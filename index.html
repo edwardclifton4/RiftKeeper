@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="screen-orientation" content="portrait">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="RiftKeeper">
@@ -218,9 +219,32 @@
   .aurora-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%, white, transparent),radial-gradient(1px 1px at 60% 15%, white, transparent),radial-gradient(1px 1px at 80% 50%, white, transparent),radial-gradient(1px 1px at 40% 70%, white, transparent),radial-gradient(1px 1px at 10% 80%, white, transparent),radial-gradient(1px 1px at 90% 25%, white, transparent),radial-gradient(1px 1px at 50% 90%, white, transparent),radial-gradient(1px 1px at 70% 60%, white, transparent);animation:auroraStars 3s ease-in-out infinite;opacity:0.5;}
   .aurora-msg{position:absolute;bottom:15%;left:0;right:0;text-align:center;font-family:'Rajdhani',sans-serif;font-size:1rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);animation:auroraStars 2s ease-in-out infinite;}
 
+  @media screen and (orientation:landscape){
+    #rotate-msg{display:flex !important;}
+  }
+  @keyframes rotateFlash{0%,100%{opacity:1;}50%{opacity:0.15;}}
+  #rotate-msg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;backdrop-filter:blur(4px);}
+  #rotate-msg .rotate-icon{font-size:4rem;animation:rotateFlash 1s ease-in-out infinite;}
+  #rotate-msg .rotate-text{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;padding:0 2rem;animation:rotateFlash 1s ease-in-out infinite;line-height:1.4;}
+
+  /* GABE EASTER EGG - hearts */
+  #gabe-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
+  #gabe-overlay.show{display:block;}
+  #gabe-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:3px solid #ff6b9d;}
+  @keyframes heartFloat{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-100vh) scale(1.5);opacity:0;}}
+  .heart-particle{position:absolute;bottom:0;font-size:2rem;animation:heartFloat linear infinite;pointer-events:none;}
+
+  /* GREG EASTER EGG - blood */
+  #greg-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
+  #greg-overlay.show{display:block;}
+  #greg-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:3px solid #8b0000;}
+  @keyframes bloodDrip{0%{transform:translateY(-20px);opacity:0;}10%{opacity:1;}100%{transform:translateY(100vh);opacity:0.6;}}
+  .blood-drip{position:absolute;top:0;width:8px;border-radius:0 0 50% 50%;background:linear-gradient(180deg,#cc0000,#660000);animation:bloodDrip linear infinite;pointer-events:none;}
+
 </style>
 </head>
 <body>
+<div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE<br>TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
@@ -288,6 +312,14 @@
   </div>
 </div>
 
+<!-- GABE EASTER EGG -->
+<div id="gabe-overlay">
+  <img src="https://raw.githubusercontent.com/edwardclifton4/RiftKeeper/main/gabe.png">
+</div>
+<!-- GREG EASTER EGG -->
+<div id="greg-overlay">
+  <img src="https://raw.githubusercontent.com/edwardclifton4/RiftKeeper/main/greg.jpg">
+</div>
 <!-- AURORA EASTER EGG -->
 <div id="aurora-overlay">
   <div class="aurora-band"></div>
@@ -988,24 +1020,70 @@ function closeConfirm(){
 
 
 /* ---- EASTER EGG - AURORA ---- */
-var _eggTouches={sivir:false, misfortune:false};
-var _eggTimer=null;
-var _eggActive=false;
+/* ---- EASTER EGGS ---- */
+var _eggTimers={};
+var _eggActive={};
 
-function eggCheckHold(){
-  if(_eggTouches.sivir && _eggTouches.misfortune){
-    if(!_eggTimer){
-      _eggTimer=setTimeout(function(){
-        _eggActive=true;
-        document.getElementById('aurora-overlay').classList.add('show');
-      }, 5000);
-    }
-  } else {
-    if(_eggTimer){clearTimeout(_eggTimer);_eggTimer=null;}
-    if(_eggActive){
-      _eggActive=false;
-      document.getElementById('aurora-overlay').classList.remove('show');
-    }
+function createHearts(){
+  var ov=document.getElementById('gabe-overlay');
+  for(var i=0;i<12;i++){
+    (function(i){
+      setTimeout(function(){
+        var h=document.createElement('div');
+        h.className='heart-particle';
+        h.textContent=['❤️','💕','💖','💗','💓'][Math.floor(Math.random()*5)];
+        h.style.left=Math.random()*100+'%';
+        h.style.animationDuration=(2+Math.random()*3)+'s';
+        h.style.animationDelay=(Math.random()*2)+'s';
+        h.style.fontSize=(1.5+Math.random()*2)+'rem';
+        ov.appendChild(h);
+      },i*200);
+    })(i);
+  }
+}
+
+function clearHearts(){
+  var ov=document.getElementById('gabe-overlay');
+  ov.querySelectorAll('.heart-particle').forEach(function(el){el.remove();});
+}
+
+function createBlood(){
+  var ov=document.getElementById('greg-overlay');
+  for(var i=0;i<15;i++){
+    (function(i){
+      setTimeout(function(){
+        var d=document.createElement('div');
+        d.className='blood-drip';
+        d.style.left=Math.random()*100+'%';
+        d.style.width=(6+Math.random()*8)+'px';
+        d.style.height=(40+Math.random()*80)+'px';
+        d.style.animationDuration=(1.5+Math.random()*2.5)+'s';
+        d.style.animationDelay=(Math.random()*1.5)+'s';
+        ov.appendChild(d);
+      },i*150);
+    })(i);
+  }
+}
+
+function clearBlood(){
+  var ov=document.getElementById('greg-overlay');
+  ov.querySelectorAll('.blood-drip').forEach(function(el){el.remove();});
+}
+
+function startEgg(name, showFn, clearFn){
+  if(_eggTimers[name]) return;
+  _eggTimers[name]=setTimeout(function(){
+    _eggActive[name]=true;
+    showFn();
+  },5000);
+}
+
+function stopEgg(name, hideFn, clearFn){
+  if(_eggTimers[name]){clearTimeout(_eggTimers[name]);_eggTimers[name]=null;}
+  if(_eggActive[name]){
+    _eggActive[name]=false;
+    hideFn();
+    if(clearFn) setTimeout(clearFn,500);
   }
 }
 
@@ -1017,19 +1095,63 @@ function attachEggListeners(){
     var legend=window._legendUnique&&window._legendUnique[idx];
     if(!legend)return;
     var key=legend.k;
-    if(key==='Sivir'||key==='MissFortune'){
-      var field=key==='Sivir'?'sivir':'misfortune';
-      card.addEventListener('touchstart',function(e){
-        _eggTouches[field]=true;
-        eggCheckHold();
+
+    // SIVIR - aurora
+    if(key==='Sivir'){
+      card.addEventListener('touchstart',function(){
+        startEgg('aurora',function(){
+          document.getElementById('aurora-overlay').classList.add('show');
+        },null);
       },{passive:true});
-      card.addEventListener('touchend',function(e){
-        _eggTouches[field]=false;
-        eggCheckHold();
+      card.addEventListener('touchend',function(){
+        stopEgg('aurora',function(){
+          document.getElementById('aurora-overlay').classList.remove('show');
+        },null);
       },{passive:true});
-      card.addEventListener('touchcancel',function(e){
-        _eggTouches[field]=false;
-        eggCheckHold();
+      card.addEventListener('touchcancel',function(){
+        stopEgg('aurora',function(){
+          document.getElementById('aurora-overlay').classList.remove('show');
+        },null);
+      },{passive:true});
+    }
+
+    // AHRI - hearts + gabe
+    if(key==='Ahri'){
+      card.addEventListener('touchstart',function(){
+        startEgg('gabe',function(){
+          createHearts();
+          document.getElementById('gabe-overlay').classList.add('show');
+        },null);
+      },{passive:true});
+      card.addEventListener('touchend',function(){
+        stopEgg('gabe',function(){
+          document.getElementById('gabe-overlay').classList.remove('show');
+        },clearHearts);
+      },{passive:true});
+      card.addEventListener('touchcancel',function(){
+        stopEgg('gabe',function(){
+          document.getElementById('gabe-overlay').classList.remove('show');
+        },clearHearts);
+      },{passive:true});
+    }
+
+    // DARIUS - blood + greg
+    if(key==='Darius'){
+      card.addEventListener('touchstart',function(){
+        startEgg('greg',function(){
+          createBlood();
+          document.getElementById('greg-overlay').classList.add('show');
+        },null);
+      },{passive:true});
+      card.addEventListener('touchend',function(){
+        stopEgg('greg',function(){
+          document.getElementById('greg-overlay').classList.remove('show');
+        },clearBlood);
+      },{passive:true});
+      card.addEventListener('touchcancel',function(){
+        stopEgg('greg',function(){
+          document.getElementById('greg-overlay').classList.remove('show');
+        },clearBlood);
       },{passive:true});
     }
   });
