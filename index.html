@@ -65,15 +65,15 @@
 
   /* GAME */
   #game{display:none;flex-direction:column;height:100%;position:relative;}
-  .player-zone{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:background 0.15s;}
+  .player-zone{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;overflow:hidden;transition:background 0.15s;padding-top:1.2rem;}
   .player-zone.p2{transform:rotate(180deg);background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.p1{background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.lit{background:rgba(255,213,79,0.13)!important;}
   .pzone-bg{position:absolute;inset:0;opacity:0.08;background-size:cover;background-position:center;pointer-events:none;}
-  .score-big{font-family:'Rajdhani',sans-serif;font-size:11rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);}
-  .player-name{font-family:'Rajdhani',sans-serif;font-size:1.4rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;}
-  .player-zone.p1 .player-name{margin-bottom:0.2rem;margin-top:-0.5rem;}
-  .legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:2px;color:rgba(79,195,247,0.55);text-transform:uppercase;text-align:center;margin-bottom:0.3rem;min-height:0.9em;}
+  .score-big{font-family:'Rajdhani',sans-serif;font-size:15rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);flex:1;display:flex;align-items:center;justify-content:center;}
+  .player-name{font-family:'Rajdhani',sans-serif;font-size:1.4rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;margin-bottom:0.1rem;}
+  .player-zone.p1 .player-name{margin-bottom:0.1rem;margin-top:0;}
+  .legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:2px;color:rgba(79,195,247,0.55);text-transform:uppercase;text-align:center;margin-bottom:0.15rem;min-height:0.9em;}
 
   /* TAP ZONES */
   .tap-zones{position:absolute;inset:0;display:flex;pointer-events:none;}
@@ -90,11 +90,12 @@
   .player-zone.p2 .xp-btn{top:16px;bottom:auto;right:12px;left:auto;transform:none;}
 
   /* MIDBAR */
-  #midbar{height:52px;background:#050e18;display:flex;align-items:center;justify-content:space-between;padding:0 0.5rem;gap:0.2rem;border-top:1px solid rgba(79,195,247,0.1);border-bottom:1px solid rgba(79,195,247,0.1);flex-shrink:0;z-index:10;}
+  #midbar{height:52px;background:#050e18;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;gap:0.2rem;border-top:1px solid rgba(79,195,247,0.1);border-bottom:1px solid rgba(79,195,247,0.1);flex-shrink:0;z-index:10;position:relative;}
   .mid-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.3rem 0.6rem;cursor:pointer;display:flex;align-items:center;font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--muted);transition:all 0.2s;white-space:nowrap;}
   .mid-btn:active{transform:scale(0.95);}
   .mid-btn.danger{color:var(--accent2);border-color:rgba(229,115,115,0.25);}
   .mid-btn.gold{color:var(--gold);border-color:rgba(255,213,79,0.25);}
+  #roll-dice-btn{position:absolute;left:50%;transform:translateX(-50%);z-index:2;}
   .mid-btn.gg{color:#4ade80;border-color:rgba(74,222,128,0.3);display:none;}
   .mid-btn.gg.show{display:flex;}
   .mid-btn.pause{color:var(--gold);border-color:rgba(255,213,79,0.3);display:none;}
@@ -126,7 +127,7 @@
   .midbar-logo .r{color:var(--accent);}
   .midbar-logo .k{color:var(--gold);}
   .midbar-logo.flip{transform:rotate(180deg);}
-  .timer-box{display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.4s;pointer-events:none;margin-top:1.2rem;}
+  .timer-box{display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.4s;pointer-events:none;margin-top:auto;padding-bottom:0.8rem;}
   .timer-box.show{opacity:1;}
   .timer-box.p2-timer{transform:none;}
   .timer-display{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;}
@@ -189,17 +190,34 @@
   .dice-first-label{font-family:'Rajdhani',sans-serif;font-size:5.5rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);line-height:1;}
   .dice-tap-label{font-family:'Rajdhani',sans-serif;font-size:0.9rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);}
   #dice-midbar{height:70px;background:#050e18;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.2);border-bottom:1px solid rgba(255,213,79,0.2);gap:10px;overflow:hidden;}
-  #dice-wheel{width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  #dice-wheel svg{width:44px;height:44px;}
+  #dice-wheel{width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  #dice-wheel svg{width:64px;height:64px;}
   @keyframes wheelSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
   @keyframes starBlink{0%,100%{opacity:1;transform:scale(1.1);}50%{opacity:0.4;transform:scale(0.8);}}
-  #dice-wheel.spinning svg{animation:wheelSpin 0.4s linear infinite;}
+  #dice-wheel.spinning img{animation:wheelSpin 1.2s linear infinite;}
   #dice-star1,#dice-star2{font-size:1.4rem;opacity:0;transition:opacity 0.3s;flex-shrink:0;animation:none;}
   #dice-star1.show,#dice-star2.show{opacity:1;animation:starBlink 0.6s ease-in-out infinite;}
   #dice-goes-first{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity 0.3s;text-align:center;white-space:nowrap;}
   #dice-goes-first.show{opacity:1;}
   @keyframes blinkZone{0%,100%{background:rgba(255,213,79,0.55);}50%{background:transparent;}}
   .blinking{animation:blinkZone 0.45s infinite;}
+
+  /* EASTER EGG - AURORA */
+  #aurora-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;overflow:hidden;}
+  #aurora-overlay.show{display:block;}
+  @keyframes auroraWave1{0%{transform:translateX(-30%) skewX(-15deg);opacity:0.5;}50%{transform:translateX(10%) skewX(10deg);opacity:0.8;}100%{transform:translateX(-30%) skewX(-15deg);opacity:0.5;}}
+  @keyframes auroraWave2{0%{transform:translateX(20%) skewX(10deg);opacity:0.4;}50%{transform:translateX(-15%) skewX(-20deg);opacity:0.7;}100%{transform:translateX(20%) skewX(10deg);opacity:0.4;}}
+  @keyframes auroraWave3{0%{transform:translateX(-10%) skewX(5deg);opacity:0.3;}50%{transform:translateX(25%) skewX(-10deg);opacity:0.6;}100%{transform:translateX(-10%) skewX(5deg);opacity:0.3;}}
+  @keyframes auroraShift{0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}}
+  .aurora-band{position:absolute;left:-50%;width:200%;border-radius:50%;filter:blur(40px);}
+  .aurora-band:nth-child(1){height:35%;top:5%;background:linear-gradient(180deg,rgba(0,255,180,0.6),rgba(0,100,255,0.3),transparent);animation:auroraWave1 6s ease-in-out infinite, auroraShift 12s linear infinite;}
+  .aurora-band:nth-child(2){height:30%;top:20%;background:linear-gradient(180deg,rgba(100,0,255,0.5),rgba(0,200,255,0.4),transparent);animation:auroraWave2 8s ease-in-out infinite, auroraShift 15s linear infinite reverse;}
+  .aurora-band:nth-child(3){height:25%;top:35%;background:linear-gradient(180deg,rgba(0,255,100,0.4),rgba(200,0,255,0.3),transparent);animation:auroraWave3 7s ease-in-out infinite, auroraShift 10s linear infinite;}
+  .aurora-band:nth-child(4){height:40%;top:0%;background:linear-gradient(180deg,rgba(0,255,220,0.3),transparent);animation:auroraWave1 10s ease-in-out infinite reverse;}
+  @keyframes auroraStars{0%,100%{opacity:0.6;}50%{opacity:1;}}
+  .aurora-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%, white, transparent),radial-gradient(1px 1px at 60% 15%, white, transparent),radial-gradient(1px 1px at 80% 50%, white, transparent),radial-gradient(1px 1px at 40% 70%, white, transparent),radial-gradient(1px 1px at 10% 80%, white, transparent),radial-gradient(1px 1px at 90% 25%, white, transparent),radial-gradient(1px 1px at 50% 90%, white, transparent),radial-gradient(1px 1px at 70% 60%, white, transparent);animation:auroraStars 3s ease-in-out infinite;opacity:0.5;}
+  .aurora-msg{position:absolute;bottom:15%;left:0;right:0;text-align:center;font-family:'Rajdhani',sans-serif;font-size:1rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);animation:auroraStars 2s ease-in-out infinite;}
+
 </style>
 </head>
 <body>
@@ -208,14 +226,14 @@
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="setup-player">
       <h3>Player 1</h3>
-      <input class="setup-input" id="p1name" placeholder="Enter name...">
+      <input class="setup-input" id="p1name" placeholder="Enter name..." maxlength="16">
       <div class="legend-pick" onclick="openLegendPicker(1)">
         <div class="legend-label"><b id="p1legname">Choose Legend</b>tap to select</div>
       </div>
     </div>
     <div class="setup-player">
       <h3>Player 2</h3>
-      <input class="setup-input" id="p2name" placeholder="Enter name...">
+      <input class="setup-input" id="p2name" placeholder="Enter name..." maxlength="16">
       <div class="legend-pick" onclick="openLegendPicker(2)">
         <div class="legend-label"><b id="p2legname">Choose Legend</b>tap to select</div>
       </div>
@@ -242,10 +260,13 @@
 
     <div id="midbar">
       <div class="mid-btn danger" onclick="confirmAction('reset')">RESET</div>
-      <div class="mid-btn gg" id="gg-btn" onclick="openGG()">GOOD GAME</div>
-      <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">ROLL DICE</div>
-      <div class="midbar-logo" id="midbar-logo-center"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
-      <div class="mid-btn pause" id="pause-btn" onclick="togglePause()">PAUSE</div>
+      <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()">GG</div>
+      <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">&nbsp; <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="#ffd54f" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#ffd54f"/><circle cx="10" cy="4" r="1" fill="#ffd54f"/><circle cx="7" cy="7" r="1" fill="#ffd54f"/><circle cx="4" cy="10" r="1" fill="#ffd54f"/><circle cx="10" cy="10" r="1" fill="#ffd54f"/></svg> &nbsp;ROLL DICE &nbsp;<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="#ffd54f" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#ffd54f"/><circle cx="10" cy="4" r="1" fill="#ffd54f"/><circle cx="7" cy="7" r="1" fill="#ffd54f"/><circle cx="4" cy="10" r="1" fill="#ffd54f"/><circle cx="10" cy="10" r="1" fill="#ffd54f"/></svg></div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;pointer-events:none;flex-shrink:0;">
+        <div class="midbar-logo flip" id="midbar-logo-p2"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
+        <div class="midbar-logo" id="midbar-logo-p1"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
+      </div>
+      <div class="mid-btn pause" id="pause-btn" onclick="togglePause()">⏸</div>
       <div class="mid-btn" onclick="confirmAction('menu')">MENU</div>
     </div>
 
@@ -267,6 +288,15 @@
   </div>
 </div>
 
+<!-- AURORA EASTER EGG -->
+<div id="aurora-overlay">
+  <div class="aurora-band"></div>
+  <div class="aurora-band"></div>
+  <div class="aurora-band"></div>
+  <div class="aurora-band"></div>
+  <div class="aurora-stars"></div>
+  <div class="aurora-msg">✦ DAZZLING ISN'T IT? ✦</div>
+</div>
 <!-- LEGEND PICKER SCREEN -->
 <div id="legend-screen">
   <div id="legend-panel">
@@ -359,14 +389,7 @@
   <div id="dice-midbar">
     <span id="dice-star1">★</span>
     <div id="dice-wheel" class="spinning">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="24" cy="24" r="20" stroke="#ffd54f" stroke-width="2.5" stroke-dasharray="6 4"/>
-        <circle cx="24" cy="4"  r="3.5" fill="#ffd54f"/>
-        <circle cx="24" cy="44" r="3.5" fill="#ffd54f"/>
-        <circle cx="4"  cy="24" r="3.5" fill="#ffd54f"/>
-        <circle cx="44" cy="24" r="3.5" fill="#ffd54f"/>
-        <circle cx="24" cy="24" r="5" fill="#ffd54f" opacity="0.9"/>
-      </svg>
+<img src="https://raw.githubusercontent.com/edwardclifton4/RiftKeeper/main/riftbound-logo.png" style="width:100%;height:100%;object-fit:contain;">
     </div>
     <div id="dice-goes-first"></div>
     <span id="dice-star2">★</span>
@@ -505,6 +528,7 @@ function renderLegends(list){
     out+='<div class="legend-card" data-idx="'+j+'"><span class="lc-name">'+l.n+'</span></div>';
   }
   grid.innerHTML=out;
+  attachEggListeners();
   grid.querySelectorAll('.legend-card').forEach(function(el){
     el.addEventListener('click',function(){
       var idx=parseInt(this.getAttribute('data-idx'));
@@ -569,8 +593,8 @@ function selectLegend(idx){
 
 
 function startGame(){
-  const n1=document.getElementById('p1name').value.trim()||'PLAYER 1';
-  const n2=document.getElementById('p2name').value.trim()||'PLAYER 2';
+  const n1=(document.getElementById('p1name').value.trim()||'PLAYER 1').substring(0,16);
+  const n2=(document.getElementById('p2name').value.trim()||'PLAYER 2').substring(0,16);
   state.names=[n1.toUpperCase(),n2.toUpperCase()];
   state.scores=[0,0];state.xp=[0,0];state.logs=[[],[]];
   state.legends=[document.getElementById('p1legname').textContent,document.getElementById('p2legname').textContent];
@@ -588,6 +612,8 @@ function startGame(){
   document.getElementById('setup').style.display='none';
   document.getElementById('game').style.display='flex';
   document.getElementById('roll-dice-btn').style.display='';
+  document.getElementById('midbar-logo-p1').style.display='none';
+  document.getElementById('midbar-logo-p2').style.display='none';
 }
 
 function adj(p,d){
@@ -600,6 +626,12 @@ function adj(p,d){
   // Auto-swap roll dice to GG on first score
   if(!document.getElementById('gg-btn').classList.contains('show')){
     showTimers();
+  }
+  // Add ? to GG button if either player hits 8
+  var ggBtn=document.getElementById('gg-btn');
+  if(ggBtn){
+    var maxScore=Math.max(state.scores[0],state.scores[1]);
+    ggBtn.textContent=maxScore>=8?'GG?':'GG';
   }
 }
 
@@ -614,7 +646,10 @@ function resetScores(){
   });
   // restore roll dice button
   document.getElementById('roll-dice-btn').style.display='';
+  document.getElementById('midbar-logo-p1').style.display='none';
+  document.getElementById('midbar-logo-p2').style.display='none';
   document.getElementById('gg-btn').classList.remove('show');
+  document.getElementById('gg-btn').textContent='GG';
   document.getElementById('pause-btn').classList.remove('show');
   closePause();
   // hide and stop timers
@@ -745,6 +780,8 @@ function closeLog(){document.getElementById('logOverlay').classList.remove('show
 function goSetup(){
   // Reset all button/overlay states before going to menu
   document.getElementById('roll-dice-btn').style.display='';
+  document.getElementById('midbar-logo-p1').style.display='none';
+  document.getElementById('midbar-logo-p2').style.display='none';
   document.getElementById('gg-btn').classList.remove('show');
   document.getElementById('pause-btn').classList.remove('show');
   closePause();
@@ -779,6 +816,8 @@ function showTimers(){
   document.getElementById('timer-p1').classList.add('show');
   document.getElementById('timer-p2').classList.add('show');
   document.getElementById('roll-dice-btn').style.display='none';
+  document.getElementById('midbar-logo-p1').style.display='';
+  document.getElementById('midbar-logo-p2').style.display='';
   document.getElementById('gg-btn').classList.add('show');
   document.getElementById('pause-btn').classList.add('show');
   timerSeconds=3600;timerOver=false;timerOverSeconds=0;
@@ -815,7 +854,19 @@ function showTimers(){
 
 
 /* ---- GG ---- */
+function confirmGG(){
+  _confirmAction='gg';
+  document.getElementById('confirm-msg').textContent='END GAME?';
+  document.getElementById('confirm-yes').onclick=function(){
+    var act=_confirmAction;
+    closeConfirm();
+    if(act==='gg') openGG();
+  };
+  document.getElementById('confirm-overlay').classList.add('show');
+}
 function openGG(){
+  // Pause timer when GG opens
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
   var s1=state.scores[0], s2=state.scores[1];
   var n1=state.names[0], n2=state.names[1];
   // Winner text
@@ -854,6 +905,18 @@ function openGG(){
 }
 function closeGG(){
   document.getElementById('gg-overlay').classList.remove('show');
+  // Resume timer if it was running and timers are visible
+  var timerShowing=document.getElementById('timer-p1').classList.contains('show');
+  if(timerShowing && !timerInterval){
+    timerInterval=setInterval(()=>{
+      if(!timerOver){
+        if(timerSeconds>0){timerSeconds--;updateTimerDisplay();}
+        else{timerOver=true;timerOverSeconds=0;['p1','p2'].forEach(p=>{document.getElementById('timer-display-'+p).classList.add('urgent');});}
+      } else {
+        if(timerOverSeconds<3600){timerOverSeconds++;updateTimerDisplay();}
+      }
+    },1000);
+  }
 }
 function nextGame(){
   closeGG();
@@ -870,10 +933,10 @@ function togglePause(){
     ov.classList.add('show');
     // pause timer
     if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
-    document.getElementById('pause-btn').textContent='RESUME';
+    document.getElementById('pause-btn').textContent='▶';
   } else {
     ov.classList.remove('show');
-    document.getElementById('pause-btn').textContent='PAUSE';
+    document.getElementById('pause-btn').textContent='⏸';
     // resume timer if it was running
     const timerShowing=document.getElementById('timer-p1').classList.contains('show');
     if(timerShowing && !timerInterval){
@@ -892,7 +955,7 @@ function closePause(){
   _paused=false;
   document.getElementById('pause-overlay').classList.remove('show');
   const pb=document.getElementById('pause-btn');
-  if(pb)pb.textContent='PAUSE';
+  if(pb)pb.textContent='⏸';
 }
 
 /* ---- CONFIRM DIALOG ---- */
@@ -919,6 +982,55 @@ function confirmAction(action){
 function closeConfirm(){
   document.getElementById('confirm-overlay').classList.remove('show');
   _confirmAction=null;
+}
+
+
+/* ---- EASTER EGG - AURORA ---- */
+var _eggTouches={sivir:false, misfortune:false};
+var _eggTimer=null;
+var _eggActive=false;
+
+function eggCheckHold(){
+  if(_eggTouches.sivir && _eggTouches.misfortune){
+    if(!_eggTimer){
+      _eggTimer=setTimeout(function(){
+        _eggActive=true;
+        document.getElementById('aurora-overlay').classList.add('show');
+      }, 5000);
+    }
+  } else {
+    if(_eggTimer){clearTimeout(_eggTimer);_eggTimer=null;}
+    if(_eggActive){
+      _eggActive=false;
+      document.getElementById('aurora-overlay').classList.remove('show');
+    }
+  }
+}
+
+function attachEggListeners(){
+  var cards=document.querySelectorAll('.legend-card');
+  cards.forEach(function(card){
+    var idx=parseInt(card.getAttribute('data-idx'));
+    if(idx===null||isNaN(idx))return;
+    var legend=window._legendUnique&&window._legendUnique[idx];
+    if(!legend)return;
+    var key=legend.k;
+    if(key==='Sivir'||key==='MissFortune'){
+      var field=key==='Sivir'?'sivir':'misfortune';
+      card.addEventListener('touchstart',function(e){
+        _eggTouches[field]=true;
+        eggCheckHold();
+      },{passive:true});
+      card.addEventListener('touchend',function(e){
+        _eggTouches[field]=false;
+        eggCheckHold();
+      },{passive:true});
+      card.addEventListener('touchcancel',function(e){
+        _eggTouches[field]=false;
+        eggCheckHold();
+      },{passive:true});
+    }
+  });
 }
 
 </script>
