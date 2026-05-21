@@ -6,6 +6,6 @@
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="80" fill="url(#bg)"/>
-  <text x="256" y="245" font-family="Arial Black,sans-serif" font-weight="900" font-size="160" fill="#FF6B2B" text-anchor="middle" letter-spacing="8">RIFT</text>
-  <text x="256" y="390" font-family="Arial Black,sans-serif" font-weight="900" font-size="110" fill="#FFD54F" text-anchor="middle" letter-spacing="4">KEEPER</text>
+  <text x="256" y="245" font-family="Arial Black,sans-serif" font-weight="900" font-size="160" fill="#4fc3f7" text-anchor="middle" letter-spacing="8">RIFT</text>
+  <text x="256" y="390" font-family="Arial Black,sans-serif" font-weight="900" font-size="110" fill="#ffd54f" text-anchor="middle" letter-spacing="4">KEEPER</text>
 </svg>
