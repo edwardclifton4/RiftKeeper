@@ -94,18 +94,19 @@
 
   /* MIDBAR */
   #midbar{height:52px;background:#000000;display:flex;align-items:stretch;justify-content:space-between;padding:0;gap:0;border-top:1px solid rgba(79,195,247,0.1);border-bottom:1px solid rgba(79,195,247,0.1);flex-shrink:0;z-index:10;position:relative;}
-  .mid-btn{background:transparent;border:none;border-right:1px solid rgba(255,255,255,0.06);padding:0 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--muted);transition:all 0.2s;white-space:nowrap;min-width:52px;}
+  .mid-btn{background:transparent;border:none;border-right:1px solid rgba(255,255,255,0.06);padding:0 0.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--muted);transition:all 0.2s;white-space:nowrap;min-width:44px;}
   .mid-btn:first-child{border-left:none;}
+
   .mid-btn:last-child{border-right:none;}
   .mid-btn:active{background:rgba(255,255,255,0.08);}
   .mid-btn:active{transform:scale(0.95);}
-  .mid-btn.danger{color:var(--accent2);border-color:rgba(229,115,115,0.25);}
+  .mid-btn.danger{color:var(--accent2);border-right:1px solid rgba(229,115,115,0.4);}
   .mid-btn.gold{color:var(--gold);border-color:rgba(255,213,79,0.25);}
   @keyframes diceFlash{0%,100%{border-color:rgba(255,213,79,0.6);}50%{border-color:rgba(255,213,79,0.1);}}
   #roll-dice-btn{position:absolute;left:50%;transform:translateX(-50%);z-index:3;height:100%;border-left:1px solid rgba(255,213,79,0.3);border-right:1px solid rgba(255,213,79,0.3);padding:0 1.2rem;background:transparent;animation:diceFlash 1.4s ease-in-out infinite;}
-  .mid-btn.gg{color:#4ade80;border-right:1px solid rgba(74,222,128,0.25);border-left:1px solid rgba(74,222,128,0.25);display:none;padding:0 0.8rem;}
+  .mid-btn.gg{color:#4ade80;border-right:1px solid rgba(74,222,128,0.25);border-left:none;display:none;padding:0 0.5rem 0 0.4rem;}
   .mid-btn.gg.show{display:flex;}
-  .mid-btn.pause{color:var(--gold);border-left:1px solid rgba(255,213,79,0.3);border-right:1px solid rgba(255,213,79,0.3);display:none;padding:0 0.8rem;}
+  .mid-btn.pause{color:var(--gold);border-left:1px solid rgba(255,213,79,0.3);border-right:none;display:none;padding:0 0.4rem 0 0.5rem;}
   .mid-btn.pause.show{display:flex;}
   .mid-btn.menu-btn{border-left:1px solid rgba(79,195,247,0.25);border-right:none;color:var(--accent);}
   /* PAUSE OVERLAY */
@@ -120,7 +121,7 @@
   .pause-tap-p2{transform:rotate(180deg);}
   #pause-icon-big{font-size:3rem;color:rgba(255,213,79,0.5);line-height:1;}
   @keyframes pauseTap{0%,100%{opacity:1;}50%{opacity:0.15;}}
-  .pause-tap{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);animation:pauseTap 1.4s ease-in-out infinite;text-align:center;}
+  .pause-tap{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);animation:pauseTap 2.5s ease-in-out infinite;text-align:center;}
   /* CONFIRM DIALOG */
   #confirm-overlay{position:absolute;inset:0;background:rgba(2,5,12,0.85);z-index:60;display:none;align-items:center;justify-content:center;}
   #confirm-overlay.show{display:flex;}
@@ -248,7 +249,7 @@
   .fos-half.p2side{transform:rotate(180deg);}
   #fos-divider{height:1px;background:rgba(255,213,79,0.15);flex-shrink:0;}
   .fos-top{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,4vw,1.4rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.8);text-align:center;}
-  .fos-question{font-family:'Rajdhani',sans-serif;font-size:clamp(2.4rem,9vw,4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1;}
+  .fos-question{font-family:'Rajdhani',sans-serif;font-size:clamp(1.6rem,6vw,2.6rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1;}
   .fos-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(0.9rem,3.5vw,1.2rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.65);text-align:center;}
   @keyframes fosFlash{0%,100%{opacity:1;}50%{opacity:0.15;}}
   .fos-active .fos-tap{animation:fosFlash 2s ease-in-out infinite;}
@@ -350,7 +351,6 @@
       <div class="pzone-bg" id="bg1"></div>
       <div class="log-btn" id="logbtn1" onclick="openLog(1)"><span id="logcount1"></span></div>
       <div class="xp-btn" onclick="openXP(1)"><span class="xp-val" id="xpval1">0 XP</span></div>
-      <div id="test-timer-btn" onclick="timerSeconds=2;timerOver=false;" style="position:absolute;top:64px;right:12px;background:rgba(229,115,115,0.2);border:1px solid rgba(229,115,115,0.4);border-radius:8px;padding:4px 8px;cursor:pointer;z-index:5;font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:1px;color:rgba(229,115,115,0.8);">TEST OT</div>
       <div class="tap-zones">
         <div class="tap-zone" onclick="adj(1,-1)"><span class="tap-hint">−</span></div>
         <div class="tap-zone" onclick="adj(1,1)"><span class="tap-hint">+</span></div>
@@ -408,9 +408,9 @@
 <div id="pause-overlay" onclick="togglePause()">
   <div class="pause-side left"><span class="pause-side-text">GAME PAUSED</span></div>
   <div id="pause-center">
-    <div class="pause-tap pause-tap-p2">TAP TO START, GOOD LUCK AND HAVE FUN!</div>
+    <div class="pause-tap pause-tap-p2">TAP TO CONTINUE</div>
     <div id="pause-icon-big"><svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="6" width="12" height="36" rx="3" fill="#ffd54f"/><rect x="29" y="6" width="12" height="36" rx="3" fill="#ffd54f"/></svg></div>
-    <div class="pause-tap">TAP TO START, GOOD LUCK AND HAVE FUN!</div>
+    <div class="pause-tap">TAP TO CONTINUE</div>
   </div>
   <div class="pause-side right"><span class="pause-side-text">GAME PAUSED</span></div>
 </div>
@@ -432,14 +432,14 @@
 <div id="bo1-rules-overlay">
   <div class="bo1-half p2side">
     <div class="bo1-title">BEST OF 1 RULES</div>
-    <div class="bo1-rule">1. REVEAL LEGENDS &amp; CHAMPIONS</div>
+    <div class="bo1-rule">1. REVEAL LEGENDS &amp; CHAMPION UNIT</div>
     <div class="bo1-rule">2. OPPONENT RANDOMLY PICKS YOUR BATTLEFIELD</div>
     <div class="bo1-tap">TAP TO CONTINUE</div>
   </div>
   <div style="height:1px;background:rgba(255,213,79,0.2);flex-shrink:0;"></div>
   <div class="bo1-half">
     <div class="bo1-title">BEST OF 1 RULES</div>
-    <div class="bo1-rule">1. REVEAL LEGENDS &amp; CHAMPIONS</div>
+    <div class="bo1-rule">1. REVEAL LEGENDS &amp; CHAMPION UNIT</div>
     <div class="bo1-rule">2. OPPONENT RANDOMLY PICKS YOUR BATTLEFIELD</div>
     <div class="bo1-tap">TAP TO CONTINUE</div>
   </div>
