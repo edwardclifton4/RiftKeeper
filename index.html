@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="screen-orientation" content="portrait">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="RiftKeeper">
@@ -23,7 +22,7 @@
   #app{display:flex;flex-direction:column;height:100vh;width:100%;}
 
   /* SETUP */
-  #setup{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:1.5rem 1.5rem 2rem;gap:1.2rem;background:linear-gradient(160deg,#0d1b2a 0%,#0a1020 100%);text-align:center;position:relative;}
+  #setup{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:1.5rem;gap:1.2rem;background:linear-gradient(160deg,#0d1b2a 0%,#0a1020 100%);text-align:center;}
   #setup h1{font-family:'Rajdhani',sans-serif;font-size:3.5rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;}
   #setup h1 span{color:var(--gold);}
   .setup-player{background:rgba(255,255,255,0.04);border:1px solid rgba(79,195,247,0.2);border-radius:12px;padding:1rem;width:100%;max-width:360px;margin-left:auto;margin-right:auto;text-align:center;}
@@ -62,12 +61,10 @@
   .legend-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;border-radius:6px;}
   .legend-card span{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--text);text-align:center;line-height:1.2;}
   #start-btn{background:linear-gradient(135deg,#1a4a6e,#0d2d45);border:1px solid var(--accent);color:var(--accent);font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:0.9rem 2.5rem;border-radius:10px;cursor:pointer;width:100%;max-width:360px;transition:all 0.2s;text-align:center;}
+  #start-btn:active{transform:scale(0.97);}
   .bo-row{display:flex;gap:0.6rem;width:100%;max-width:360px;}
   .bo-btn{flex:1;padding:0.6rem 0;border-radius:10px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:2px;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;}
   .bo-btn.active{background:rgba(255,213,79,0.15);border-color:var(--gold);color:var(--gold);}
-  #start-btn:active{transform:scale(0.97);}
-  #donate-link{font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:1px;color:rgba(255,213,79,0.5);text-align:center;text-decoration:none;padding:0.3rem;transition:color 0.2s;position:absolute;bottom:1.2rem;left:0;right:0;}
-  #donate-link:active{color:var(--gold);}
 
   /* GAME */
   #game{display:none;flex-direction:column;height:100%;position:relative;}
@@ -76,18 +73,16 @@
   .player-zone.p1{background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.lit{background:rgba(255,213,79,0.13)!important;}
   .pzone-bg{position:absolute;inset:0;opacity:0.08;background-size:cover;background-position:center;pointer-events:none;}
-  .score-big{font-family:'Rajdhani',sans-serif;font-size:15rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);flex:1;display:flex;align-items:center;justify-content:center;pointer-events:none;}
-  .player-name{font-family:'Rajdhani',sans-serif;font-size:1.4rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;margin-bottom:0.1rem;pointer-events:none;}
+  .score-big{font-family:'Rajdhani',sans-serif;font-size:15rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);flex:1;display:flex;align-items:center;justify-content:center;}
+  .player-name{font-family:'Rajdhani',sans-serif;font-size:1.4rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:0.2rem;margin-bottom:0.1rem;}
   .player-zone.p1 .player-name{margin-bottom:0.1rem;margin-top:0;}
-  .legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:2px;color:rgba(79,195,247,0.55);text-transform:uppercase;text-align:center;margin-bottom:0.15rem;min-height:0.9em;pointer-events:none;}
+  .legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:2px;color:rgba(79,195,247,0.55);text-transform:uppercase;text-align:center;margin-bottom:0.15rem;min-height:0.9em;}
 
   /* TAP ZONES */
   .tap-zones{position:absolute;inset:0;display:flex;pointer-events:none;}
   .tap-zone{flex:1;display:flex;align-items:center;justify-content:center;pointer-events:all;cursor:pointer;-webkit-tap-highlight-color:transparent;}
   .tap-zone:active{background:rgba(255,213,79,0.09);}
   .tap-hint{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;opacity:0.55;pointer-events:none;user-select:none;color:var(--gold);}
-  .tap-start-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;z-index:3;pointer-events:all;cursor:pointer;}
-  .tap-start-text{font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.7);text-align:center;animation:pauseTap 1.8s ease-in-out infinite;}
 
   /* CORNER BUTTONS */
   .log-btn{position:absolute;top:16px;left:12px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 10px;cursor:pointer;display:flex;align-items:flex-start;font-size:11px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;color:var(--gold);z-index:5;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:pre-line;line-height:1.5;}
@@ -98,16 +93,21 @@
   .player-zone.p2 .xp-btn{top:16px;bottom:auto;right:12px;left:auto;transform:none;}
 
   /* MIDBAR */
-  #midbar{height:52px;background:#000000;display:flex;align-items:center;justify-content:space-between;padding:0 1.2rem;gap:0.2rem;border-top:1px solid rgba(79,195,247,0.1);border-bottom:1px solid rgba(79,195,247,0.1);flex-shrink:0;z-index:10;position:relative;}
-  .mid-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.9rem 1.2rem;cursor:pointer;display:flex;align-items:center;font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--muted);transition:all 0.2s;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation;position:relative;}
+  #midbar{height:52px;background:#000000;display:flex;align-items:stretch;justify-content:space-between;padding:0;gap:0;border-top:1px solid rgba(79,195,247,0.1);border-bottom:1px solid rgba(79,195,247,0.1);flex-shrink:0;z-index:10;position:relative;}
+  .mid-btn{background:transparent;border:none;border-right:1px solid rgba(255,255,255,0.06);padding:0 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--muted);transition:all 0.2s;white-space:nowrap;min-width:52px;}
+  .mid-btn:first-child{border-left:none;}
+  .mid-btn:last-child{border-right:none;}
+  .mid-btn:active{background:rgba(255,255,255,0.08);}
   .mid-btn:active{transform:scale(0.95);}
   .mid-btn.danger{color:var(--accent2);border-color:rgba(229,115,115,0.25);}
   .mid-btn.gold{color:var(--gold);border-color:rgba(255,213,79,0.25);}
-  #roll-dice-btn{position:absolute;left:50%;transform:translateX(-50%);z-index:2;}
-  .mid-btn.gg{color:#4ade80;border-color:rgba(74,222,128,0.3);display:none;}
+  @keyframes diceFlash{0%,100%{border-color:rgba(255,213,79,0.6);}50%{border-color:rgba(255,213,79,0.1);}}
+  #roll-dice-btn{position:absolute;left:50%;transform:translateX(-50%);z-index:3;height:100%;border-left:1px solid rgba(255,213,79,0.3);border-right:1px solid rgba(255,213,79,0.3);padding:0 1.2rem;background:transparent;animation:diceFlash 1.4s ease-in-out infinite;}
+  .mid-btn.gg{color:#4ade80;border-right:1px solid rgba(74,222,128,0.25);border-left:1px solid rgba(74,222,128,0.25);display:none;padding:0 0.8rem;}
   .mid-btn.gg.show{display:flex;}
-  .mid-btn.pause{color:var(--gold);border-color:rgba(255,213,79,0.3);display:none;}
+  .mid-btn.pause{color:var(--gold);border-left:1px solid rgba(255,213,79,0.3);border-right:1px solid rgba(255,213,79,0.3);display:none;padding:0 0.8rem;}
   .mid-btn.pause.show{display:flex;}
+  .mid-btn.menu-btn{border-left:1px solid rgba(79,195,247,0.25);border-right:none;color:var(--accent);}
   /* PAUSE OVERLAY */
   #pause-overlay{position:absolute;inset:0;background:rgba(2,5,12,0.9);z-index:40;display:none;flex-direction:row;cursor:pointer;}
   #pause-overlay.show{display:flex;}
@@ -121,16 +121,6 @@
   #pause-icon-big{font-size:3rem;color:rgba(255,213,79,0.5);line-height:1;}
   @keyframes pauseTap{0%,100%{opacity:1;}50%{opacity:0.15;}}
   .pause-tap{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);animation:pauseTap 1.4s ease-in-out infinite;text-align:center;}
-  /* FIRST OR SECOND */
-  #fos-overlay{position:absolute;inset:0;background:rgba(2,5,12,0.92);z-index:55;display:none;flex-direction:column;}
-  #fos-overlay.show{display:flex;}
-  .fos-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;cursor:pointer;}
-  .fos-half.p2side{transform:rotate(180deg);}
-  .fos-question{font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;}
-  .fos-tap{font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.6);text-align:center;}
-  .fos-btn{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:rgba(255,213,79,0.1);border:1px solid rgba(255,213,79,0.3);border-radius:10px;padding:0.7rem 2rem;color:var(--gold);cursor:pointer;}
-  .fos-btn:active{background:rgba(255,213,79,0.25);}
-  #fos-divider{height:1px;background:rgba(255,213,79,0.15);flex-shrink:0;}
   /* CONFIRM DIALOG */
   #confirm-overlay{position:absolute;inset:0;background:rgba(2,5,12,0.85);z-index:60;display:none;align-items:center;justify-content:center;}
   #confirm-overlay.show{display:flex;}
@@ -141,7 +131,7 @@
   .confirm-btn.yes{background:rgba(229,115,115,0.15);color:var(--accent2);border-color:rgba(229,115,115,0.3);}
   .confirm-btn.no{background:rgba(255,255,255,0.05);color:var(--muted);}
   .midbar-btns{display:flex;align-items:center;gap:1rem;}
-  .midbar-logo{font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:1.5px;line-height:1.2;text-align:center;pointer-events:none;user-select:none;flex-shrink:0;color:var(--muted);}
+  .midbar-logo{font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:2px;line-height:1.2;text-align:center;pointer-events:none;user-select:none;flex-shrink:0;}
   .midbar-logo .r{color:var(--accent);}
   .midbar-logo .k{color:var(--gold);}
   .midbar-logo.flip{transform:rotate(180deg);}
@@ -160,11 +150,10 @@
   .panel h2{font-family:'Rajdhani',sans-serif;letter-spacing:2px;text-transform:uppercase;font-size:1rem;color:var(--accent);margin-bottom:1rem;}
   .close-btn{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.7rem;color:var(--muted);font-family:'Rajdhani',sans-serif;letter-spacing:2px;font-size:0.9rem;cursor:pointer;text-transform:uppercase;margin-top:0.6rem;}
   .close-btn:active{transform:scale(0.98);}
-  #gg-overlay{position:absolute;inset:0;background:rgba(2,5,12,0.92);z-index:50;display:none;align-items:center;justify-content:center;padding:1rem;}
+  #gg-overlay{position:fixed;inset:0;background:rgba(2,5,12,0.9);z-index:50;display:none;align-items:center;justify-content:center;padding:1rem;}
   #gg-overlay.show{display:flex;}
   #gg-card{background:#0a1828;border:1px solid rgba(79,195,247,0.25);border-radius:16px;width:100%;max-width:380px;display:flex;flex-direction:column;overflow:hidden;max-height:88vh;}
   #gg-winner{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;text-align:center;padding:1rem 1rem 0.2rem;color:var(--gold);}
-  #gg-rounds{font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:2px;color:var(--accent);text-align:center;padding:0 1rem 0.4rem;text-transform:uppercase;}
   #gg-time{font-family:'Rajdhani',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--muted);text-align:center;padding:0 1rem 0.8rem;text-transform:uppercase;}
   #gg-cols{display:flex;flex:1;overflow:hidden;border-top:1px solid rgba(79,195,247,0.12);}
   .gg-col{flex:1;display:flex;flex-direction:column;padding:0.8rem;overflow-y:auto;scrollbar-width:none;}
@@ -179,7 +168,7 @@
   .gg-log-empty{font-size:0.78rem;color:var(--muted);text-align:center;}
   #gg-actions{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
   .gg-action-btn{flex:1;padding:0.75rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px;font-size:0.85rem;cursor:pointer;text-transform:uppercase;text-align:center;color:var(--muted);background:rgba(255,255,255,0.03);}
-  #next-game-btn{border-right:1px solid rgba(255,255,255,0.08);}
+  .gg-action-btn:first-child{border-right:1px solid rgba(255,255,255,0.08);}
   .gg-action-btn.next{color:var(--accent);}
   .gg-action-btn:active{background:rgba(255,255,255,0.08);}
   /* XP POPUP — small inline popup near button */
@@ -208,6 +197,7 @@
   #dice-winner-p2.show{opacity:1;pointer-events:all;}
   .dice-first-label{font-family:'Rajdhani',sans-serif;font-size:5.5rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);line-height:1;}
   .dice-tap-label{font-family:'Rajdhani',sans-serif;font-size:0.9rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);}
+  .dice-loser-text{font-family:'Rajdhani',sans-serif;font-size:clamp(1.2rem,5vw,2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);animation:pauseTap 1.2s ease-in-out infinite;white-space:nowrap;}
   #dice-midbar{height:70px;background:#000000;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.2);border-bottom:1px solid rgba(255,213,79,0.2);gap:10px;overflow:hidden;}
   #dice-wheel{width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   #dice-wheel svg{width:64px;height:64px;}
@@ -237,30 +227,67 @@
   .aurora-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%, white, transparent),radial-gradient(1px 1px at 60% 15%, white, transparent),radial-gradient(1px 1px at 80% 50%, white, transparent),radial-gradient(1px 1px at 40% 70%, white, transparent),radial-gradient(1px 1px at 10% 80%, white, transparent),radial-gradient(1px 1px at 90% 25%, white, transparent),radial-gradient(1px 1px at 50% 90%, white, transparent),radial-gradient(1px 1px at 70% 60%, white, transparent);animation:auroraStars 3s ease-in-out infinite;opacity:0.5;}
   .aurora-msg{position:absolute;bottom:15%;left:0;right:0;text-align:center;font-family:'Rajdhani',sans-serif;font-size:1rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);animation:auroraStars 2s ease-in-out infinite;}
 
-
   @keyframes rotateFlash{0%,100%{opacity:1;}50%{opacity:0.15;}}
   #rotate-msg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;}
+  #rotate-msg.show{display:flex;}
   #rotate-msg .rotate-icon{font-size:4rem;animation:rotateFlash 1s ease-in-out infinite;}
-  #rotate-msg .rotate-text{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;padding:0 2rem;animation:rotateFlash 1s ease-in-out infinite;line-height:1.4;}
-
-  /* GABE EASTER EGG - hearts */
+  #rotate-msg .rotate-text{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;padding:0 2rem;animation:rotateFlash 1s ease-in-out infinite;}
+  #donate-link{font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:1px;color:rgba(255,213,79,0.5);text-align:center;text-decoration:none;padding:0.3rem;transition:color 0.2s;position:absolute;bottom:1.2rem;left:0;right:0;}
+  #donate-link:active{color:var(--gold);}
+  .midbar-logo{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:2px;line-height:1.2;text-align:center;pointer-events:none;user-select:none;flex-shrink:0;color:var(--gold);}
+  .midbar-logo .r{color:var(--accent);}
+  .midbar-logo .k{color:var(--gold);}
+  .midbar-logo.flip{transform:rotate(180deg);}
+  @keyframes finalRoundZoom{0%{transform:scale(3);opacity:0;}60%{transform:scale(1.05);opacity:1;}100%{transform:scale(1);opacity:1;}}
+  .final-round-anim{animation:finalRoundZoom 0.8s cubic-bezier(0.22,1,0.36,1) forwards;}
+  @keyframes blinkZoneStrong{0%,100%{background:rgba(255,213,79,0.35);box-shadow:inset 0 0 60px rgba(255,213,79,0.3);}50%{background:rgba(0,0,0,0.6);box-shadow:none;}}
+  .blinking-zone{animation:blinkZoneStrong 0.5s ease-in-out infinite;}
+  #fos-overlay{position:fixed;inset:0;background:rgba(2,5,12,0.97);z-index:9000;display:none;flex-direction:column;}
+  #fos-overlay.show{display:flex;}
+  .fos-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;cursor:pointer;}
+  .fos-half.p2side{transform:rotate(180deg);}
+  #fos-divider{height:1px;background:rgba(255,213,79,0.15);flex-shrink:0;}
+  .fos-top{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,4vw,1.4rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.8);text-align:center;}
+  .fos-question{font-family:'Rajdhani',sans-serif;font-size:clamp(2.4rem,9vw,4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1;}
+  .fos-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(0.9rem,3.5vw,1.2rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.65);text-align:center;}
+  @keyframes fosFlash{0%,100%{opacity:1;}50%{opacity:0.15;}}
+  .fos-active .fos-tap{animation:fosFlash 2s ease-in-out infinite;}
+  .fos-waiting .fos-question{animation:fosFlash 2.2s ease-in-out infinite;}
+  .tap-start-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;z-index:3;pointer-events:all;cursor:pointer;}
+  .tap-start-text{font-family:'Rajdhani',sans-serif;font-size:clamp(1.8rem,7vw,3rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.7);text-align:center;animation:pauseTap 1.8s ease-in-out infinite;}
+  .gg-tab{flex:1;padding:0.5rem 0.3rem;font-family:'Rajdhani',sans-serif;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;text-align:center;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;}
+  .gg-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+  #gg-rounds{font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:2px;color:var(--accent);text-align:center;padding:0 1rem 0.4rem;text-transform:uppercase;display:none;}
+  #overtime-overlay{position:fixed;inset:0;z-index:9500;display:none;flex-direction:column;pointer-events:all;cursor:pointer;background:rgba(2,5,12,0.97);}
+  #overtime-overlay.show{display:flex;}
+  .overtime-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;padding:1.5rem;}
+  .overtime-half.p2side{transform:rotate(180deg);}
+  .overtime-title{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,8vw,3.5rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;}
+  .overtime-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(0.9rem,3.5vw,1.15rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.75);text-align:center;line-height:1.8;}
+  .overtime-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(0.9rem,3.5vw,1.2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.5);text-align:center;margin-top:0.8rem;animation:pauseTap 1.2s ease-in-out infinite;}
+  #bo1-rules-overlay{position:fixed;inset:0;z-index:9200;display:none;flex-direction:column;pointer-events:all;cursor:pointer;background:rgba(2,5,12,0.97);}
+  #bo1-rules-overlay.show{display:flex;}
+  .bo1-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;padding:1.5rem;}
+  .bo1-half.p2side{transform:rotate(180deg);}
+  .bo1-title{font-family:'Rajdhani',sans-serif;font-size:clamp(2.5rem,10vw,5rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;}
+  .bo1-rule{font-family:'Rajdhani',sans-serif;font-size:clamp(1.2rem,5vw,2rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.75);text-align:center;line-height:2;}
+  .bo1-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,4vw,1.5rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.5);text-align:center;margin-top:1rem;animation:pauseTap 1.2s ease-in-out infinite;}
   #gabe-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
   #gabe-overlay.show{display:block;}
   #gabe-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:3px solid #ff6b9d;}
   @keyframes heartFloat{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-100vh) scale(1.5);opacity:0;}}
   .heart-particle{position:absolute;bottom:0;font-size:2rem;animation:heartFloat linear infinite;pointer-events:none;}
-
-  /* GREG EASTER EGG - blood */
   #greg-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
   #greg-overlay.show{display:block;}
   #greg-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:3px solid #8b0000;}
   @keyframes bloodDrip{0%{transform:translateY(-20px);opacity:0;}10%{opacity:1;}100%{transform:translateY(100vh);opacity:0.6;}}
   .blood-drip{position:absolute;top:0;width:8px;border-radius:0 0 50% 50%;background:linear-gradient(180deg,#cc0000,#660000);animation:bloodDrip linear infinite;pointer-events:none;}
-
+  #fireworks-canvas{position:fixed;inset:0;z-index:149;pointer-events:none;display:none;}
+  #fireworks-canvas.show{display:block;}
 </style>
 </head>
 <body>
-<div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE<br>TO CONTINUE</div></div>
+<div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
@@ -284,7 +311,6 @@
     </div>
     <button id="start-btn" onclick="startGame()">ENTER THE ARENA</button>
     <a id="donate-link" href="https://www.paypal.com/donate/?business=EUJMUQZQT8KS6&no_recurring=0&item_name=Thank+you+for+supporting+me+to+keep+this+going%21&currency_code=USD" target="_blank">💛 Support me with a donation!</a>
-
   </div>
 
   <div id="game">
@@ -297,7 +323,7 @@
         <div class="tap-zone" onclick="adj(2,1)"><span class="tap-hint">+</span></div>
       </div>
       <div class="tap-start-msg" id="tapstart2" onclick="tapToStart()">
-        <div class="tap-start-text">TAP TO START</div>
+        <div class="tap-start-text">ROLL THE DICE OR TAP TO START</div>
       </div>
       <div class="player-name" id="pname2">PLAYER 2</div>
       <div class="legend-sub" id="legendsub2"></div>
@@ -308,24 +334,29 @@
     </div>
 
     <div id="midbar">
-      <div class="mid-btn danger" onclick="confirmAction('reset')">RESET</div>
-      <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()">GG</div>
-      <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">&nbsp;<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="#ffd54f" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#ffd54f"/><circle cx="10" cy="4" r="1" fill="#ffd54f"/><circle cx="7" cy="7" r="1" fill="#ffd54f"/><circle cx="4" cy="10" r="1" fill="#ffd54f"/><circle cx="10" cy="10" r="1" fill="#ffd54f"/></svg> &nbsp;CLAIM INITIATIVE &nbsp;<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="#ffd54f" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#ffd54f"/><circle cx="10" cy="4" r="1" fill="#ffd54f"/><circle cx="7" cy="7" r="1" fill="#ffd54f"/><circle cx="4" cy="10" r="1" fill="#ffd54f"/><circle cx="10" cy="10" r="1" fill="#ffd54f"/></svg></div>
-      <div class="midbar-logo" id="midbar-round-p1" style="min-width:70px;text-align:center;"></div>
-      <div class="mid-btn pause" id="pause-btn" onclick="togglePause()"><svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="3.5" height="10" rx="1" fill="#ffd54f"/><rect x="8.5" y="2" width="3.5" height="10" rx="1" fill="#ffd54f"/></svg></div>
-      <div class="mid-btn" onclick="confirmAction('menu')">MENU</div>
+      <div class="mid-btn danger" onclick="confirmAction('reset')" title="Reset"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#ff6b6b"/></svg></div>
+      <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()" title="GG"><svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 13l5 5L20 7" stroke="#66bb6a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">&nbsp; <svg width="20" height="20" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="#ffd54f" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#ffd54f"/><circle cx="10" cy="4" r="1" fill="#ffd54f"/><circle cx="7" cy="7" r="1" fill="#ffd54f"/><circle cx="4" cy="10" r="1" fill="#ffd54f"/><circle cx="10" cy="10" r="1" fill="#ffd54f"/></svg> &nbsp;ROLL DICE &nbsp;<svg width="20" height="20" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="#ffd54f" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#ffd54f"/><circle cx="10" cy="4" r="1" fill="#ffd54f"/><circle cx="7" cy="7" r="1" fill="#ffd54f"/><circle cx="4" cy="10" r="1" fill="#ffd54f"/><circle cx="10" cy="10" r="1" fill="#ffd54f"/></svg></div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;pointer-events:none;flex-shrink:0;">
+        <div class="midbar-logo flip" id="midbar-logo-p2"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
+        <div class="midbar-logo" id="midbar-round-p1" style="display:none;"></div>
+        <div class="midbar-logo" id="midbar-logo-p1"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
+      </div>
+      <div class="mid-btn pause" id="pause-btn" onclick="togglePause()"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/></svg></div>
+      <div class="mid-btn menu-btn" onclick="confirmAction('menu')" title="Menu"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="2" rx="1" fill="#4fc3f7"/><rect x="3" y="11" width="18" height="2" rx="1" fill="#4fc3f7"/><rect x="3" y="17" width="18" height="2" rx="1" fill="#4fc3f7"/></svg></div>
     </div>
 
     <div class="player-zone p1" id="zone1">
       <div class="pzone-bg" id="bg1"></div>
       <div class="log-btn" id="logbtn1" onclick="openLog(1)"><span id="logcount1"></span></div>
       <div class="xp-btn" onclick="openXP(1)"><span class="xp-val" id="xpval1">0 XP</span></div>
+      <div id="test-timer-btn" onclick="timerSeconds=2;timerOver=false;" style="position:absolute;top:64px;right:12px;background:rgba(229,115,115,0.2);border:1px solid rgba(229,115,115,0.4);border-radius:8px;padding:4px 8px;cursor:pointer;z-index:5;font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:1px;color:rgba(229,115,115,0.8);">TEST OT</div>
       <div class="tap-zones">
         <div class="tap-zone" onclick="adj(1,-1)"><span class="tap-hint">−</span></div>
         <div class="tap-zone" onclick="adj(1,1)"><span class="tap-hint">+</span></div>
       </div>
       <div class="tap-start-msg" id="tapstart1" onclick="tapToStart()">
-        <div class="tap-start-text">TAP TO START</div>
+        <div class="tap-start-text">ROLL THE DICE OR TAP TO START</div>
       </div>
       <div class="player-name" id="pname1">PLAYER 1</div>
       <div class="legend-sub" id="legendsub1"></div>
@@ -386,15 +417,51 @@
 <!-- FIRST OR SECOND OVERLAY -->
 <div id="fos-overlay">
   <div class="fos-half p2side" id="fos-p2-half" onclick="fosConfirm()">
-    <div class="fos-tap" id="fos-top2"></div>
+    <div class="fos-top" id="fos-top2"></div>
     <div class="fos-question" id="fos-q2"></div>
     <div class="fos-tap" id="fos-sub2"></div>
   </div>
   <div id="fos-divider"></div>
   <div class="fos-half" id="fos-p1-half" onclick="fosConfirm()">
-    <div class="fos-tap" id="fos-top1"></div>
+    <div class="fos-top" id="fos-top1"></div>
     <div class="fos-question" id="fos-q1"></div>
     <div class="fos-tap" id="fos-sub1"></div>
+  </div>
+</div>
+<!-- BO1 RULES OVERLAY -->
+<div id="bo1-rules-overlay">
+  <div class="bo1-half p2side">
+    <div class="bo1-title">BEST OF 1 RULES</div>
+    <div class="bo1-rule">1. REVEAL LEGENDS &amp; CHAMPIONS</div>
+    <div class="bo1-rule">2. OPPONENT RANDOMLY PICKS YOUR BATTLEFIELD</div>
+    <div class="bo1-tap">TAP TO CONTINUE</div>
+  </div>
+  <div style="height:1px;background:rgba(255,213,79,0.2);flex-shrink:0;"></div>
+  <div class="bo1-half">
+    <div class="bo1-title">BEST OF 1 RULES</div>
+    <div class="bo1-rule">1. REVEAL LEGENDS &amp; CHAMPIONS</div>
+    <div class="bo1-rule">2. OPPONENT RANDOMLY PICKS YOUR BATTLEFIELD</div>
+    <div class="bo1-tap">TAP TO CONTINUE</div>
+  </div>
+</div>
+<!-- OVERTIME OVERLAY -->
+<div id="overtime-overlay">
+  <div class="overtime-half p2side">
+    <div class="overtime-title">OVERTIME</div>
+    <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THEIR TURN</div>
+    <div class="overtime-sub" id="ot-turns-p2">THEN BOTH PLAYERS PLAY 5 MORE TURNS TOTAL</div>
+    <div class="overtime-sub" id="ot-result-p2">MOST POINTS → WINS THE ROUND</div>
+    <div class="overtime-sub" id="ot-draw-p2">TIED ON POINTS → ROUND IS A DRAW</div>
+    <div class="overtime-tap">TAP TO CONTINUE</div>
+  </div>
+  <div style="height:1px;background:rgba(255,213,79,0.2);flex-shrink:0;"></div>
+  <div class="overtime-half">
+    <div class="overtime-title">OVERTIME</div>
+    <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THEIR TURN</div>
+    <div class="overtime-sub" id="ot-turns-p1">THEN BOTH PLAYERS PLAY 5 MORE TURNS TOTAL</div>
+    <div class="overtime-sub" id="ot-result-p1">MOST POINTS → WINS THE ROUND</div>
+    <div class="overtime-sub" id="ot-draw-p1">TIED ON POINTS → ROUND IS A DRAW</div>
+    <div class="overtime-tap">TAP TO CONTINUE</div>
   </div>
 </div>
 <!-- CONFIRM OVERLAY -->
@@ -413,6 +480,7 @@
     <div id="gg-winner"></div>
     <div id="gg-rounds"></div>
     <div id="gg-time"></div>
+    <div id="gg-tabs" style="display:none;flex-shrink:0;border-bottom:1px solid rgba(79,195,247,0.15);"></div>
     <div id="gg-cols">
       <div class="gg-col">
         <div class="gg-score-name" id="gg-name1"></div>
@@ -430,8 +498,8 @@
       </div>
     </div>
     <div id="gg-actions">
-      <div class="gg-action-btn next" id="next-game-btn" onclick="nextGame()" style="display:none;flex:1;">NEXT ROUND</div>
-      <div class="gg-action-btn" id="gg-close-btn" onclick="closeGG()" style="display:none;">CLOSE</div>
+      <div class="gg-action-btn next" id="next-game-btn" onclick="nextGame()" style="display:none;flex:1;padding:1.1rem;">NEXT ROUND</div>
+      <div class="gg-action-btn" id="gg-close-btn" onclick="confirmDone()" style="display:none;">DONE</div>
     </div>
   </div>
 </div>
@@ -466,25 +534,54 @@
     <div id="dice-goes-first"></div>
     <span id="dice-star2">★</span>
   </div>
+  <div id="dice-loser-p2" style="position:absolute;top:25%;left:0;right:0;transform:translateY(-50%) rotate(180deg);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;pointer-events:none;">
+    <div class="dice-loser-text" id="dice-loser-name2"></div>
+  </div>
   <div id="dice-half1" onclick="confirmDice()"></div>
   <div id="dice-winner-p1" onclick="confirmDice()">
-    <div class="dice-first-label">FIRST</div>
-    <div class="dice-tap-label">TAP TO START, GOOD LUCK AND HAVE FUN!</div>
+    <div class="dice-first-label">FIRST OR SECOND?</div>
+    <div class="dice-tap-label">INFORM YOUR OPPONENT • TAP TO CONTINUE</div>
+  </div>
+  <div id="dice-loser-p1" style="position:absolute;top:75%;left:0;right:0;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;pointer-events:none;">
+    <div class="dice-loser-text" id="dice-loser-name1"></div>
   </div>
   <div id="dice-winner-p2" onclick="confirmDice()">
-    <div class="dice-first-label">FIRST</div>
-    <div class="dice-tap-label">TAP TO START, GOOD LUCK AND HAVE FUN!</div>
+    <div class="dice-first-label">FIRST OR SECOND?</div>
+    <div class="dice-tap-label">INFORM YOUR OPPONENT • TAP TO CONTINUE</div>
   </div>
 </div>
 
 <script>
-let state={scores:[0,0],xp:[0,0],names:['PLAYER 1','PLAYER 2'],logs:[[],[]],activeXP:null,bo:3,gameStartTime:null,gameEndTime:null,legends:['',''],roundWins:[0,0],roundLoser:null};
+let state={scores:[0,0],xp:[0,0],names:['PLAYER 1','PLAYER 2'],logs:[[],[]],activeXP:null,bo:3,roundWins:[0,0],roundLoser:null,roundHistory:[],roundCounted:false,gameStartTime:null,gameEndTime:null,legends:['','']};
 let diceWinner=null, diceSettled=false;
 
 function setBo(n){
   state.bo=n;
   document.getElementById('bo1-btn').classList.toggle('active',n===1);
   document.getElementById('bo3-btn').classList.toggle('active',n===3);
+}
+function updateRoundDisplay(){
+  var r1=document.getElementById('midbar-round-p1');
+  var l1=document.getElementById('midbar-logo-p1');
+  var l2=document.getElementById('midbar-logo-p2');
+  if(!r1)return;
+  r1.style.color='';
+  if(state.bo===3){
+    var w1=state.roundWins[0],w2=state.roundWins[1];
+    var roundNum=state.roundHistory.length+1;
+    var isFinalRound=(w1===1&&w2===1)||(roundNum===3);
+    var txt=isFinalRound?'FINAL ROUND':'ROUND '+roundNum+' OF 3';
+    r1.textContent=txt;
+    r1.style.color='';
+    r1.style.display='';
+    if(l1)l1.style.display='none';
+    if(l2)l2.style.display='none';
+    if(isFinalRound){r1.classList.remove('final-round-anim');void r1.offsetWidth;r1.classList.add('final-round-anim');}
+  } else {
+    r1.style.display='none';
+    if(l1)l1.style.display='';
+    if(l2)l2.style.display='';
+  }
 }
 function tsLog(){
   const n=new Date();
@@ -673,7 +770,7 @@ function startGame(){
   const n1=(document.getElementById('p1name').value.trim()||'PLAYER 1').substring(0,16);
   const n2=(document.getElementById('p2name').value.trim()||'PLAYER 2').substring(0,16);
   state.names=[n1.toUpperCase(),n2.toUpperCase()];
-  state.scores=[0,0];state.xp=[0,0];state.logs=[[],[]];state.gameStartTime=new Date();state.gameEndTime=null;
+  state.scores=[0,0];state.xp=[0,0];state.logs=[[],[]];
   state.legends=[document.getElementById('p1legname').textContent,document.getElementById('p2legname').textContent];
   ['1','2'].forEach(p=>{
     document.getElementById('score'+p).textContent='0';
@@ -686,18 +783,23 @@ function startGame(){
     const lb=document.getElementById('logbtn'+p);if(lb)lb.classList.remove('has-entries');
   });
 
+  state.gameStartTime=new Date();
+  timerSeconds=state.bo===1?1800:3600;timerOver=false;timerOverSeconds=0;
+  if(timerInterval)clearInterval(timerInterval);
+  timerInterval=setInterval(timerTick,1000);
+  if(state.bo===1){var b1=document.getElementById('bo1-rules-overlay');b1.style.display='flex';b1.classList.add('show');b1.addEventListener('click',function h(){b1.classList.remove('show');b1.style.display='none';b1.removeEventListener('click',h);},{once:true});}
   document.getElementById('setup').style.display='none';
   document.getElementById('game').style.display='flex';
   document.getElementById('roll-dice-btn').style.display='';
-  updateRoundDisplay();
-  // Hide scores and +/- until dice rolled or tap to start
-  setPreGameState(true);
   document.getElementById('midbar-round-p1').style.display='none';
+  setPreGameState(true);
+  document.getElementById('midbar-logo-p1').style.display='none';
+  document.getElementById('midbar-logo-p2').style.display='none';
 }
 
 function adj(p,d){
   let s=state.scores[p-1]+d;
-  if(s<0)s=0;if(s>99)s=99;
+  if(s<0)s=0;if(s>13)s=13;
   if(s===state.scores[p-1])return;
   state.scores[p-1]=s;
   document.getElementById('score'+p).textContent=s;
@@ -710,10 +812,22 @@ function adj(p,d){
   var ggBtn=document.getElementById('gg-btn');
   if(ggBtn){
     var maxScore=Math.max(state.scores[0],state.scores[1]);
-    ggBtn.textContent=maxScore>=8?'GG?':'GG';
+    // keep icon, just update opacity when eligible
+    ggBtn.style.opacity=maxScore>=8?'1':'0.7';
   }
 }
 
+function resetRound(){
+  state.scores=[0,0];
+  state.logs=[[],[]];
+  state.roundCounted=false;
+  ['1','2'].forEach(p=>{
+    document.getElementById('score'+p).textContent='0';
+    document.getElementById('logcount'+p).textContent='';
+    const btn=document.getElementById('logbtn'+p);
+    if(btn)btn.classList.remove('has-entries');
+  });
+}
 function resetScores(){
   state.scores=[0,0];
   state.logs=[[],[]];
@@ -726,8 +840,10 @@ function resetScores(){
   // restore roll dice button
   document.getElementById('roll-dice-btn').style.display='';
   document.getElementById('midbar-round-p1').style.display='none';
-  document.getElementById('gg-btn').classList.remove('show');
   setPreGameState(true);
+  document.getElementById('midbar-logo-p1').style.display='none';
+  document.getElementById('midbar-logo-p2').style.display='none';
+  document.getElementById('gg-btn').classList.remove('show');
   document.getElementById('gg-btn').textContent='GG';
   document.getElementById('pause-btn').classList.remove('show');
   closePause();
@@ -759,6 +875,9 @@ function rollDice(){
   document.querySelectorAll('.tap-hint').forEach(function(el){el.style.visibility='hidden';});
   document.getElementById('tapstart1').style.display='none';
   document.getElementById('tapstart2').style.display='none';
+  document.getElementById('score1').style.visibility='hidden';
+  document.getElementById('score2').style.visibility='hidden';
+  document.querySelectorAll('.tap-hint').forEach(function(el){el.style.visibility='hidden';});
   document.getElementById('dice-overlay').classList.add('show');
 
   let ticks=0;
@@ -785,6 +904,9 @@ function rollDice(){
       document.getElementById('dice-wheel').className='star-blink';
       // Show FIRST over winner's name
       document.getElementById('dice-winner-p'+winner).classList.add('show');
+      var loser=winner===1?2:1;
+      var loserEl=document.getElementById('dice-loser-p'+loser);
+      if(loserEl){document.getElementById('dice-loser-name'+loser).textContent='WAITING FOR '+state.names[winner-1]+'...';loserEl.style.opacity='1';}
       diceWinner=winner;
       if(winner===1) h1.classList.add('blinking');
       else h2.classList.add('blinking');
@@ -796,7 +918,10 @@ function rollDice(){
 
 function confirmDice(){
   if(!diceSettled||diceWinner===null)return;
-  const w=diceWinner;
+  var w=diceWinner;
+  var loser=w===1?2:1;
+  var loserName=state.names[loser-1];
+  // Clear dice overlay
   document.getElementById('dice-half1').classList.remove('blinking');
   document.getElementById('dice-half2').classList.remove('blinking');
   document.getElementById('dice-winner-p1').classList.remove('show');
@@ -805,10 +930,18 @@ function confirmDice(){
   document.getElementById('dice-goes-first').classList.remove('show');
   document.getElementById('dice-star1').classList.remove('show');
   document.getElementById('dice-star2').classList.remove('show');
+  ['1','2'].forEach(function(p){var el=document.getElementById('dice-loser-p'+p);if(el)el.style.opacity='0';});
   document.getElementById('dice-overlay').classList.remove('show');
-  // Show FIRST OR SECOND? to the dice winner
-  showFirstOrSecondAfterDice(w);
-  diceWinner=null; diceSettled=false;
+  // Hide tap-to-start, show scores
+  document.getElementById('tapstart1').style.display='none';
+  document.getElementById('tapstart2').style.display='none';
+  document.querySelectorAll('.tap-hint').forEach(function(el){el.style.visibility='';});
+  document.getElementById('score1').style.visibility='';
+  document.getElementById('score2').style.visibility='';
+  diceWinner=null;diceSettled=false;
+  // Start game directly - dice overlay already showed FIRST OR SECOND
+  setPreGameState(false);
+  showTimers();
 }
 
 function openXP(p){
@@ -862,15 +995,17 @@ function goSetup(){
   // Reset all button/overlay states before going to menu
   document.getElementById('roll-dice-btn').style.display='';
   document.getElementById('midbar-round-p1').style.display='none';
-  document.getElementById('gg-btn').classList.remove('show');
   setPreGameState(true);
+  document.getElementById('midbar-logo-p1').style.display='none';
+  document.getElementById('midbar-logo-p2').style.display='none';
+  document.getElementById('gg-btn').classList.remove('show');
   document.getElementById('pause-btn').classList.remove('show');
   closePause();
   closeConfirm();
   if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
   document.getElementById('timer-p1').classList.remove('show');
   document.getElementById('timer-p2').classList.remove('show');
-  state.scores=[0,0];state.logs=[[],[]];state.roundWins=[0,0];state.roundLoser=null;
+  state.scores=[0,0];state.logs=[[],[]];state.roundWins=[0,0];state.roundLoser=null;state.roundHistory=[];state.roundCounted=false;
   document.getElementById('game').style.display='none';
   document.getElementById('setup').style.display='flex';
 }
@@ -893,50 +1028,53 @@ function updateTimerDisplay(){
   });
 }
 
+function timerTick(){
+  if(!timerOver){
+    if(timerSeconds>0){timerSeconds--;updateTimerDisplay();}
+    else{
+      timerOver=true;timerOverSeconds=0;
+      ['p1','p2'].forEach(p=>{document.getElementById('timer-display-'+p).classList.add('urgent');});
+      triggerOvertime();
+    }
+  } else {
+    if(timerOverSeconds<3600){timerOverSeconds++;updateTimerDisplay();}
+  }
+}
 function showTimers(){
   document.getElementById('timer-p1').classList.add('show');
   document.getElementById('timer-p2').classList.add('show');
   document.getElementById('roll-dice-btn').style.display='none';
-  document.getElementById('midbar-round-p1').style.display='';
+  if(state.bo===3){
+    updateRoundDisplay();
+  } else {
+    var l1=document.getElementById('midbar-logo-p1');
+    var l2=document.getElementById('midbar-logo-p2');
+    var r1=document.getElementById('midbar-round-p1');
+    if(l1)l1.style.display='none';
+    if(l2)l2.style.display='none';
+    if(r1){r1.textContent='BEST OF 1';r1.style.color='var(--gold)';r1.style.display='';}
+  }
   document.getElementById('gg-btn').classList.add('show');
   document.getElementById('pause-btn').classList.add('show');
-  timerSeconds=3600;timerOver=false;timerOverSeconds=0;
-  if(timerInterval)clearInterval(timerInterval);
   ['p1','p2'].forEach(p=>{
     const el=document.getElementById('timer-display-'+p);
     el.classList.remove('urgent','flashing');
     el.style.animation='';
   });
   updateTimerDisplay();
-  // auto-start
-  timerInterval=setInterval(()=>{
-    if(!timerOver){
-      if(timerSeconds>0){
-        timerSeconds--;
-        updateTimerDisplay();
-      } else {
-        // hit 0 — switch to counting up, start flashing red
-        timerOver=true;
-        timerOverSeconds=0;
-        ['p1','p2'].forEach(p=>{
-          const el=document.getElementById('timer-display-'+p);
-          el.classList.add('urgent');
-        });
-      }
-    } else {
-      if(timerOverSeconds<3600){
-        timerOverSeconds++;
-        updateTimerDisplay();
-      }
-    }
-  },1000);
+  // timer already running from startGame - no restart needed
+  /* OLD_TIMER_REMOVED */
 }
 
 
 /* ---- GG ---- */
 function confirmGG(){
   _confirmAction='gg';
-  document.getElementById('confirm-msg').textContent='END GAME?';
+  var rNum=state.roundHistory.length+1;
+  var w1r=state.roundWins[0],w2r=state.roundWins[1];
+  var isFinalRound=state.bo===3&&((w1r===1&&w2r===1)||rNum>=3);
+  var rLabel=state.bo===3?(isFinalRound?'END GAME?':'END ROUND '+rNum+'?'):'END GAME?';
+  document.getElementById('confirm-msg').textContent=rLabel;
   document.getElementById('confirm-yes').onclick=function(){
     var act=_confirmAction;
     closeConfirm();
@@ -945,58 +1083,60 @@ function confirmGG(){
   document.getElementById('confirm-overlay').classList.add('show');
 }
 function openGG(){
-  state.gameEndTime=new Date();
-  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
-  var cb=document.getElementById('gg-close-btn');
-  cb.style.display='none';cb.textContent='DONE';
   var s1=state.scores[0], s2=state.scores[1];
   var n1=state.names[0], n2=state.names[1];
-  // Determine round winner and update round wins
+  var roundNum=state.roundHistory.length+1;
   var roundWinner=null;
-  if(s1>s2){roundWinner=1;state.roundWins[0]++;}
-  else if(s2>s1){roundWinner=2;state.roundWins[1]++;}
-  state.roundLoser=roundWinner===1?2:roundWinner===2?1:null;
-  // Winner text
-  var winEl=document.getElementById('gg-winner');
-  if(s1>s2){winEl.textContent='ROUND: '+n1+' WINS!';winEl.style.color='var(--gold)';}
-  else if(s2>s1){winEl.textContent='ROUND: '+n2+' WINS!';winEl.style.color='var(--gold)';}
-  else{winEl.textContent='TIE ROUND!';winEl.style.color='var(--accent)';}
-  // Show round wins tracker
-  var rw=document.getElementById('gg-rounds');
-  rw.style.display='none';
-  if(state.bo===3){
-    // Show wins inside each column name
-    var w1=state.roundWins[0], w2=state.roundWins[1];
-    document.getElementById('gg-name1').textContent=n1+(w1>0?' - '+w1+' WIN'+(w1>1?'S':''):'');
-    document.getElementById('gg-name2').textContent=n2+(w2>0?' - '+w2+' WIN'+(w2>1?'S':''):'');
-    // Check if match is over (first to 2)
-    var matchOver=w1>=2||w2>=2;
-    var nextBtn=document.getElementById('next-game-btn');
-    if(matchOver){
-      var matchWinner=w1>=2?n1:n2;
-      winEl.textContent='🏆 '+matchWinner+' WINS THE MATCH!';
-      nextBtn.style.display='none';
-      var cb=document.getElementById('gg-close-btn');
-      cb.textContent='DONE';
-      cb.style.display='';
-    } else {
-      nextBtn.style.display='';
-    }
+  if(!state.roundCounted){
+    if(s1>s2){roundWinner=1;state.roundWins[0]++;}
+    else if(s2>s1){roundWinner=2;state.roundWins[1]++;}
+    state.roundLoser=roundWinner===1?2:roundWinner===2?1:null;
+    state.roundCounted=true;
+    state.roundHistory.push({roundNum:roundNum,s1:s1,s2:s2,n1:n1,n2:n2,logs1:state.logs[0].slice(),logs2:state.logs[1].slice(),winner:roundWinner});
   } else {
-    document.getElementById('next-game-btn').style.display='none';
-    var cb=document.getElementById('gg-close-btn');
-    cb.textContent='DONE';
-    cb.style.display='';
+    roundWinner=state.roundLoser===1?2:state.roundLoser===2?1:null;
   }
-  // Scores
+  var winEl=document.getElementById('gg-winner');
+  var w1=state.roundWins[0],w2=state.roundWins[1];
+  if(s1>s2){winEl.textContent='ROUND '+roundNum+': '+n1+' WINS!';winEl.style.color='var(--gold)';}
+  else if(s2>s1){winEl.textContent='ROUND '+roundNum+': '+n2+' WINS!';winEl.style.color='var(--gold)';}
+  else{winEl.textContent='ROUND '+roundNum+': DRAW!';winEl.style.color='var(--accent)';}
+  // Scores & names
+  document.getElementById('gg-name1').textContent=n1+(state.roundWins[0]>0?' - '+state.roundWins[0]+' WIN'+(state.roundWins[0]>1?'S':''):'');
+  document.getElementById('gg-name2').textContent=n2+(state.roundWins[1]>0?' - '+state.roundWins[1]+' WIN'+(state.roundWins[1]>1?'S':''):'');
   document.getElementById('gg-leg1').textContent=state.legends?state.legends[0]&&state.legends[0]!=='Choose Legend'?state.legends[0]:''  :'';
-  document.getElementById('gg-val1').textContent=s1;
   document.getElementById('gg-leg2').textContent=state.legends?state.legends[1]&&state.legends[1]!=='Choose Legend'?state.legends[1]:''  :'';
+  document.getElementById('gg-val1').textContent=s1;
   document.getElementById('gg-val2').textContent=s2;
-  // Set names if not already set by Bo3 block
-  if(state.bo!==3){
-    document.getElementById('gg-name1').textContent=n1;
-    document.getElementById('gg-name2').textContent=n2;
+  document.getElementById('gg-val1').style.color=s1>=s2?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-val2').style.color=s2>=s1?'var(--gold)':'var(--muted)';
+  // Build tabs
+  var tabsEl=document.getElementById('gg-tabs');
+  if(state.bo===3&&state.roundHistory.length>1){
+    tabsEl.style.display='flex';
+    tabsEl.innerHTML=state.roundHistory.map(function(rh,i){return '<div class="gg-tab'+(i===state.roundHistory.length-1?' active':'')+'" onclick="showRoundTab('+i+')">ROUND '+rh.roundNum+'</div>';}).join('');
+    showRoundTab(state.roundHistory.length-1);
+  } else {
+    tabsEl.style.display='none';
+  }
+  // Match over check
+  var matchOver=w1>=2||w2>=2;
+  var isDrawEnd=(!matchOver&&roundNum>=3&&s1===s2);
+  var nextBtn=document.getElementById('next-game-btn');
+  var cb=document.getElementById('gg-close-btn');
+  cb.textContent='DONE';
+  if(matchOver){
+    winEl.textContent=(w1>=2?n1:n2)+' WINS THE MATCH!';
+    winEl.style.color='var(--gold)';
+    nextBtn.style.display='none';cb.style.display='';
+  } else if(isDrawEnd){
+    winEl.textContent='GAME OVER — DRAW!';
+    winEl.style.color='var(--accent)';
+    nextBtn.style.display='none';cb.style.display='';
+  } else if(state.bo===3){
+    nextBtn.style.display='';cb.style.display='none';
+  } else {
+    nextBtn.style.display='none';cb.style.display='';
   }
   // Highlight winner score
   document.getElementById('gg-val1').style.color=s1>=s2?'var(--gold)':'var(--muted)';
@@ -1013,48 +1153,16 @@ function openGG(){
     }
   }
   buildCol(1);buildCol(2);
-  // Actual game duration from start to GG tap
-  var duration=0;
-  if(state.gameStartTime && state.gameEndTime){
-    duration=Math.floor((state.gameEndTime-state.gameStartTime)/1000);
-  }
-  var dm=Math.floor(duration/60).toString().padStart(2,'0');
-  var ds=(duration%60).toString().padStart(2,'0');
-  var boLabel='BEST OF '+state.bo;
-  document.getElementById('gg-time').textContent=boLabel+'  •  GAME TIME  '+dm+':'+ds;
+  // Game time
+  var elapsed=3600-timerSeconds+(timerOver?timerOverSeconds:0);
+  var em=Math.floor(elapsed/60).toString().padStart(2,'0');
+  var es=(elapsed%60).toString().padStart(2,'0');
+  document.getElementById('gg-time').textContent='GAME TIME  '+em+':'+es;
   document.getElementById('gg-overlay').classList.add('show');
 }
 function closeGG(){
   document.getElementById('gg-overlay').classList.remove('show');
-  // Resume timer if it was running and timers are visible
-  var timerShowing=document.getElementById('timer-p1').classList.contains('show');
-  if(timerShowing && !timerInterval){
-    timerInterval=setInterval(()=>{
-      if(!timerOver){
-        if(timerSeconds>0){timerSeconds--;updateTimerDisplay();}
-        else{timerOver=true;timerOverSeconds=0;['p1','p2'].forEach(p=>{document.getElementById('timer-display-'+p).classList.add('urgent');});}
-      } else {
-        if(timerOverSeconds<3600){timerOverSeconds++;updateTimerDisplay();}
-      }
-    },1000);
-  }
-}
-function nextGame(){
-  var loser=state.roundLoser;
-  closeGG();
-  resetScores();
-  updateRoundDisplay();
-  // Update player names on score screen with win counts
-  ['1','2'].forEach(function(p){
-    var wins=state.roundWins[p-1];
-    var base=state.names[p-1];
-    document.getElementById('pname'+p).textContent=wins>0?base+' - '+wins+' WIN'+(wins>1?'S':''):base;
-  });
-  updateScoreNames();
-  // Show FIRST OR SECOND? prompt facing the loser
-  if(loser){
-    showFirstOrSecond(loser);
-  }
+  // timer runs continuously - no restart needed
 }
 
 
@@ -1065,31 +1173,19 @@ function togglePause(){
   const ov=document.getElementById('pause-overlay');
   if(_paused){
     ov.classList.add('show');
-    // pause timer
-    if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
-    document.getElementById('pause-btn').innerHTML='<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><polygon points="3,2 12,7 3,12" fill="#ffd54f"/></svg>';
+    // timer keeps running during pause
+    document.getElementById('pause-btn').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 21,12 5,21" fill="#ffd54f"/></svg>';
   } else {
     ov.classList.remove('show');
-    document.getElementById('pause-btn').innerHTML='<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="3.5" height="10" rx="1" fill="#ffd54f"/><rect x="8.5" y="2" width="3.5" height="10" rx="1" fill="#ffd54f"/></svg>';
-    // resume timer if it was running
-    const timerShowing=document.getElementById('timer-p1').classList.contains('show');
-    if(timerShowing && !timerInterval){
-      timerInterval=setInterval(()=>{
-        if(!timerOver){
-          if(timerSeconds>0){timerSeconds--;updateTimerDisplay();}
-          else{timerOver=true;timerOverSeconds=0;['p1','p2'].forEach(p=>{document.getElementById('timer-display-'+p).classList.add('urgent');});}
-        } else {
-          if(timerOverSeconds<3600){timerOverSeconds++;updateTimerDisplay();}
-        }
-      },1000);
-    }
+    document.getElementById('pause-btn').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/></svg>';
+    // timer keeps running - no restart needed
   }
 }
 function closePause(){
   _paused=false;
   document.getElementById('pause-overlay').classList.remove('show');
   const pb=document.getElementById('pause-btn');
-  if(pb)pb.innerHTML='<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="3.5" height="10" rx="1" fill="#ffd54f"/><rect x="8.5" y="2" width="3.5" height="10" rx="1" fill="#ffd54f"/></svg>';
+  if(pb)pb.innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/></svg>';
 }
 
 /* ---- CONFIRM DIALOG ---- */
@@ -1120,72 +1216,47 @@ function closeConfirm(){
 
 
 /* ---- EASTER EGG - AURORA ---- */
-/* ---- EASTER EGGS ---- */
-var _eggTimers={};
-var _eggActive={};
+var _eggTouches={sivir:false, misfortune:false};
+var _eggTimer=null;
+var _eggActive=false;
+
+function eggCheckHold(){
+  if(_eggTouches.sivir && _eggTouches.misfortune){
+    if(!_eggTimer){
+      _eggTimer=setTimeout(function(){
+        _eggActive=true;
+        document.getElementById('aurora-overlay').classList.add('show');
+      }, 5000);
+    }
+  } else {
+    if(_eggTimer){clearTimeout(_eggTimer);_eggTimer=null;}
+    if(_eggActive){
+      _eggActive=false;
+      document.getElementById('aurora-overlay').classList.remove('show');
+    }
+  }
+}
 
 function createHearts(){
   var ov=document.getElementById('gabe-overlay');
-  for(var i=0;i<12;i++){
-    (function(i){
-      setTimeout(function(){
-        var h=document.createElement('div');
-        h.className='heart-particle';
-        h.textContent=['❤️','💕','💖','💗','💓'][Math.floor(Math.random()*5)];
-        h.style.left=Math.random()*100+'%';
-        h.style.animationDuration=(2+Math.random()*3)+'s';
-        h.style.animationDelay=(Math.random()*2)+'s';
-        h.style.fontSize=(1.5+Math.random()*2)+'rem';
-        ov.appendChild(h);
-      },i*200);
-    })(i);
-  }
+  for(var i=0;i<12;i++){(function(i){setTimeout(function(){
+    var el=document.createElement('div');el.className='heart-particle';
+    el.textContent=['❤️','💕','💖','💗','💓'][Math.floor(Math.random()*5)];
+    el.style.left=Math.random()*100+'%';el.style.animationDuration=(2+Math.random()*3)+'s';
+    el.style.animationDelay=(Math.random()*2)+'s';ov.appendChild(el);
+  },i*200);})(i);}
 }
-
-function clearHearts(){
-  var ov=document.getElementById('gabe-overlay');
-  ov.querySelectorAll('.heart-particle').forEach(function(el){el.remove();});
-}
-
+function clearHearts(){document.getElementById('gabe-overlay').querySelectorAll('.heart-particle').forEach(function(el){el.remove();});}
 function createBlood(){
   var ov=document.getElementById('greg-overlay');
-  for(var i=0;i<15;i++){
-    (function(i){
-      setTimeout(function(){
-        var d=document.createElement('div');
-        d.className='blood-drip';
-        d.style.left=Math.random()*100+'%';
-        d.style.width=(6+Math.random()*8)+'px';
-        d.style.height=(40+Math.random()*80)+'px';
-        d.style.animationDuration=(1.5+Math.random()*2.5)+'s';
-        d.style.animationDelay=(Math.random()*1.5)+'s';
-        ov.appendChild(d);
-      },i*150);
-    })(i);
-  }
+  for(var i=0;i<15;i++){(function(i){setTimeout(function(){
+    var d=document.createElement('div');d.className='blood-drip';
+    d.style.left=Math.random()*100+'%';d.style.width=(6+Math.random()*8)+'px';
+    d.style.height=(40+Math.random()*80)+'px';d.style.animationDuration=(1.5+Math.random()*2.5)+'s';
+    d.style.animationDelay=(Math.random()*1.5)+'s';ov.appendChild(d);
+  },i*150);})(i);}
 }
-
-function clearBlood(){
-  var ov=document.getElementById('greg-overlay');
-  ov.querySelectorAll('.blood-drip').forEach(function(el){el.remove();});
-}
-
-function startEgg(name, showFn, clearFn){
-  if(_eggTimers[name]) return;
-  _eggTimers[name]=setTimeout(function(){
-    _eggActive[name]=true;
-    showFn();
-  },5000);
-}
-
-function stopEgg(name, hideFn, clearFn){
-  if(_eggTimers[name]){clearTimeout(_eggTimers[name]);_eggTimers[name]=null;}
-  if(_eggActive[name]){
-    _eggActive[name]=false;
-    hideFn();
-    if(clearFn) setTimeout(clearFn,500);
-  }
-}
+function clearBlood(){document.getElementById('greg-overlay').querySelectorAll('.blood-drip').forEach(function(el){el.remove();});}
 
 function attachEggListeners(){
   var cards=document.querySelectorAll('.legend-card');
@@ -1195,194 +1266,227 @@ function attachEggListeners(){
     var legend=window._legendUnique&&window._legendUnique[idx];
     if(!legend)return;
     var key=legend.k;
-
-    // SIVIR - aurora
-    if(key==='Sivir'){
-      card.addEventListener('touchstart',function(){
-        startEgg('aurora',function(){
-          document.getElementById('aurora-overlay').classList.add('show');
-        },null);
+    if(key==='Sivir'||key==='MissFortune'){
+      var field=key==='Sivir'?'sivir':'misfortune';
+      card.addEventListener('touchstart',function(e){
+        _eggTouches[field]=true;
+        eggCheckHold();
       },{passive:true});
-      card.addEventListener('touchend',function(){
-        stopEgg('aurora',function(){
-          document.getElementById('aurora-overlay').classList.remove('show');
-        },null);
+      card.addEventListener('touchend',function(e){
+        _eggTouches[field]=false;
+        eggCheckHold();
       },{passive:true});
-      card.addEventListener('touchcancel',function(){
-        stopEgg('aurora',function(){
-          document.getElementById('aurora-overlay').classList.remove('show');
-        },null);
-      },{passive:true});
-    }
-
-    // AHRI - hearts + gabe
-    if(key==='Ahri'){
-      card.addEventListener('touchstart',function(){
-        startEgg('gabe',function(){
-          createHearts();
-          document.getElementById('gabe-overlay').classList.add('show');
-        },null);
-      },{passive:true});
-      card.addEventListener('touchend',function(){
-        stopEgg('gabe',function(){
-          document.getElementById('gabe-overlay').classList.remove('show');
-        },clearHearts);
-      },{passive:true});
-      card.addEventListener('touchcancel',function(){
-        stopEgg('gabe',function(){
-          document.getElementById('gabe-overlay').classList.remove('show');
-        },clearHearts);
-      },{passive:true});
-    }
-
-    // DARIUS - blood + greg
-    if(key==='Darius'){
-      card.addEventListener('touchstart',function(){
-        startEgg('greg',function(){
-          createBlood();
-          document.getElementById('greg-overlay').classList.add('show');
-        },null);
-      },{passive:true});
-      card.addEventListener('touchend',function(){
-        stopEgg('greg',function(){
-          document.getElementById('greg-overlay').classList.remove('show');
-        },clearBlood);
-      },{passive:true});
-      card.addEventListener('touchcancel',function(){
-        stopEgg('greg',function(){
-          document.getElementById('greg-overlay').classList.remove('show');
-        },clearBlood);
+      card.addEventListener('touchcancel',function(e){
+        _eggTouches[field]=false;
+        eggCheckHold();
       },{passive:true});
     }
   });
 }
 
 
-/* ---- FIRST OR SECOND ---- */
+function checkOrientation(){
+  var msg=document.getElementById('rotate-msg');
+  if(!msg)return;
+  var isMobile=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+  if(isMobile && window.innerWidth>window.innerHeight){msg.style.display='flex';}
+  else{msg.style.display='none';}
+}
+window.addEventListener('resize',checkOrientation);
+window.addEventListener('orientationchange',function(){setTimeout(checkOrientation,100);});
+checkOrientation();
+
+function setFosHalf(player,mode,top,question,sub){
+  var el=document.getElementById('fos-p'+player+'-half');
+  el.classList.remove('fos-active','fos-waiting');
+  if(mode==='active')el.classList.add('fos-active');
+  if(mode==='waiting')el.classList.add('fos-waiting');
+  document.getElementById('fos-top'+player).textContent=top||'';
+  document.getElementById('fos-q'+player).textContent=question||'';
+  document.getElementById('fos-sub'+player).textContent=sub||'';
+  el.style.opacity=mode==='waiting'?'0.6':'1';
+  el.style.pointerEvents='all';
+}
+
 function showFirstOrSecond(loserPlayer){
   var winnerPlayer=loserPlayer===1?2:1;
   var loserName=state.names[loserPlayer-1];
-  // Loser picks first or second
-  document.getElementById('fos-top'+loserPlayer).textContent='INFORM YOUR OPPONENT...';
-  document.getElementById('fos-q'+loserPlayer).textContent='FIRST OR SECOND?';
-  document.getElementById('fos-sub'+loserPlayer).textContent='TAP TO START THE GAME, GOOD LUCK AND HAVE FUN!';
-  document.getElementById('fos-p'+loserPlayer+'-half').style.opacity='1';
-  document.getElementById('fos-p'+loserPlayer+'-half').style.pointerEvents='all';
-  // Winner waits
-  document.getElementById('fos-top'+winnerPlayer).textContent='';
-  document.getElementById('fos-q'+winnerPlayer).textContent='WAITING ON '+loserName+'...';
-  document.getElementById('fos-sub'+winnerPlayer).textContent='TAP TO START THE GAME';
-  document.getElementById('fos-p'+winnerPlayer+'-half').style.opacity='0.5';
-  document.getElementById('fos-p'+winnerPlayer+'-half').style.pointerEvents='all';
-  document.getElementById('fos-overlay').classList.add('show');
+  setFosHalf(loserPlayer,'active','INFORM YOUR OPPONENT','FIRST OR SECOND?','TAP TO START');
+  setFosHalf(winnerPlayer,'waiting','','WAITING FOR '+loserName+'...','');
+  document.getElementById('zone'+loserPlayer).classList.add('blinking-zone');
+  document.getElementById('zone'+winnerPlayer).classList.remove('blinking-zone');
+  var ov=document.getElementById('fos-overlay');
+  ov.style.display='flex';
+  ov.classList.add('show');
 }
 
+var _fosConfirming=false;
 function fosConfirm(){
-  document.getElementById('fos-overlay').classList.remove('show');
-  document.getElementById('score1').style.visibility='';
-  document.getElementById('score2').style.visibility='';
-  document.querySelectorAll('.tap-hint').forEach(function(el){el.style.visibility='';});
-  document.getElementById('tapstart1').style.display='none';
-  document.getElementById('tapstart2').style.display='none';
+  if(_fosConfirming)return;
+  _fosConfirming=true;
+  setTimeout(function(){_fosConfirming=false;},1000);
+  var ov=document.getElementById('fos-overlay');
+  ov.classList.remove('show');
+  ov.style.display='none';
+  document.getElementById('zone1').classList.remove('blinking-zone');
+  document.getElementById('zone2').classList.remove('blinking-zone');
+  setPreGameState(false);
   showTimers();
 }
-function fosChoice(callerPlayer, choice){
-  fosConfirm();
-  // Show FIRST badge on winner's zone
-  document.getElementById('score1').style.visibility='hidden';
-  document.getElementById('score2').style.visibility='hidden';
-  document.querySelectorAll('.tap-hint').forEach(function(el){el.style.visibility='hidden';});
-  document.getElementById('tapstart1').style.display='none';
-  document.getElementById('tapstart2').style.display='none';
-  // Show FIRST label on the zone of goesFirst player
-  var fosWinOverlay=document.getElementById('dice-winner-p'+goesFirst);
-  var fosLoseOverlay=document.getElementById('dice-winner-p'+(goesFirst===1?2:1));
-  fosWinOverlay.classList.add('show');
-  fosLoseOverlay.classList.remove('show');
-  document.getElementById('dice-star1').classList.remove('show');
-  document.getElementById('dice-star2').classList.remove('show');
-  // Use the dice overlay halves for blinking
-  var h1=document.getElementById('dice-half1');
-  var h2=document.getElementById('dice-half2');
-  if(goesFirst===1)h1.classList.add('blinking');
-  else h2.classList.add('blinking');
-  document.getElementById('dice-overlay').classList.add('show');
-  diceWinner=goesFirst;
-  diceSettled=true;
-}
 
-
-function updateScoreNames(){
-  // Update displayed names on score screen with win counts
-  if(state.bo===3){
-    var w1=state.roundWins[0], w2=state.roundWins[1];
-    document.getElementById('pname1').textContent=state.names[0]+(w1>0?' - '+w1+' WIN'+(w1>1?'S':''):'');
-    document.getElementById('pname2').textContent=state.names[1]+(w2>0?' - '+w2+' WIN'+(w2>1?'S':''):'');
-  }
-}
-function updateRoundDisplay(){
-  var r1=document.getElementById('midbar-round-p1');
-  if(!r1)return;
-  if(state.bo===3){
-    var roundNum=Math.min(state.roundWins[0]+state.roundWins[1]+1,3);
-    r1.textContent=roundNum===3?'FINAL ROUND':'ROUND '+roundNum+' OF 3';
-    r1.style.display='';
-  } else {
-    r1.textContent='';
-  }
-}
-
-
-/* ---- PRE GAME STATE ---- */
 function setPreGameState(on){
-  // on=true: hide score/hints, show tap msg
-  // on=false: show score/hints, hide tap msg
   document.getElementById('score1').style.visibility=on?'hidden':'';
   document.getElementById('score2').style.visibility=on?'hidden':'';
   document.querySelectorAll('.tap-hint').forEach(function(el){el.style.visibility=on?'hidden':'';});
   document.getElementById('tapstart1').style.display=on?'':'none';
   document.getElementById('tapstart2').style.display=on?'':'none';
 }
-
 function tapToStart(){
   setPreGameState(false);
   showTimers();
 }
 
-
-function showFirstOrSecondAfterDice(winnerPlayer){
-  var loserPlayer=winnerPlayer===1?2:1;
-  var loserName=state.names[loserPlayer-1];
-  // Winner's half - inform opponent, pick first/second, tap to start
-  document.getElementById('fos-top'+winnerPlayer).textContent='INFORM YOUR OPPONENT...';
-  document.getElementById('fos-q'+winnerPlayer).textContent='FIRST OR SECOND?';
-  document.getElementById('fos-sub'+winnerPlayer).textContent='TAP TO START THE GAME, GOOD LUCK AND HAVE FUN!';
-  document.getElementById('fos-p'+winnerPlayer+'-half').style.opacity='1';
-  document.getElementById('fos-p'+winnerPlayer+'-half').style.pointerEvents='all';
-  // Loser's half - waiting for opponent to tap
-  document.getElementById('fos-top'+loserPlayer).textContent='';
-  document.getElementById('fos-q'+loserPlayer).textContent='WAITING FOR OPPONENT...';
-  document.getElementById('fos-sub'+loserPlayer).textContent='TAP TO START THE GAME';
-  document.getElementById('fos-p'+loserPlayer+'-half').style.opacity='0.5';
-  document.getElementById('fos-p'+loserPlayer+'-half').style.pointerEvents='all';
-  document.getElementById('fos-overlay').classList.add('show');
+function showRoundTab(idx){
+  var rh=state.roundHistory[idx];
+  if(!rh)return;
+  document.querySelectorAll('.gg-tab').forEach(function(t,i){t.classList.toggle('active',i===idx);});
+  document.getElementById('gg-val1').textContent=rh.s1;
+  document.getElementById('gg-val2').textContent=rh.s2;
+  document.getElementById('gg-val1').style.color=rh.s1>=rh.s2?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-val2').style.color=rh.s2>=rh.s1?'var(--gold)':'var(--muted)';
+  function renderLog(entries,elId,titleId,rNum){
+    document.getElementById(titleId).textContent='ROUND '+rNum+' LOG';
+    var el=document.getElementById(elId);
+    el.innerHTML=entries.length===0?'<div class="gg-log-empty">no changes</div>':entries.map(function(e){return '<div class="gg-log-entry">'+e+'</div>';}).join('');
+  }
+  renderLog(rh.logs1,'gg-log-entries1','gg-log-title1',rh.roundNum);
+  renderLog(rh.logs2,'gg-log-entries2','gg-log-title2',rh.roundNum);
 }
 
+function nextGame(){
+  var loser=state.roundLoser;
+  closeGG();
+  resetRound();
+  updateRoundDisplay();
+  var totalRounds=state.roundWins[0]+state.roundWins[1];
+  ['1','2'].forEach(function(p){
+    var wins=state.roundWins[p-1];
+    var base=state.names[p-1];
+    var isFinal=totalRounds>=2;
+    document.getElementById('pname'+p).textContent=isFinal?base:(wins>0?base+' - '+wins+' WIN'+(wins>1?'S':''):base);
+  });
+  showFirstOrSecond(loser||1);
+}
 
-// Only show rotate warning on mobile touch devices in landscape
-function checkOrientation(){
-  var msg=document.getElementById('rotate-msg');
-  if(!msg)return;
-  var isMobile=('ontouchstart' in window)||navigator.maxTouchPoints>0;
-  if(isMobile && window.innerWidth>window.innerHeight){
-    msg.style.display='flex';
-  } else {
-    msg.style.display='none';
+function confirmDone(){
+  _confirmAction='menu_from_gg';
+  document.getElementById('confirm-msg').textContent='RETURN TO MENU?';
+  document.getElementById('confirm-yes').onclick=function(){
+    var act=_confirmAction;
+    closeConfirm();
+    if(act==='menu_from_gg'){
+      document.getElementById('gg-overlay').classList.remove('show');
+      goSetup();
+    }
+  };
+  document.getElementById('confirm-overlay').classList.add('show');
+}
+
+function playBeeps(n,cb){
+  try{
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    var i=0;
+    function beep(){
+      if(i>=n){if(cb)cb();return;}
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=880;
+      g.gain.setValueAtTime(0.5,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.3);
+      o.start(ctx.currentTime);o.stop(ctx.currentTime+0.3);
+      i++;setTimeout(beep,400);
+    }
+    beep();
+  }catch(e){if(cb)cb();}
+}
+
+function triggerOvertime(){
+  playBeeps(5,null);
+  var turns=state.bo===1?'3':'5';
+  ['p1','p2'].forEach(function(p){
+    var el=document.getElementById('ot-turns-'+p);
+    if(el)el.textContent='THEN BOTH PLAYERS PLAY '+turns+' MORE TURNS TOTAL';
+    var rd=document.getElementById('ot-result-'+p);
+    if(rd)rd.textContent=state.bo===1?'NEED 2-POINT LEAD TO WIN':'MOST POINTS → WINS THE ROUND';
+    var dr=document.getElementById('ot-draw-'+p);
+    if(dr)dr.textContent=state.bo===1?'OTHERWISE PLAYER WITH FEWER POINTS LOSES':'TIED ON POINTS → ROUND IS A DRAW';
+  });
+  var r1=document.getElementById('midbar-round-p1');
+  if(r1){r1.textContent='OVERTIME';r1.style.color='var(--accent2)';r1.style.display='';}
+  var ov=document.getElementById('overtime-overlay');
+  ov.classList.add('show');
+  ov.addEventListener('click',function handler(){
+    ov.classList.remove('show');
+    ov.removeEventListener('click',handler);
+  },{once:true});
+}
+
+/* ---- FIREWORKS ---- */
+var _fwInterval=null;
+function startFireworks(){
+  var canvas=document.getElementById('fireworks-canvas');
+  if(!canvas)return;
+  canvas.width=canvas.parentElement.offsetWidth||window.innerWidth;
+  canvas.height=canvas.parentElement.offsetHeight||window.innerHeight;
+  canvas.classList.add('show');
+  var ctx=canvas.getContext('2d');
+  var particles=[];
+  var colors=['#ffd54f','#4fc3f7','#ff6b6b','#66bb6a','#ce93d8','#ff8a65'];
+  function Particle(x,y,color){
+    this.x=x;this.y=y;this.color=color;
+    var angle=Math.random()*Math.PI*2;
+    var speed=2+Math.random()*5;
+    this.vx=Math.cos(angle)*speed;
+    this.vy=Math.sin(angle)*speed;
+    this.life=1;this.decay=0.015+Math.random()*0.02;
+    this.size=2+Math.random()*3;
+  }
+  function launch(){
+    var x=canvas.width*0.2+Math.random()*canvas.width*0.6;
+    var y=canvas.height*0.1+Math.random()*canvas.height*0.5;
+    var color=colors[Math.floor(Math.random()*colors.length)];
+    for(var i=0;i<60;i++) particles.push(new Particle(x,y,color));
+  }
+  var launchTimer=0;
+  function frame(){
+    ctx.fillStyle='rgba(0,0,0,0.15)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    launchTimer++;
+    if(launchTimer%40===0) launch();
+    for(var i=particles.length-1;i>=0;i--){
+      var p=particles[i];
+      p.x+=p.vx;p.y+=p.vy;p.vy+=0.08;
+      p.life-=p.decay;
+      if(p.life<=0){particles.splice(i,1);continue;}
+      ctx.save();ctx.globalAlpha=p.life;
+      ctx.fillStyle=p.color;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+      ctx.restore();
+    }
+  }
+  if(_fwInterval)clearInterval(_fwInterval);
+  launch();
+  _fwInterval=setInterval(frame,16);
+}
+function stopFireworks(){
+  if(_fwInterval){clearInterval(_fwInterval);_fwInterval=null;}
+  var canvas=document.getElementById('fireworks-canvas');
+  if(canvas){
+    canvas.classList.remove('show');
+    var ctx=canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width,canvas.height);
   }
 }
-window.addEventListener('resize',checkOrientation);
-window.addEventListener('orientationchange',function(){setTimeout(checkOrientation,100);});
-checkOrientation();
 
 </script>
 </body>
