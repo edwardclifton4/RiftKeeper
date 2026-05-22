@@ -187,7 +187,7 @@
   .log-empty{color:var(--muted);font-size:0.85rem;text-align:center;padding:1.2rem;}
 
   /* DICE OVERLAY — full screen split */
-  #dice-overlay{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;}
+  #dice-overlay{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;background:rgba(2,5,12,0.97);}
   #dice-overlay.show{display:flex;position:fixed;}
   #dice-half1{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;transition:background 0.08s;cursor:pointer;}
   #dice-half2{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;transition:background 0.08s;transform:rotate(180deg);cursor:pointer;}
@@ -196,9 +196,9 @@
   #dice-winner-p1.show{opacity:1;pointer-events:all;}
   #dice-winner-p2{position:absolute;top:25%;left:0;right:0;transform:translateY(-50%) rotate(180deg);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;transition:opacity 0.3s;pointer-events:none;}
   #dice-winner-p2.show{opacity:1;pointer-events:all;}
-  .dice-first-label{font-family:'Rajdhani',sans-serif;font-size:5.5rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);line-height:1;}
-  .dice-tap-label{font-family:'Rajdhani',sans-serif;font-size:0.9rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);}
-  .dice-loser-text{font-family:'Rajdhani',sans-serif;font-size:clamp(1.2rem,5vw,2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);animation:pauseTap 1.2s ease-in-out infinite;white-space:nowrap;}
+  .dice-first-label{font-family:'Rajdhani',sans-serif;font-size:clamp(1.6rem,6vw,2.6rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);line-height:1;}
+  .dice-tap-label{font-family:'Rajdhani',sans-serif;font-size:clamp(0.8rem,3vw,1rem);letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.7);}
+  .dice-loser-text{font-family:'Rajdhani',sans-serif;font-size:clamp(1.2rem,5vw,1.8rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);animation:fosFlash 2.2s ease-in-out infinite;white-space:nowrap;opacity:0.7;}
   #dice-midbar{height:70px;background:#000000;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.2);border-bottom:1px solid rgba(255,213,79,0.2);gap:10px;overflow:hidden;}
   #dice-wheel{width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   #dice-wheel svg{width:64px;height:64px;}
@@ -248,9 +248,9 @@
   .fos-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;cursor:pointer;}
   .fos-half.p2side{transform:rotate(180deg);}
   #fos-divider{height:1px;background:rgba(255,213,79,0.15);flex-shrink:0;}
-  .fos-top{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,4vw,1.4rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.8);text-align:center;}
+  .fos-top{font-family:'Rajdhani',sans-serif;font-size:clamp(0.85rem,3.5vw,1.2rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.8);text-align:center;}
   .fos-question{font-family:'Rajdhani',sans-serif;font-size:clamp(1.6rem,6vw,2.6rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1;}
-  .fos-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(0.9rem,3.5vw,1.2rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.65);text-align:center;}
+  .fos-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(0.8rem,3vw,1rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.65);text-align:center;}
   @keyframes fosFlash{0%,100%{opacity:1;}50%{opacity:0.15;}}
   .fos-active .fos-tap{animation:fosFlash 2s ease-in-out infinite;}
   .fos-waiting .fos-question{animation:fosFlash 2.2s ease-in-out infinite;}
@@ -266,7 +266,7 @@
   .overtime-title{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,8vw,3.5rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;}
   .overtime-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(0.9rem,3.5vw,1.15rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.75);text-align:center;line-height:1.8;}
   .overtime-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(0.9rem,3.5vw,1.2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.5);text-align:center;margin-top:0.8rem;animation:pauseTap 1.2s ease-in-out infinite;}
-  #bo1-rules-overlay{position:fixed;inset:0;z-index:9200;display:none;flex-direction:column;pointer-events:all;cursor:pointer;background:rgba(2,5,12,0.97);}
+  #bo1-rules-overlay{position:fixed;inset:0;z-index:9200;display:none;flex-direction:column;pointer-events:all;cursor:pointer;background:rgba(2,5,12,0.82);}
   #bo1-rules-overlay.show{display:flex;}
   .bo1-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;padding:1.5rem;}
   .bo1-half.p2side{transform:rotate(180deg);}
@@ -526,6 +526,7 @@
 <!-- DICE OVERLAY — full screen split layout -->
 <div id="dice-overlay">
   <div id="dice-half2" onclick="confirmDice()"></div>
+  <div style="height:1px;background:rgba(255,213,79,0.15);flex-shrink:0;position:absolute;top:50%;left:0;right:0;pointer-events:none;"></div>
   <div id="dice-midbar">
     <span id="dice-star1">★</span>
     <div id="dice-wheel" class="spinning">
@@ -539,15 +540,17 @@
   </div>
   <div id="dice-half1" onclick="confirmDice()"></div>
   <div id="dice-winner-p1" onclick="confirmDice()">
+    <div class="dice-tap-label">INFORM YOUR OPPONENT</div>
     <div class="dice-first-label">FIRST OR SECOND?</div>
-    <div class="dice-tap-label">INFORM YOUR OPPONENT • TAP TO CONTINUE</div>
+    <div class="dice-tap-label" style="animation:fosFlash 2s ease-in-out infinite;">TAP TO CONTINUE</div>
   </div>
   <div id="dice-loser-p1" style="position:absolute;top:75%;left:0;right:0;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;pointer-events:none;">
     <div class="dice-loser-text" id="dice-loser-name1"></div>
   </div>
   <div id="dice-winner-p2" onclick="confirmDice()">
+    <div class="dice-tap-label">INFORM YOUR OPPONENT</div>
     <div class="dice-first-label">FIRST OR SECOND?</div>
-    <div class="dice-tap-label">INFORM YOUR OPPONENT • TAP TO CONTINUE</div>
+    <div class="dice-tap-label" style="animation:fosFlash 2s ease-in-out infinite;">TAP TO CONTINUE</div>
   </div>
 </div>
 
