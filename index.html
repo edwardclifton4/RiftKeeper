@@ -204,9 +204,9 @@
   #dice-midbar{height:70px;background:#000000;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.2);border-bottom:1px solid rgba(255,213,79,0.2);gap:10px;overflow:hidden;}
   #dice-wheel{width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   #dice-wheel svg{width:64px;height:64px;}
-  @keyframes wheelSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes wheelSpin{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
   @keyframes starBlink{0%,100%{opacity:1;transform:scale(1.05);}50%{opacity:0.6;transform:scale(0.95);}}
-  #dice-wheel.spinning img{animation:wheelSpin 1.2s linear infinite;}
+  #dice-wheel.spinning img{animation:wheelSpin 3s linear infinite;}
   #dice-star1,#dice-star2{font-size:1.4rem;opacity:0;transition:opacity 0.3s;flex-shrink:0;animation:none;}
   #dice-star1.show,#dice-star2.show{opacity:1;animation:starBlink 3s ease-in-out infinite;}
   #dice-goes-first{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity 0.3s;text-align:center;white-space:nowrap;}
@@ -1460,6 +1460,13 @@ function stopDiceAnim(){
   if(_diceAnimInterval){clearInterval(_diceAnimInterval);_diceAnimInterval=null;}
 }
 
+
+document.addEventListener('contextmenu', function(e){e.preventDefault();return false;});
+document.addEventListener('touchstart', function(e){
+  if(e.touches.length>1) e.preventDefault();
+}, {passive:false});
+document.addEventListener('selectstart', function(e){e.preventDefault();return false;});
+document.addEventListener('dragstart', function(e){e.preventDefault();return false;});
 </script>
 </body>
 </html>
