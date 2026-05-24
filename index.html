@@ -204,9 +204,9 @@
   #dice-midbar{height:70px;background:#000000;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.2);border-bottom:1px solid rgba(255,213,79,0.2);gap:10px;overflow:hidden;}
   #dice-wheel{width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
   #dice-wheel svg{width:64px;height:64px;}
-  @keyframes wheelSpin{from{transform:rotate(0deg)}to{transform:rotate(-360deg)}}
+  @keyframes wheelSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
   @keyframes starBlink{0%,100%{opacity:1;transform:scale(1.05);}50%{opacity:0.6;transform:scale(0.95);}}
-  #dice-wheel.spinning img{animation:wheelSpin 3s linear infinite;}
+  #dice-wheel.spinning img{animation:wheelSpin 1.2s linear infinite;}
   #dice-star1,#dice-star2{font-size:1.4rem;opacity:0;transition:opacity 0.3s;flex-shrink:0;animation:none;}
   #dice-star1.show,#dice-star2.show{opacity:1;animation:starBlink 3s ease-in-out infinite;}
   #dice-goes-first{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity 0.3s;text-align:center;white-space:nowrap;}
@@ -347,7 +347,7 @@
 
     <div id="midbar">
       <div class="mid-btn danger" onclick="confirmAction('reset')" title="Reset"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#ff6b6b"/></svg></div>
-      <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()" title="End Round"><svg width="26" height="26" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 3v18" stroke="#66bb6a" stroke-width="2.5" stroke-linecap="round"/><path d="M4 4h11l-2.5 4 2.5 4H4" fill="rgba(102,187,106,0.25)" stroke="#66bb6a" stroke-width="2" stroke-linejoin="round"/></svg></div>
+      <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()" title="End Round"><svg width="30" height="24" viewBox="0 0 30 24" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="30" height="24" fill="none" stroke="#66bb6a" stroke-width="1"/><rect x="1" y="1" width="5" height="4" fill="#66bb6a"/><rect x="6" y="1" width="6" height="4" fill="#111"/><rect x="12" y="1" width="6" height="4" fill="#66bb6a"/><rect x="18" y="1" width="6" height="4" fill="#111"/><rect x="24" y="1" width="5" height="4" fill="#66bb6a"/><rect x="1" y="5" width="5" height="4" fill="#111"/><rect x="6" y="5" width="6" height="4" fill="#66bb6a"/><rect x="12" y="5" width="6" height="4" fill="#111"/><rect x="18" y="5" width="6" height="4" fill="#66bb6a"/><rect x="24" y="5" width="5" height="4" fill="#111"/><rect x="1" y="9" width="5" height="4" fill="#66bb6a"/><rect x="6" y="9" width="6" height="4" fill="#111"/><rect x="12" y="9" width="6" height="4" fill="#66bb6a"/><rect x="18" y="9" width="6" height="4" fill="#111"/><rect x="24" y="9" width="5" height="4" fill="#66bb6a"/><rect x="1" y="13" width="5" height="4" fill="#111"/><rect x="6" y="13" width="6" height="4" fill="#66bb6a"/><rect x="12" y="13" width="6" height="4" fill="#111"/><rect x="18" y="13" width="6" height="4" fill="#66bb6a"/><rect x="24" y="13" width="5" height="4" fill="#111"/><rect x="1" y="17" width="5" height="6" fill="#66bb6a"/><rect x="6" y="17" width="6" height="6" fill="#111"/><rect x="12" y="17" width="6" height="6" fill="#66bb6a"/><rect x="18" y="17" width="6" height="6" fill="#111"/><rect x="24" y="17" width="5" height="6" fill="#66bb6a"/></svg></div>
       <div id="big-dice-container">
         <svg id="big-dice" class="idle" onclick="rollDice()" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <rect x="5" y="5" width="90" height="90" rx="18" fill="#0d2035" stroke="#ffd54f" stroke-width="3"/>
@@ -842,7 +842,7 @@ function resetScores(){
   document.getElementById('midbar-logo-p1').style.display='none';
   document.getElementById('midbar-logo-p2').style.display='none';
   document.getElementById('gg-btn').classList.remove('show');
-  document.getElementById('gg-btn').textContent='GG';
+  document.getElementById('gg-btn').innerHTML='<svg width="34" height="26" viewBox="0 0 28 19" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="28" height="19" fill="none" stroke="#66bb6a" stroke-width="1.5"/><rect x="1" y="1" width="5" height="4" fill="#66bb6a"/><rect x="6" y="1" width="5" height="4" fill="#1a1a1a"/><rect x="11" y="1" width="5" height="4" fill="#66bb6a"/><rect x="16" y="1" width="5" height="4" fill="#1a1a1a"/><rect x="21" y="1" width="5" height="4" fill="#66bb6a"/><rect x="1" y="5" width="5" height="4" fill="#1a1a1a"/><rect x="6" y="5" width="5" height="4" fill="#66bb6a"/><rect x="11" y="5" width="5" height="4" fill="#1a1a1a"/><rect x="16" y="5" width="5" height="4" fill="#66bb6a"/><rect x="21" y="5" width="5" height="4" fill="#1a1a1a"/><rect x="1" y="9" width="5" height="4" fill="#66bb6a"/><rect x="6" y="9" width="5" height="4" fill="#1a1a1a"/><rect x="11" y="9" width="5" height="4" fill="#66bb6a"/><rect x="16" y="9" width="5" height="4" fill="#1a1a1a"/><rect x="21" y="9" width="5" height="4" fill="#66bb6a"/><rect x="1" y="13" width="5" height="4" fill="#1a1a1a"/><rect x="6" y="13" width="5" height="4" fill="#66bb6a"/><rect x="11" y="13" width="5" height="4" fill="#1a1a1a"/><rect x="16" y="13" width="5" height="4" fill="#66bb6a"/><rect x="21" y="13" width="5" height="4" fill="#1a1a1a"/></svg>';
   document.getElementById('pause-btn').classList.remove('show');
   closePause();
   // hide and stop timers
@@ -1460,13 +1460,6 @@ function stopDiceAnim(){
   if(_diceAnimInterval){clearInterval(_diceAnimInterval);_diceAnimInterval=null;}
 }
 
-
-document.addEventListener('contextmenu', function(e){e.preventDefault();return false;});
-document.addEventListener('touchstart', function(e){
-  if(e.touches.length>1) e.preventDefault();
-}, {passive:false});
-document.addEventListener('selectstart', function(e){e.preventDefault();return false;});
-document.addEventListener('dragstart', function(e){e.preventDefault();return false;});
 </script>
 </body>
 </html>
