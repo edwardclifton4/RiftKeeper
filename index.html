@@ -265,13 +265,15 @@
   .gg-tab{flex:1;padding:0.5rem 0.3rem;font-family:'Rajdhani',sans-serif;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;text-align:center;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;}
   .gg-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
   #gg-rounds{font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:2px;color:var(--accent);text-align:center;padding:0 1rem 0.4rem;text-transform:uppercase;display:none;}
-  #overtime-overlay{position:fixed;inset:0;z-index:9500;display:none;flex-direction:column;pointer-events:all;cursor:pointer;background:rgba(2,5,12,0.97);}
+  @keyframes overtimeFlash{0%,100%{opacity:1;text-shadow:0 0 20px rgba(229,115,115,0.8),0 0 40px rgba(229,115,115,0.4);}50%{opacity:0.35;text-shadow:none;}}
+  @keyframes overtimeTapPulse{0%,100%{opacity:1;transform:scale(1.02);}50%{opacity:0.5;transform:scale(0.98);}}
+  #overtime-overlay{position:fixed;inset:0;z-index:9500;display:none;flex-direction:column;pointer-events:all;cursor:pointer;background:rgba(2,5,12,0.98);}
   #overtime-overlay.show{display:flex;}
-  .overtime-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;padding:1.5rem;}
+  .overtime-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(0.4rem,1.5vh,0.8rem);padding:clamp(1rem,3vw,2rem);}
   .overtime-half.p2side{transform:rotate(180deg);}
-  .overtime-title{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,7.5vw,3.2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;}
-  .overtime-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(1.1rem,4.5vw,1.5rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.75);text-align:center;line-height:1.8;}
-  .overtime-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.5);text-align:center;margin-top:0.8rem;animation:fosFlash 8s ease-in-out infinite;}
+  .overtime-title{font-family:'Rajdhani',sans-serif;font-size:clamp(2.4rem,9vw,4rem);font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#ef5350;text-align:center;animation:overtimeFlash 1s ease-in-out infinite;line-height:1;}
+  .overtime-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(0.8rem,3.5vw,1.15rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.8);text-align:center;line-height:1.6;}
+  .overtime-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,4vw,1.4rem);font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#ffffff;text-align:center;margin-top:clamp(0.4rem,1.5vh,0.8rem);animation:overtimeTapPulse 1s ease-in-out infinite;text-shadow:0 0 16px rgba(255,255,255,0.6);}
   #bo1-rules-overlay{position:fixed;inset:0;z-index:9200;display:none;flex-direction:column;pointer-events:all;cursor:pointer;background:rgb(2,5,12);}
   #bo1-rules-overlay.show{display:flex;}
   .bo1-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;padding:1.5rem;}
@@ -281,7 +283,7 @@
   .bo1-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:0.6rem;animation:fosFlash 0.6s ease-in-out infinite;}
   #gabe-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
   #gabe-overlay.show{display:block;}
-  #gabe-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:3px solid #ff6b9d;}
+  #gabe-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:5px solid #ff6b9d;box-shadow:0 0 24px rgba(255,107,157,0.7),0 0 48px rgba(255,107,157,0.3);}
   #greg-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
   #greg-overlay.show{display:block;}
   #greg-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:3px solid #8b0000;}
@@ -299,6 +301,8 @@
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
   .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:2px;}
+  .overtime-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:3px;color:#ef5350;text-transform:uppercase;display:none;animation:timerFlash 1s ease-in-out infinite;}
+  .overtime-label.show{display:block;}
 </style>
 </head>
 <body>
@@ -345,7 +349,7 @@
       <div class="score-big" id="score2">0</div>
       <div class="timer-box p2-timer" id="timer-p2">
         <div class="timer-display" id="timer-display-p2">60:00</div>
-        <div class="timer-round-sub" id="timer-round-p2"></div>
+        <div style="display:flex;align-items:center;gap:0.4rem;justify-content:center;"><div class="overtime-label" id="overtime-label-p2">OT</div><div class="timer-round-sub" id="timer-round-p2"></div></div>
       </div>
     </div>
 
@@ -372,6 +376,7 @@
       <div class="pzone-bg" id="bg1"></div>
       <div class="log-btn" id="logbtn1" onclick="openLog(1)"><span id="logcount1"></span></div>
       <div class="xp-btn" onclick="openXP(1)"><span class="xp-val" id="xpval1">0 XP</span></div>
+      <div id="test-timer-btn" onclick="timerSeconds=2;timerOver=false;timerOverSeconds=0;" style="position:absolute;top:64px;right:12px;background:rgba(229,115,115,0.2);border:1px solid rgba(229,115,115,0.4);border-radius:8px;padding:4px 8px;cursor:pointer;z-index:5;font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:1px;color:rgba(229,115,115,0.8);">TEST OT</div>
       <div class="tap-zones">
         <div class="tap-zone" onclick="adj(1,-1)"><span class="tap-hint">−</span></div>
         <div class="tap-zone" onclick="adj(1,1)"><span class="tap-hint">+</span></div>
@@ -384,7 +389,7 @@
       <div class="score-big" id="score1">0</div>
       <div class="timer-box" id="timer-p1">
         <div class="timer-display" id="timer-display-p1">60:00</div>
-        <div class="timer-round-sub" id="timer-round-p1"></div>
+        <div style="display:flex;align-items:center;gap:0.4rem;justify-content:center;"><div class="overtime-label" id="overtime-label-p1">OT</div><div class="timer-round-sub" id="timer-round-p1"></div></div>
       </div>
     </div>
   </div>
@@ -482,18 +487,18 @@
   <div class="overtime-half p2side">
     <div class="overtime-title">OVERTIME</div>
     <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THEIR TURN</div>
-    <div class="overtime-sub" id="ot-turns-p2">THEN BOTH PLAYERS PLAY 5 MORE TURNS TOTAL</div>
-    <div class="overtime-sub" id="ot-result-p2">MOST POINTS → WINS THE ROUND</div>
-    <div class="overtime-sub" id="ot-draw-p2">TIED ON POINTS → ROUND IS A DRAW</div>
+    <div class="overtime-sub" id="ot-turns-p2">BOTH PLAYERS PLAY 5 MORE TURNS TOTAL</div>
+    <div class="overtime-sub" id="ot-result-p2">2-POINT LEAD REQUIRED TO WIN</div>
+    <div class="overtime-sub" id="ot-draw-p2">OTHERWISE THE ROUND IS A DRAW</div>
     <div class="overtime-tap">TAP TO CONTINUE</div>
   </div>
   <div style="height:1px;background:rgba(255,213,79,0.2);flex-shrink:0;"></div>
   <div class="overtime-half">
     <div class="overtime-title">OVERTIME</div>
     <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THEIR TURN</div>
-    <div class="overtime-sub" id="ot-turns-p1">THEN BOTH PLAYERS PLAY 5 MORE TURNS TOTAL</div>
-    <div class="overtime-sub" id="ot-result-p1">MOST POINTS → WINS THE ROUND</div>
-    <div class="overtime-sub" id="ot-draw-p1">TIED ON POINTS → ROUND IS A DRAW</div>
+    <div class="overtime-sub" id="ot-turns-p1">BOTH PLAYERS PLAY 5 MORE TURNS TOTAL</div>
+    <div class="overtime-sub" id="ot-result-p1">2-POINT LEAD REQUIRED TO WIN</div>
+    <div class="overtime-sub" id="ot-draw-p1">OTHERWISE THE ROUND IS A DRAW</div>
     <div class="overtime-tap">TAP TO CONTINUE</div>
   </div>
 </div>
@@ -684,6 +689,11 @@ function openLegendPicker(p){
 
 function closeLegendPicker(){
   document.getElementById('legend-screen').classList.remove('show');
+  // Reset all egg states on close
+  _eggTouches.sivir=false;
+  if(_eggTimer){clearTimeout(_eggTimer);_eggTimer=null;} _eggActive=false;
+  document.getElementById('aurora-overlay').classList.remove('show');
+  stopGabeEgg(); stopGregEgg();
   activeLegendPlayer=null;
 }
 
@@ -780,6 +790,7 @@ function startGame(){
 
   state.gameStartTime=new Date();
   timerSeconds=state.bo===1?1800:3600;timerOver=false;timerOverSeconds=0;
+  ['p1','p2'].forEach(function(p){var ol=document.getElementById('overtime-label-'+p);if(ol)ol.classList.remove('show');});
   if(timerInterval)clearInterval(timerInterval);
   timerInterval=setInterval(timerTick,1000);
   if(state.bo===1){var b1=document.getElementById('bo1-rules-overlay');b1.style.display='flex';b1.classList.add('show');b1.addEventListener('click',function h(){b1.classList.remove('show');b1.style.display='none';b1.removeEventListener('click',h);},{once:true});}
@@ -1046,7 +1057,11 @@ function timerTick(){
     if(timerSeconds>0){timerSeconds--;updateTimerDisplay();}
     else{
       timerOver=true;timerOverSeconds=0;
-      ['p1','p2'].forEach(p=>{document.getElementById('timer-display-'+p).classList.add('urgent');});
+      ['p1','p2'].forEach(p=>{
+        document.getElementById('timer-display-'+p).classList.add('urgent');
+        var ol=document.getElementById('overtime-label-'+p);
+        if(ol)ol.classList.add('show');
+      });
       triggerOvertime();
     }
   } else {
@@ -1079,7 +1094,7 @@ function confirmGG(){
   var rNum=state.roundHistory.length+1;
   var w1r=state.roundWins[0],w2r=state.roundWins[1];
   var isFinalRound=state.bo===3&&((w1r===1&&w2r===1)||rNum>=3);
-  var rLabel=state.bo===3?(isFinalRound?'END GAME?':'END ROUND '+rNum+'?'):'END GAME?';
+  var rLabel=timerOver?'END GAME?':state.bo===3?(isFinalRound?'END GAME?':'END ROUND '+rNum+'?'):'END GAME?';
   document.getElementById('confirm-msg').textContent=rLabel;
   document.getElementById('confirm-yes').onclick=function(){
     var act=_confirmAction;
@@ -1094,8 +1109,16 @@ function openGG(){
   var roundNum=state.roundHistory.length+1;
   var roundWinner=null;
   if(!state.roundCounted){
-    if(s1>s2){roundWinner=1;state.roundWins[0]++;}
-    else if(s2>s1){roundWinner=2;state.roundWins[1]++;}
+    var diff=Math.abs(s1-s2);
+    if(timerOver){
+      // 2-point rule in overtime
+      if(s1>s2 && diff>=2){roundWinner=1;state.roundWins[0]++;}
+      else if(s2>s1 && diff>=2){roundWinner=2;state.roundWins[1]++;}
+      // else no winner - game ends as draw
+    } else {
+      if(s1>s2){roundWinner=1;state.roundWins[0]++;}
+      else if(s2>s1){roundWinner=2;state.roundWins[1]++;}
+    }
     state.roundLoser=roundWinner===1?2:roundWinner===2?1:null;
     state.roundCounted=true;
     state.roundHistory.push({roundNum:roundNum,s1:s1,s2:s2,n1:n1,n2:n2,logs1:state.logs[0].slice(),logs2:state.logs[1].slice(),winner:roundWinner});
@@ -1105,9 +1128,16 @@ function openGG(){
   var winEl=document.getElementById('gg-winner');
   var w1=state.roundWins[0],w2=state.roundWins[1];
   var prefix=state.bo===1?'':'ROUND '+roundNum+': ';
-  if(s1>s2){winEl.textContent=prefix+n1+' WINS!';winEl.style.color='var(--gold)';}
-  else if(s2>s1){winEl.textContent=prefix+n2+' WINS!';winEl.style.color='var(--gold)';}
-  else{winEl.textContent=prefix+'DRAW!';winEl.style.color='var(--accent)';}
+  if(timerOver){
+    var otDiff=Math.abs(s1-s2);
+    if(s1>s2&&otDiff>=2){winEl.textContent=n1+' WINS!';winEl.style.color='var(--gold)';}
+    else if(s2>s1&&otDiff>=2){winEl.textContent=n2+' WINS!';winEl.style.color='var(--gold)';}
+    else{winEl.textContent='DRAW — NO 2-POINT LEAD';winEl.style.color='var(--accent)';}
+  } else {
+    if(s1>s2){winEl.textContent=prefix+n1+' WINS!';winEl.style.color='var(--gold)';}
+    else if(s2>s1){winEl.textContent=prefix+n2+' WINS!';winEl.style.color='var(--gold)';}
+    else{winEl.textContent=prefix+'DRAW!';winEl.style.color='var(--accent)';}
+  }
   // Scores & names
   document.getElementById('gg-name1').textContent=n1+(state.roundWins[0]>0?' - '+state.roundWins[0]+' WIN'+(state.roundWins[0]>1?'S':''):'');
   document.getElementById('gg-name2').textContent=n2+(state.roundWins[1]>0?' - '+state.roundWins[1]+' WIN'+(state.roundWins[1]>1?'S':''):'');
@@ -1132,7 +1162,10 @@ function openGG(){
   var nextBtn=document.getElementById('next-game-btn');
   var cb=document.getElementById('gg-close-btn');
   cb.textContent='DONE';
-  if(matchOver){
+  if(timerOver){
+    // Overtime always ends the game
+    nextBtn.style.display='none';cb.style.display='';
+  } else if(matchOver){
     winEl.textContent=(w1>=2?n1:n2)+' WINS!';
     winEl.style.color='var(--gold)';
     nextBtn.style.display='none';cb.style.display='';
@@ -1161,11 +1194,21 @@ function openGG(){
   }
   buildCol(1);buildCol(2);
   // Game time
-  var elapsed=3600-timerSeconds+(timerOver?timerOverSeconds:0);
+  var regularSeconds=state.bo===1?1800:3600;
+  var elapsed=regularSeconds-timerSeconds+(timerOver?timerOverSeconds:0);
   var em=Math.floor(elapsed/60).toString().padStart(2,'0');
   var es=(elapsed%60).toString().padStart(2,'0');
   var boStr='BEST OF '+state.bo;
-  document.getElementById('gg-time').textContent=boStr+' · GAME TIME '+em+':'+es;
+  var timeEl=document.getElementById('gg-time');
+  if(timerOver){
+    var regMin=Math.floor(regularSeconds/60).toString().padStart(2,'0');
+    var regSec=(regularSeconds%60).toString().padStart(2,'0');
+    var otMin=Math.floor(timerOverSeconds/60).toString().padStart(2,'0');
+    var otSec=(timerOverSeconds%60).toString().padStart(2,'0');
+    timeEl.innerHTML=boStr+' · GAME TIME '+regMin+':'+regSec+' <span style="color:#ef5350;">+'+otMin+':'+otSec+' OT</span>';
+  } else {
+    timeEl.textContent=boStr+' · GAME TIME '+em+':'+es;
+  }
   document.getElementById('gg-overlay').classList.add('show');
 }
 function closeGG(){
@@ -1222,7 +1265,7 @@ function closeConfirm(){
 }
 
 /* ---- EASTER EGG - AURORA ---- */
-var _eggTouches={sivir:false, misfortune:false};
+var _eggTouches={sivir:false};
 var _eggTimer=null;
 var _eggActive=false;
 
@@ -1233,35 +1276,15 @@ function startGabeEgg(){
   if(_gabeTimer)return;
   _gabeTimer=setTimeout(function(){
     _gabeActive=true;
-    createHearts();
     document.getElementById('gabe-overlay').classList.add('show');
-  },5000);
+  },3000);
 }
 function stopGabeEgg(){
   if(_gabeTimer){clearTimeout(_gabeTimer);_gabeTimer=null;}
   if(_gabeActive){
     _gabeActive=false;
     document.getElementById('gabe-overlay').classList.remove('show');
-    clearHearts();
   }
-}
-function createHearts(){
-  var ov=document.getElementById('gabe-overlay');
-  for(var i=0;i<12;i++){(function(i){setTimeout(function(){
-    if(!_gabeActive)return;
-    var el=document.createElement('div');
-    el.className='heart-particle';
-    el.textContent='❤️';
-    el.style.left=Math.random()*100+'%';
-    el.style.animationDuration=(1.5+Math.random()*2)+'s';
-    el.style.animationDelay=(Math.random()*1)+'s';
-    ov.appendChild(el);
-    setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},4000);
-  },i*200);})(i);}
-}
-function clearHearts(){
-  var ov=document.getElementById('gabe-overlay');
-  ov.querySelectorAll('.heart-particle').forEach(function(el){el.parentNode.removeChild(el);});
 }
 
 /* ---- EASTER EGG - GREG (Darius 5s hold) ---- */
@@ -1273,7 +1296,7 @@ function startGregEgg(){
     _gregActive=true;
     createBlood();
     document.getElementById('greg-overlay').classList.add('show');
-  },5000);
+  },3000);
 }
 function stopGregEgg(){
   if(_gregTimer){clearTimeout(_gregTimer);_gregTimer=null;}
@@ -1303,12 +1326,12 @@ function clearBlood(){
 }
 
 function eggCheckHold(){
-  if(_eggTouches.sivir && _eggTouches.misfortune){
+  if(_eggTouches.sivir){
     if(!_eggTimer){
       _eggTimer=setTimeout(function(){
         _eggActive=true;
         document.getElementById('aurora-overlay').classList.add('show');
-      }, 5000);
+      }, 3000);
     }
   } else {
     if(_eggTimer){clearTimeout(_eggTimer);_eggTimer=null;}
@@ -1327,8 +1350,8 @@ function attachEggListeners(){
     var legend=window._legendUnique&&window._legendUnique[idx];
     if(!legend)return;
     var key=legend.k;
-    if(key==='Sivir'||key==='MissFortune'){
-      var field=key==='Sivir'?'sivir':'misfortune';
+    if(key==='Sivir'){
+      var field='sivir';
       card.addEventListener('touchstart',function(e){
         _eggTouches[field]=true;
         eggCheckHold();
@@ -1341,16 +1364,26 @@ function attachEggListeners(){
         _eggTouches[field]=false;
         eggCheckHold();
       },{passive:true});
+      // Block card selection while aurora is active
+      card.addEventListener('click',function(e){
+        if(_eggActive){e.stopImmediatePropagation();}
+      },true);
     }
     if(key==='Ahri'){
       card.addEventListener('touchstart',function(){startGabeEgg();},{passive:true});
       card.addEventListener('touchend',function(){stopGabeEgg();},{passive:true});
       card.addEventListener('touchcancel',function(){stopGabeEgg();},{passive:true});
+      card.addEventListener('click',function(e){
+        if(_gabeActive){e.stopImmediatePropagation();}
+      },true);
     }
     if(key==='Darius'){
       card.addEventListener('touchstart',function(){startGregEgg();},{passive:true});
       card.addEventListener('touchend',function(){stopGregEgg();},{passive:true});
       card.addEventListener('touchcancel',function(){stopGregEgg();},{passive:true});
+      card.addEventListener('click',function(e){
+        if(_gregActive){e.stopImmediatePropagation();}
+      },true);
     }
   });
 }
@@ -1501,11 +1534,11 @@ function triggerOvertime(){
   var turns=state.bo===1?'3':'5';
   ['p1','p2'].forEach(function(p){
     var el=document.getElementById('ot-turns-'+p);
-    if(el)el.textContent='THEN BOTH PLAYERS PLAY '+turns+' MORE TURNS TOTAL';
+    if(el)el.textContent='BOTH PLAYERS PLAY '+turns+' MORE TURNS TOTAL';
     var rd=document.getElementById('ot-result-'+p);
-    if(rd)rd.textContent=state.bo===1?'NEED 2-POINT LEAD TO WIN':'MOST POINTS → WINS THE ROUND';
+    if(rd)rd.textContent='2-POINT LEAD REQUIRED TO WIN';
     var dr=document.getElementById('ot-draw-'+p);
-    if(dr)dr.textContent=state.bo===1?'OTHERWISE PLAYER WITH FEWER POINTS LOSES':'TIED ON POINTS → ROUND IS A DRAW';
+    if(dr)dr.textContent='OTHERWISE THE ROUND IS A DRAW';
   });
   var ov=document.getElementById('overtime-overlay');
   ov.classList.add('show');
