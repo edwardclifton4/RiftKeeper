@@ -208,7 +208,7 @@
   #dice-wheel svg{width:64px;height:64px;}
   @keyframes wheelSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
   @keyframes starBlink{0%,100%{opacity:1;transform:scale(1.05);}50%{opacity:0.6;transform:scale(0.95);}}
-  #dice-wheel.spinning img{animation:wheelSpin 1.2s linear infinite;}
+  #dice-wheel.spinning svg{animation:wheelSpin 0.15s ease-in-out infinite;}
   #dice-star1,#dice-star2{font-size:1.4rem;opacity:0;transition:opacity 0.3s;flex-shrink:0;animation:none;}
   #dice-star1.show,#dice-star2.show{opacity:1;animation:starBlink 3s ease-in-out infinite;}
   #dice-goes-first{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity 0.3s;text-align:center;white-space:nowrap;}
@@ -539,7 +539,9 @@
   <div id="dice-midbar">
     <span id="dice-star1">★</span>
     <div id="dice-wheel" class="spinning">
-<img src="https://raw.githubusercontent.com/edwardclifton4/RiftKeeper/main/riftbound-logo.png" style="width:100%;height:100%;object-fit:contain;">
+      <svg id="rolling-dice" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+        <rect x="5" y="5" width="90" height="90" rx="18" fill="#0d2035" stroke="#ffd54f" stroke-width="3"/>
+      </svg>
     </div>
     <div id="dice-goes-first"></div>
     <span id="dice-star2">★</span>
@@ -859,25 +861,46 @@ function rollDice(){
   document.getElementById('dice-overlay').classList.add('show');
 
   let ticks=0;
-  const totalTicks=16;
-  let current=1;
+  const totalTicks=28;
+  let current=Math.random()<0.5?1:2;
 
   function tick(){
     ticks++;
-    if(Math.random()>0.2) current=current===1?2:1;
+    // Always alternate at start, then get sticky toward winner at end
+    const progress=ticks/totalTicks;
+    if(progress<0.6){
+      // Fast phase: always switch
+      current=current===1?2:1;
+    } else {
+      // Slow phase: bias toward winner
+      var bias=progress<0.8?0.6:0.8;
+      if(Math.random()<bias) current=winner;
+      else current=winner===1?2:1;
+    }
 
-    // Blink both halves, highlight current
     h1.style.background=current===1?'rgba(255,213,79,0.45)':'';
     h2.style.background=current===2?'rgba(255,213,79,0.45)':'';
 
-    const progress=ticks/totalTicks;
-    const delay=40+Math.pow(progress,2.2)*260;
+    // Sync dice face speed with progress
+    var faceSpeed=Math.max(60,60+Math.pow(progress,2.5)*800);
+    setRollAnimSpeed(faceSpeed);
+    // Shake speed slows down
+    var shakeSpeed=Math.max(0.3,0.15+Math.pow(progress,2)*0.8);
+    var wheel=document.getElementById('dice-wheel');
+    if(wheel)wheel.style.animationDuration=shakeSpeed+'s';
+
+    const delay=40+Math.pow(progress,2.5)*500;
 
     if(ticks<totalTicks){
       setTimeout(tick,delay);
     } else {
-      // Settle on winner
+      // Final settle on winner
+      current=winner;
+      h1.style.background=winner===1?'rgba(255,213,79,0.45)':'';
+      h2.style.background=winner===2?'rgba(255,213,79,0.45)':'';
+      setTimeout(function(){
       h1.style.background=''; h2.style.background='';
+      stopRollAnim();
       document.getElementById('dice-wheel').className='star-blink';
       // Show FIRST over winner's name
       document.getElementById('dice-winner-p'+winner).classList.add('show');
@@ -885,6 +908,7 @@ function rollDice(){
       var loserEl=document.getElementById('dice-loser-p'+loser);
       if(loserEl){document.getElementById('dice-loser-name'+loser).textContent='WAITING FOR '+state.names[winner-1]+'...';loserEl.style.opacity='1';}
       diceWinner=winner;
+      },400);
       if(winner===1) h1.classList.add('blinking');
       else h2.classList.add('blinking');
       diceSettled=true;
@@ -1491,6 +1515,49 @@ document.addEventListener('touchstart',function(e){
     e.target.style.userSelect='none';
   }
 },{passive:true,capture:false});
+
+var _rollDiceInterval=null;
+var _rollAnimActive=false;
+var _rollFaces=[
+  [[50,50]],
+  [[28,28],[72,72]],
+  [[28,28],[50,50],[72,72]],
+  [[28,28],[72,28],[28,72],[72,72]],
+  [[28,28],[72,28],[50,50],[28,72],[72,72]],
+  [[28,28],[72,28],[28,50],[72,50],[28,72],[72,72]]
+];
+var _prevRollFace=-1;
+function showRollFace(){
+  var dice=document.getElementById('rolling-dice');
+  if(!dice)return;
+  var dots=dice.querySelectorAll('.roll-dot');
+  dots.forEach(function(d){d.remove();});
+  var n;
+  do{n=Math.floor(Math.random()*6);}while(n===_prevRollFace);
+  _prevRollFace=n;
+  _rollFaces[n].forEach(function(pos){
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',pos[0]);c.setAttribute('cy',pos[1]);c.setAttribute('r','9');
+    c.setAttribute('fill','#ffd54f');c.classList.add('roll-dot');
+    dice.appendChild(c);
+  });
+}
+function startRollAnim(speed){
+  _rollAnimActive=true;
+  showRollFace();
+  if(_rollDiceInterval)clearInterval(_rollDiceInterval);
+  _rollDiceInterval=setInterval(showRollFace,speed||120);
+}
+function setRollAnimSpeed(speed){
+  if(!_rollAnimActive)return;
+  if(_rollDiceInterval)clearInterval(_rollDiceInterval);
+  _rollDiceInterval=setInterval(showRollFace,speed);
+}
+function stopRollAnim(){
+  _rollAnimActive=false;
+  if(_rollDiceInterval){clearInterval(_rollDiceInterval);_rollDiceInterval=null;}
+}
+
 </script>
 </body>
 </html>
