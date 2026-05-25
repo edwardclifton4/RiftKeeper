@@ -204,11 +204,11 @@
   .dice-tap-label{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.7);}
   .dice-loser-text{font-family:'Rajdhani',sans-serif;font-size:clamp(1.2rem,5vw,1.8rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);animation:fosFlash 8s ease-in-out infinite;white-space:nowrap;opacity:0.7;}
   #dice-midbar{height:70px;background:#000000;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.2);border-bottom:1px solid rgba(255,213,79,0.2);gap:10px;overflow:hidden;}
-  #dice-wheel{width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  #dice-wheel svg{width:64px;height:64px;}
+  #dice-wheel{display:none;}
+  #dice-wheel svg{display:none;}
   @keyframes wheelSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
   @keyframes starBlink{0%,100%{opacity:1;transform:scale(1.05);}50%{opacity:0.6;transform:scale(0.95);}}
-  #dice-wheel.spinning svg{animation:wheelSpin 0.15s ease-in-out infinite;}
+  #dice-wheel.spinning svg{animation:wheelSpin 0.3s ease-in-out infinite;}
   #dice-star1,#dice-star2{font-size:1.4rem;opacity:0;transition:opacity 0.3s;flex-shrink:0;animation:none;}
   #dice-star1.show,#dice-star2.show{opacity:1;animation:starBlink 3s ease-in-out infinite;}
   #dice-goes-first{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);opacity:0;transition:opacity 0.3s;text-align:center;white-space:nowrap;}
@@ -882,12 +882,9 @@ function rollDice(){
     h2.style.background=current===2?'rgba(255,213,79,0.45)':'';
 
     // Sync dice face speed with progress
-    var faceSpeed=Math.max(60,60+Math.pow(progress,2.5)*800);
+    var faceSpeed=400+Math.pow(progress,2)*800;
     setRollAnimSpeed(faceSpeed);
-    // Shake speed slows down
-    var shakeSpeed=Math.max(0.3,0.15+Math.pow(progress,2)*0.8);
-    var wheel=document.getElementById('dice-wheel');
-    if(wheel)wheel.style.animationDuration=shakeSpeed+'s';
+
 
     const delay=40+Math.pow(progress,2.5)*500;
 
@@ -908,7 +905,7 @@ function rollDice(){
       var loserEl=document.getElementById('dice-loser-p'+loser);
       if(loserEl){document.getElementById('dice-loser-name'+loser).textContent='WAITING FOR '+state.names[winner-1]+'...';loserEl.style.opacity='1';}
       diceWinner=winner;
-      },400);
+      },300);
       if(winner===1) h1.classList.add('blinking');
       else h2.classList.add('blinking');
       diceSettled=true;
