@@ -73,7 +73,8 @@
   .player-zone.p1{background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.lit{background:rgba(255,213,79,0.13)!important;}
   .pzone-bg{position:absolute;inset:0;opacity:0.08;background-size:cover;background-position:center;pointer-events:none;}
-  .score-big{font-family:'Rajdhani',sans-serif;font-size:15rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);flex:1;display:flex;align-items:center;justify-content:center;}
+  .score-big{font-family:'Rajdhani',sans-serif;font-size:15rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);flex:1;display:flex;align-items:center;justify-content:center;transition:transform 0.15s,color 0.15s;}
+  @keyframes scorePop{0%{transform:scale(1);}40%{transform:scale(1.15);}100%{transform:scale(1);}}
   .player-name{font-family:'Rajdhani',sans-serif;font-size:1.4rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:1.2rem;margin-bottom:0.1rem;}
   .player-zone.p1 .player-name{margin-bottom:0.1rem;}
   .legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:2px;color:rgba(79,195,247,0.55);text-transform:uppercase;text-align:center;margin-bottom:0.15rem;min-height:0.9em;}
@@ -171,18 +172,18 @@
   .gg-log-entry{font-family:'Rajdhani',sans-serif;font-size:0.95rem;color:var(--gold);padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;}
   .gg-log-entry:last-child{border-bottom:none;}
   .gg-log-empty{font-size:0.78rem;color:var(--muted);text-align:center;}
-  #gg-actions{display:flex;gap:0;border-top:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
-  .gg-action-btn{flex:1;padding:0.75rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px;font-size:0.85rem;cursor:pointer;text-transform:uppercase;text-align:center;color:var(--muted);background:rgba(255,255,255,0.03);}
-  .gg-action-btn:first-child{border-right:1px solid rgba(255,255,255,0.08);}
-  .gg-action-btn.next{color:var(--accent);}
-  .gg-action-btn:active{background:rgba(255,255,255,0.08);}
+  #gg-actions{display:flex;gap:0;flex-shrink:0;border-top:1px solid rgba(79,195,247,0.15);}
+  .gg-action-btn{flex:1;padding:0.75rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px;font-size:0.85rem;cursor:pointer;text-transform:uppercase;text-align:center;color:var(--gold);background:rgba(255,213,79,0.08);}
+  #rematch-btn{border-right:1px solid rgba(255,213,79,0.25);}
+  .gg-action-btn.next{color:var(--gold);background:rgba(255,213,79,0.12);}
+  .gg-action-btn:active{background:rgba(255,213,79,0.2);}
   /* XP POPUP — small inline popup near button */
-  #xp-popup{position:fixed;z-index:150;display:none;flex-direction:column;align-items:center;gap:12px;background:#0d2035;border:1px solid rgba(255,213,79,0.4);border-radius:20px;padding:20px 28px;min-width:220px;transition:none;}
+  #xp-popup{position:fixed;z-index:150;display:none;flex-direction:column;align-items:center;gap:8px;background:#0d2035;border:1px solid rgba(255,213,79,0.4);border-radius:16px;padding:14px 6px;min-width:0;transition:none;}
   #xp-popup.show{display:flex;}
   #xp-popup.p2-popup{transform:rotate(180deg);}
-  .xp-popup-val{font-family:'Rajdhani',sans-serif;font-size:4rem;font-weight:700;color:var(--gold);line-height:1;text-align:center;}
+  .xp-popup-val{font-family:'Rajdhani',sans-serif;font-size:3rem;font-weight:700;color:var(--gold);line-height:1;text-align:center;}
   .xp-popup-btns{display:flex;gap:10px;align-items:center;}
-  .xp-popup-btn{width:80px;height:80px;border-radius:50%;border:2px solid rgba(255,213,79,0.35);background:rgba(255,213,79,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:2.8rem;font-weight:700;color:var(--gold);line-height:1;transition:all 0.12s;}
+  .xp-popup-btn{width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,213,79,0.35);background:rgba(255,213,79,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1;transition:all 0.12s;}
   .xp-popup-btn:active{transform:scale(0.88);background:rgba(255,213,79,0.22);}
   #xp-popup-backdrop{position:fixed;inset:0;z-index:149;display:none;}
   #xp-popup-backdrop.show{display:block;}
@@ -262,7 +263,7 @@
   .tap-start-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;z-index:3;pointer-events:all;cursor:pointer;}
   .tap-start-text{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,1);text-align:center;animation:fosFlash 8s ease-in-out infinite;}
   .gg-tab{flex:1;padding:0.5rem 0.3rem;font-family:'Rajdhani',sans-serif;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;text-align:center;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;transition:all 0.2s;}
-  .gg-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+  .gg-tab.active{color:var(--gold);border-bottom-color:transparent;}
   #gg-rounds{font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:2px;color:var(--accent);text-align:center;padding:0 1rem 0.4rem;text-transform:uppercase;display:none;}
   #overtime-overlay{position:fixed;inset:0;z-index:9500;display:none;flex-direction:column;pointer-events:all;cursor:pointer;background:rgba(2,5,12,0.97);}
   #overtime-overlay.show{display:flex;}
@@ -509,6 +510,7 @@
     </div>
     <div id="gg-actions">
       <div class="gg-action-btn next" id="next-game-btn" onclick="nextGame()" style="display:none;flex:1;padding:1.1rem;">NEXT ROUND</div>
+      <div class="gg-action-btn" id="rematch-btn" onclick="rematch()" style="display:none;">REMATCH</div>
       <div class="gg-action-btn" id="gg-close-btn" onclick="confirmDone()" style="display:none;">DONE</div>
     </div>
   </div>
@@ -746,7 +748,7 @@ function startGame(){
   state.names=[n1.toUpperCase(),n2.toUpperCase()];
   // Easter egg: ban aurora
   state.names=state.names.map(function(n){return n==='BAN AURORA'?'I LOVE DAZZLING AURORA':n;});
-  state.scores=[0,0];state.xp=[0,0];state.logs=[[],[]];
+  state.scores=[0,0];state.xp=[0,0];state.logs=[[],[]];state.roundWins=[0,0];state.roundLoser=null;state.roundHistory=[];state.roundCounted=false;
   state.legends=[document.getElementById('p1legname').textContent,document.getElementById('p2legname').textContent];
   ['1','2'].forEach(p=>{
     document.getElementById('score'+p).textContent='0';
@@ -781,7 +783,11 @@ function adj(p,d){
   if(s<0)s=0;if(s>13)s=13;
   if(s===state.scores[p-1])return;
   state.scores[p-1]=s;
-  document.getElementById('score'+p).textContent=s;
+  var scoreEl=document.getElementById('score'+p);
+  scoreEl.textContent=s;
+  scoreEl.style.animation='none';
+  void scoreEl.offsetWidth;
+  scoreEl.style.animation='scorePop 0.3s ease-out';
   addLog(p,s+(d>0?'+':'-')+tsLog());
   // Auto-swap roll dice to GG on first score
   if(!document.getElementById('gg-btn').classList.contains('show')){
@@ -958,7 +964,7 @@ function openXP(p){
   if(p===2){popup.classList.add('p2-popup');}else{popup.classList.remove('p2-popup');}
   if(xpBtnEl){
     const r=xpBtnEl.getBoundingClientRect();
-    const pw=240,ph=160;
+    const pw=150,ph=120;
     let top,left;
     if(p===2){
       top=r.top-ph-42;
@@ -968,7 +974,7 @@ function openXP(p){
       left=r.right-pw;
     }
     top=Math.max(8,Math.min(top,window.innerHeight-ph-8));
-    left=Math.max(8,Math.min(left,window.innerWidth-pw-8));
+    if(p===2){left=Math.max(8,left);}else{left=r.right-pw;}
     popup.style.top=top+'px';
     popup.style.left=left+'px';
   }
@@ -1007,6 +1013,20 @@ function openLog(p){
   document.getElementById('logOverlay').classList.add('show');
 }
 function closeLog(){document.getElementById('logOverlay').classList.remove('show');}
+
+function rematch(){
+  // Close GG overlay and reset its state fully
+  var gg=document.getElementById('gg-overlay');
+  gg.classList.remove('show');
+  document.getElementById('next-game-btn').style.display='none';
+  document.getElementById('gg-close-btn').style.display='none';
+  var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='none';
+  document.getElementById('gg-winner').textContent='';
+  document.getElementById('gg-rounds').textContent='';
+  document.getElementById('gg-time').textContent='';
+  document.getElementById('gg-tabs').style.display='none';
+  startGame();
+}
 
 function goSetup(){
   // Reset all button/overlay states before going to menu
@@ -1135,6 +1155,10 @@ function openGG(){
   document.getElementById('gg-val2').textContent=s2;
   document.getElementById('gg-val1').style.color=s1>=s2?'var(--gold)':'var(--muted)';
   document.getElementById('gg-val2').style.color=s2>=s1?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-name1').style.color=s1>s2?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-name1').style.fontWeight=s1>s2?'700':'400';
+  document.getElementById('gg-name2').style.color=s2>s1?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-name2').style.fontWeight=s2>s1?'700':'400';
   // Build tabs
   var tabsEl=document.getElementById('gg-tabs');
   if(state.bo===3&&state.roundHistory.length>1){
@@ -1154,18 +1178,25 @@ function openGG(){
     winEl.textContent=(w1>=2?n1:n2)+' WINS!';
     winEl.style.color='var(--gold)';
     nextBtn.style.display='none';cb.style.display='';
+  var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='';
   } else if(isDrawEnd){
     winEl.textContent='GAME OVER — DRAW!';
     winEl.style.color='var(--accent)';
     nextBtn.style.display='none';cb.style.display='';
+  var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='';
   } else if(state.bo===3){
     nextBtn.style.display='';cb.style.display='none';
   } else {
     nextBtn.style.display='none';cb.style.display='';
+  var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='';
   }
   // Highlight winner score
   document.getElementById('gg-val1').style.color=s1>=s2?'var(--gold)':'var(--muted)';
   document.getElementById('gg-val2').style.color=s2>=s1?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-name1').style.color=s1>s2?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-name1').style.fontWeight=s1>s2?'700':'400';
+  document.getElementById('gg-name2').style.color=s2>s1?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-name2').style.fontWeight=s2>s1?'700':'400';
   // Logs
   function buildCol(p){
     var entries=state.logs[p-1];
