@@ -196,9 +196,9 @@
   #dice-half1{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;transition:background 0.08s;cursor:pointer;}
   #dice-half2{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;transition:background 0.08s;transform:rotate(180deg);cursor:pointer;}
   .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:color 0.08s;color:var(--muted);}
-  #dice-winner-p1{position:absolute;top:75%;left:0;right:0;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+  #dice-winner-p1{position:absolute;top:75%;left:0;right:0;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;pointer-events:none;}
   #dice-winner-p1.show{opacity:1;pointer-events:all;}
-  #dice-winner-p2{position:absolute;top:25%;left:0;right:0;transform:translateY(-50%) rotate(180deg);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+  #dice-winner-p2{position:absolute;top:25%;left:0;right:0;transform:translateY(-50%) rotate(180deg);display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;pointer-events:none;}
   #dice-winner-p2.show{opacity:1;pointer-events:all;}
   .dice-first-label{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,7.5vw,3.2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);line-height:1;}
   .dice-tap-label{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.7);}
@@ -546,7 +546,7 @@
     <div id="dice-goes-first"></div>
     <span id="dice-star2">★</span>
   </div>
-  <div id="dice-loser-p2" style="position:absolute;top:25%;left:0;right:0;transform:translateY(-50%) rotate(180deg);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;pointer-events:none;">
+  <div id="dice-loser-p2" style="position:absolute;top:25%;left:0;right:0;transform:translateY(-50%) rotate(180deg);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;">
     <div class="dice-loser-text" id="dice-loser-name2"></div>
   </div>
   <div id="dice-half1" onclick="confirmDice()"></div>
@@ -555,7 +555,7 @@
     <div class="dice-first-label">FIRST OR SECOND?</div>
     <div class="dice-tap-label">TAP TO CONTINUE</div>
   </div>
-  <div id="dice-loser-p1" style="position:absolute;top:75%;left:0;right:0;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s;pointer-events:none;">
+  <div id="dice-loser-p1" style="position:absolute;top:75%;left:0;right:0;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;">
     <div class="dice-loser-text" id="dice-loser-name1"></div>
   </div>
   <div id="dice-winner-p2" onclick="confirmDice()">
@@ -860,58 +860,62 @@ function rollDice(){
   stopDiceAnim();
   document.getElementById('dice-overlay').classList.add('show');
 
-  let ticks=0;
-  const totalTicks=28;
-  let current=Math.random()<0.5?1:2;
+  // Build steps: linear slowdown 120ms->500ms over ~3 seconds
+  // Winner is pre-determined randomly - animation just builds toward it
+  var _steps=[];
+  var _elapsed=0;
+  while(_elapsed<3000){
+    var _p=_elapsed/3000;
+    var _d=Math.round(120+(_p*380));
+    _steps.push(_d);
+    _elapsed+=_d;
+  }
+  var _si=0;
+  var _cur=Math.random()<0.5?1:2;
 
   function tick(){
-    ticks++;
-    // Always alternate at start, then get sticky toward winner at end
-    const progress=ticks/totalTicks;
-    if(progress<0.6){
-      // Fast phase: always switch
-      current=current===1?2:1;
+    var _progress=_si/_steps.length;
+    // Early phase: purely alternate
+    // Late phase (last 30%): bias strongly toward winner so it lands correctly
+    if(_progress<0.7){
+      _cur=_cur===1?2:1;
     } else {
-      // Slow phase: bias toward winner
-      var bias=progress<0.8?0.6:0.8;
-      if(Math.random()<bias) current=winner;
-      else current=winner===1?2:1;
+      // Need to land on winner at end - calculate if we should switch or stay
+      var _stepsLeft=_steps.length-_si;
+      if(_stepsLeft===1){
+        // Last step - force winner
+        _cur=winner;
+      } else if(_stepsLeft%2===0){
+        // Even steps left: stay to land on winner
+        if(_cur===winner) _cur=_cur; // stay
+        else _cur=_cur===1?2:1; // switch to get closer
+      } else {
+        // Odd steps left: switch to land on winner
+        if(_cur!==winner) _cur=_cur; // stay
+        else _cur=_cur===1?2:1;
+      }
     }
 
-    h1.style.background=current===1?'rgba(255,213,79,0.45)':'';
-    h2.style.background=current===2?'rgba(255,213,79,0.45)':'';
+    h1.style.background=_cur===1?'rgba(255,213,79,0.5)':'';
+    h2.style.background=_cur===2?'rgba(255,213,79,0.5)':'';
 
-    // Sync dice face speed with progress
-    var faceSpeed=400+Math.pow(progress,2)*800;
-    setRollAnimSpeed(faceSpeed);
-
-
-    const delay=40+Math.pow(progress,2.5)*500;
-
-    if(ticks<totalTicks){
-      setTimeout(tick,delay);
+    _si++;
+    if(_si<_steps.length){
+      setTimeout(tick,_steps[_si]);
     } else {
-      // Final settle on winner
-      current=winner;
-      h1.style.background=winner===1?'rgba(255,213,79,0.45)':'';
-      h2.style.background=winner===2?'rgba(255,213,79,0.45)':'';
-      setTimeout(function(){
-      h1.style.background=''; h2.style.background='';
-      stopRollAnim();
-      document.getElementById('dice-wheel').className='star-blink';
-      // Show FIRST over winner's name
+      h1.style.background='';
+      h2.style.background='';
       document.getElementById('dice-winner-p'+winner).classList.add('show');
       var loser=winner===1?2:1;
       var loserEl=document.getElementById('dice-loser-p'+loser);
       if(loserEl){document.getElementById('dice-loser-name'+loser).textContent='WAITING FOR '+state.names[winner-1]+'...';loserEl.style.opacity='1';}
-      diceWinner=winner;
-      },300);
       if(winner===1) h1.classList.add('blinking');
       else h2.classList.add('blinking');
+      diceWinner=winner;
       diceSettled=true;
     }
   }
-  setTimeout(tick,80);
+  setTimeout(tick,_steps[0]);
 }
 
 function confirmDice(){
