@@ -346,7 +346,7 @@
 
     <div id="midbar">
       <div class="mid-btn danger" onclick="confirmAction('reset')" title="Reset"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#ff6b6b"/></svg></div>
-      <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()" title="End Round"><svg width="30" height="24" viewBox="0 0 30 24" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="30" height="24" fill="none" stroke="#66bb6a" stroke-width="1"/><rect x="1" y="1" width="5" height="4" fill="#66bb6a"/><rect x="6" y="1" width="6" height="4" fill="#111"/><rect x="12" y="1" width="6" height="4" fill="#66bb6a"/><rect x="18" y="1" width="6" height="4" fill="#111"/><rect x="24" y="1" width="5" height="4" fill="#66bb6a"/><rect x="1" y="5" width="5" height="4" fill="#111"/><rect x="6" y="5" width="6" height="4" fill="#66bb6a"/><rect x="12" y="5" width="6" height="4" fill="#111"/><rect x="18" y="5" width="6" height="4" fill="#66bb6a"/><rect x="24" y="5" width="5" height="4" fill="#111"/><rect x="1" y="9" width="5" height="4" fill="#66bb6a"/><rect x="6" y="9" width="6" height="4" fill="#111"/><rect x="12" y="9" width="6" height="4" fill="#66bb6a"/><rect x="18" y="9" width="6" height="4" fill="#111"/><rect x="24" y="9" width="5" height="4" fill="#66bb6a"/><rect x="1" y="13" width="5" height="4" fill="#111"/><rect x="6" y="13" width="6" height="4" fill="#66bb6a"/><rect x="12" y="13" width="6" height="4" fill="#111"/><rect x="18" y="13" width="6" height="4" fill="#66bb6a"/><rect x="24" y="13" width="5" height="4" fill="#111"/><rect x="1" y="17" width="5" height="6" fill="#66bb6a"/><rect x="6" y="17" width="6" height="6" fill="#111"/><rect x="12" y="17" width="6" height="6" fill="#66bb6a"/><rect x="18" y="17" width="6" height="6" fill="#111"/><rect x="24" y="17" width="5" height="6" fill="#66bb6a"/></svg></div>
+      <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()" title="End Round"><svg width="30" height="22" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="30" height="22" fill="none" stroke="#66bb6a" stroke-width="1"/><rect x="1" y="1" width="5" height="4" fill="#66bb6a"/><rect x="6" y="1" width="6" height="4" fill="#111"/><rect x="12" y="1" width="6" height="4" fill="#66bb6a"/><rect x="18" y="1" width="6" height="4" fill="#111"/><rect x="24" y="1" width="5" height="4" fill="#66bb6a"/><rect x="1" y="5" width="5" height="4" fill="#111"/><rect x="6" y="5" width="6" height="4" fill="#66bb6a"/><rect x="12" y="5" width="6" height="4" fill="#111"/><rect x="18" y="5" width="6" height="4" fill="#66bb6a"/><rect x="24" y="5" width="5" height="4" fill="#111"/><rect x="1" y="9" width="5" height="4" fill="#66bb6a"/><rect x="6" y="9" width="6" height="4" fill="#111"/><rect x="12" y="9" width="6" height="4" fill="#66bb6a"/><rect x="18" y="9" width="6" height="4" fill="#111"/><rect x="24" y="9" width="5" height="4" fill="#66bb6a"/><rect x="1" y="13" width="5" height="4" fill="#111"/><rect x="6" y="13" width="6" height="4" fill="#66bb6a"/><rect x="12" y="13" width="6" height="4" fill="#111"/><rect x="18" y="13" width="6" height="4" fill="#66bb6a"/><rect x="24" y="13" width="5" height="4" fill="#111"/><rect x="1" y="17" width="5" height="4" fill="#66bb6a"/><rect x="6" y="17" width="6" height="4" fill="#111"/><rect x="12" y="17" width="6" height="4" fill="#66bb6a"/><rect x="18" y="17" width="6" height="4" fill="#111"/><rect x="24" y="17" width="5" height="4" fill="#66bb6a"/></svg></div>
       <div id="big-dice-container">
         <svg id="big-dice" class="idle" onclick="rollDice()" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <rect x="5" y="5" width="90" height="90" rx="18" fill="#0d2035" stroke="#ffd54f" stroke-width="3"/>
@@ -1035,7 +1035,6 @@ function formatTimer(s){
   return m+':'+sec;
 }
 
-
 function getRoundLabel(){
   if(state.bo===1)return'BEST OF 1';
   if(state.bo===3){
@@ -1542,21 +1541,6 @@ function showRollFace(){
     c.setAttribute('fill','#ffd54f');c.classList.add('roll-dot');
     dice.appendChild(c);
   });
-}
-function startRollAnim(speed){
-  _rollAnimActive=true;
-  showRollFace();
-  if(_rollDiceInterval)clearInterval(_rollDiceInterval);
-  _rollDiceInterval=setInterval(showRollFace,speed||120);
-}
-function setRollAnimSpeed(speed){
-  if(!_rollAnimActive)return;
-  if(_rollDiceInterval)clearInterval(_rollDiceInterval);
-  _rollDiceInterval=setInterval(showRollFace,speed);
-}
-function stopRollAnim(){
-  _rollAnimActive=false;
-  if(_rollDiceInterval){clearInterval(_rollDiceInterval);_rollDiceInterval=null;}
 }
 
 </script>
