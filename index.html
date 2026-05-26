@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-user-select:none !important;user-select:none !important;-webkit-touch-callout:none !important;}
+  input,textarea{-webkit-user-select:text !important;user-select:text !important;}
   :root{
     --bg1:#0d1b2a;--gold:#ffd54f;--accent:#4fc3f7;--accent2:#e57373;
     --text:#e0f0ff;--muted:#7a9bb5;
@@ -35,7 +36,7 @@
   .legend-label{font-size:0.8rem;color:var(--muted);text-align:center;width:100%;}
   .legend-label b{display:block;font-size:0.95rem;color:var(--text);font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:1px;}
   /* LEGEND PICKER SCREEN */
-  #legend-screen{position:fixed;inset:0;background:#000000;z-index:300;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:1rem;}
+  #legend-screen{position:fixed;inset:0;background:#000000;z-index:300;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:1rem;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
   #legend-screen.show{display:flex;}
   #legend-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(79,195,247,0.2);border-radius:16px;width:100%;max-width:420px;display:flex;flex-direction:column;overflow:hidden;max-height:92vh;}
   #legend-search-bar{padding:0.5rem 0.8rem;background:rgba(5,14,24,0.6);border-bottom:1px solid rgba(79,195,247,0.1);display:flex;align-items:center;gap:0.6rem;flex-shrink:0;}
@@ -1592,6 +1593,43 @@ document.addEventListener('pointerup',function(){
 document.addEventListener('pointercancel',function(){
   if(_sivirHoldTimer){clearTimeout(_sivirHoldTimer);_sivirHoldTimer=null;}
   document.getElementById('aurora-overlay').classList.remove('show');
+});
+
+// Gabe easter egg - hold Ahri 5s
+var _ahriHoldTimer=null;
+// Greg easter egg - hold Darius 5s
+var _dariusHoldTimer=null;
+
+document.addEventListener('pointerdown',function(e){
+  var card=e.target&&e.target.closest&&e.target.closest('.legend-card');
+  if(!card)return;
+  var idx=parseInt(card.getAttribute('data-idx'));
+  var legend=window._legendUnique&&!isNaN(idx)?window._legendUnique[idx]:null;
+  var key=legend?legend.k:'';
+  if(key==='Ahri'){
+    _ahriHoldTimer=setTimeout(function(){
+      _ahriHoldTimer=null;
+      document.getElementById('gabe-overlay').classList.add('show');
+    },5000);
+  }
+  if(key==='Darius'){
+    _dariusHoldTimer=setTimeout(function(){
+      _dariusHoldTimer=null;
+      document.getElementById('greg-overlay').classList.add('show');
+    },5000);
+  }
+});
+document.addEventListener('pointerup',function(){
+  if(_ahriHoldTimer){clearTimeout(_ahriHoldTimer);_ahriHoldTimer=null;}
+  if(_dariusHoldTimer){clearTimeout(_dariusHoldTimer);_dariusHoldTimer=null;}
+  document.getElementById('gabe-overlay').classList.remove('show');
+  document.getElementById('greg-overlay').classList.remove('show');
+});
+document.addEventListener('pointercancel',function(){
+  if(_ahriHoldTimer){clearTimeout(_ahriHoldTimer);_ahriHoldTimer=null;}
+  if(_dariusHoldTimer){clearTimeout(_dariusHoldTimer);_dariusHoldTimer=null;}
+  document.getElementById('gabe-overlay').classList.remove('show');
+  document.getElementById('greg-overlay').classList.remove('show');
 });
 </script>
 </body>
