@@ -397,12 +397,7 @@
 </div>
 <!-- AURORA EASTER EGG -->
 <div id="aurora-overlay">
-  <div class="aurora-band"></div>
-  <div class="aurora-band"></div>
-  <div class="aurora-band"></div>
-  <div class="aurora-band"></div>
-  <div class="aurora-stars"></div>
-  <div class="aurora-msg">✦ DAZZLING ISN'T IT? ✦</div>
+  <img src="https://static0.fextralifeimages.com/file/riftbound/0/0c/Ogn-160-dazzling-aurora-riftbound-tcg-wiki-guide.jpg" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:65%;max-width:300px;border-radius:12px;">
 </div>
 <!-- LEGEND PICKER SCREEN -->
 <div id="legend-screen">
@@ -625,8 +620,8 @@ const LEGENDS=[
   {n:'Jax',sub:'Grandmaster at Arms',k:'Jax'},
   {n:'Jhin',sub:'The Virtuoso',k:'Jhin'},
   {n:'Jinx',sub:'The Loose Cannon',k:'Jinx'},
-  {n:'Kai Sa',sub:'Daughter of the Void',k:'Kaisa'},
-  {n:'Kha Zix',sub:'The Voidreaver',k:'Khazix'},
+  {n:'Kai Sa',sub:'Daughter of the Void',k:'Kai\'Sa'},
+  {n:'Kha Zix',sub:'The Voidreaver',k:'Kha\'Zix'},
   {n:'LeBlanc',sub:'The Deceiver',k:'Leblanc'},
   {n:'Lee Sin',sub:'The Blind Monk',k:'LeeSin'},
   {n:'Leona',sub:'The Radiant Dawn',k:'Leona'},
@@ -638,7 +633,7 @@ const LEGENDS=[
   {n:'Ornn',sub:'The Fire Below the Mountain',k:'Ornn'},
   {n:'Poppy',sub:'Keeper of the Hammer',k:'Poppy'},
   {n:'Pyke',sub:'The Bloodharbor Ripper',k:'Pyke'},
-  {n:'Rek Sai',sub:'The Void Burrower',k:'RekSai'},
+  {n:'Rek Sai',sub:'The Void Burrower',k:'Rek\'Sai'},
   {n:'Renata Glasc',sub:'The Chem-Baroness',k:'Renata'},
   {n:'Rengar',sub:'The Pridestalker',k:'Rengar'},
   {n:'Rumble',sub:'The Mechanized Menace',k:'Rumble'},
@@ -1573,6 +1568,30 @@ function showRollFace(){
     dice.appendChild(c);
   });
 }
+
+
+// Easter egg - Sivir hold 5s triggers Aurora
+var _sivirTimer=null;
+document.addEventListener('pointerdown',function(e){
+  var card=e.target.closest&&e.target.closest('.legend-card');
+  if(!card)return;
+  var idx=parseInt(card.getAttribute('data-idx'));
+  var legend=window._legendUnique&&!isNaN(idx)?window._legendUnique[idx]:null;
+  var name=card.querySelector&&card.querySelector('.lc-name');
+  var key=legend?legend.k:(name?name.textContent.trim():'');
+  if(key==='Sivir'){
+    _sivirTimer=setTimeout(function(){
+      document.getElementById('aurora-overlay').classList.add('show');
+      setTimeout(function(){document.getElementById('aurora-overlay').classList.remove('show');},8000);
+    },5000);
+  }
+});
+document.addEventListener('pointerup',function(e){
+  if(_sivirTimer){clearTimeout(_sivirTimer);_sivirTimer=null;}
+});
+document.addEventListener('pointercancel',function(e){
+  if(_sivirTimer){clearTimeout(_sivirTimer);_sivirTimer=null;}
+});
 
 </script>
 </body>
