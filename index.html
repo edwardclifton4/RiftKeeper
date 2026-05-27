@@ -60,7 +60,7 @@
   .legend-card{display:flex;flex-direction:column;align-items:center;gap:0.35rem;cursor:pointer;background:rgba(255,255,255,0.04);border:1px solid rgba(79,195,247,0.12);border-radius:10px;padding:0.5rem 0.3rem;transition:background 0.15s;}
   .legend-card:active{background:rgba(79,195,247,0.15);}
   .legend-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;border-radius:6px;}
-  .legend-card span{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--text);text-align:center;line-height:1.2;}
+  .legend-card span{font-family:'Rajdhani',sans-serif;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--text);text-align:center;line-height:1.2;}
   #start-btn{background:linear-gradient(135deg,#1a4a6e,#0d2d45);border:1px solid var(--accent);color:var(--accent);font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:0.9rem 2.5rem;border-radius:10px;cursor:pointer;width:100%;max-width:360px;transition:all 0.2s;text-align:center;}
   #start-btn:active{transform:scale(0.97);}
   .bo-row{display:flex;gap:0.6rem;width:100%;max-width:360px;}
@@ -74,26 +74,28 @@
   .player-zone.p1{background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.lit{background:rgba(255,213,79,0.13)!important;}
   .pzone-bg{position:absolute;inset:0;opacity:0.08;background-size:cover;background-position:center;pointer-events:none;}
-  .score-big{font-family:'Rajdhani',sans-serif;font-size:15rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);flex:1;display:flex;align-items:center;justify-content:center;transition:transform 0.15s,color 0.15s;}
+  .score-big{font-family:'Rajdhani',sans-serif;font-size:15rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);flex:1;display:flex;align-items:center;justify-content:center;transition:transform 0.15s,color 0.15s;-webkit-user-select:none !important;user-select:none !important;pointer-events:none;}
   @keyframes scorePop{0%{transform:scale(1);}40%{transform:scale(1.15);}100%{transform:scale(1);}}
-  .player-name{font-family:'Rajdhani',sans-serif;font-size:1.4rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:1.2rem;margin-bottom:0.1rem;}
+  .player-name{font-family:'Rajdhani',sans-serif;font-size:1.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:2rem;margin-bottom:0.1rem;}
   .player-zone.p1 .player-name{margin-bottom:0.1rem;}
   .legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:2px;color:rgba(79,195,247,0.55);text-transform:uppercase;text-align:center;margin-bottom:0.15rem;min-height:0.9em;}
 
   /* TAP ZONES */
   .tap-zones{position:absolute;inset:0;display:flex;pointer-events:none;}
-  .tap-zone{flex:1;display:flex;align-items:center;justify-content:center;pointer-events:all;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .tap-zone{flex:1;display:flex;align-items:center;justify-content:center;pointer-events:all;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none !important;user-select:none !important;-webkit-touch-callout:none !important;touch-action:manipulation;}
   .tap-zone:first-child{justify-content:flex-start;padding-left:2.2rem;}
   .tap-zone:last-child{justify-content:flex-end;padding-right:2.2rem;}
   .tap-zone:active{background:rgba(255,213,79,0.09);}
   .tap-hint{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;opacity:0.45;pointer-events:none;user-select:none;color:var(--gold);}
 
   /* CORNER BUTTONS */
-  .log-btn{position:absolute;top:16px;left:12px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 10px;cursor:pointer;display:flex;align-items:flex-start;font-size:11px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;color:var(--gold);z-index:5;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:pre-line;line-height:1.5;}
+  .log-btn{position:absolute;bottom:0.5rem;left:12px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 10px;cursor:pointer;display:flex;align-items:flex-start;font-size:11px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;color:var(--gold);z-index:5;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:pre-line;line-height:1.5;}
   .log-btn.has-entries{opacity:1;pointer-events:all;}
-  .xp-btn{position:absolute;top:16px;right:12px;background:rgba(255,213,79,0.12);border:1px solid rgba(255,213,79,0.3);border-radius:8px;padding:5px 10px;cursor:pointer;display:flex;align-items:center;z-index:5;}
-  .xp-val{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--gold);letter-spacing:1px;}
-  .player-zone.p2 .log-btn{top:16px;bottom:auto;left:12px;right:auto;transform:none;}
+  .concede-btn{position:absolute;top:16px;left:12px;background:rgba(255,107,107,0.12);border:1px solid rgba(255,107,107,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;z-index:5;font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:#ff6b6b;letter-spacing:1px;touch-action:manipulation;}
+  .player-zone.p2 .concede-btn{top:16px;left:12px;}
+  .xp-btn{position:absolute;top:16px;right:12px;background:rgba(255,213,79,0.12);border:1px solid rgba(255,213,79,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;z-index:5;}
+  .xp-val{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--gold);letter-spacing:1px;}
+  .player-zone.p2 .log-btn{bottom:0.5rem;top:auto;left:12px;right:auto;transform:none;}
   .player-zone.p2 .xp-btn{top:16px;bottom:auto;right:12px;left:auto;transform:none;}
 
   /* MIDBAR */
@@ -142,10 +144,10 @@
   .midbar-logo .r{color:var(--accent);}
   .midbar-logo .k{color:var(--gold);}
   .midbar-logo.flip{transform:rotate(180deg);}
-  .timer-box{display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity 0.4s;pointer-events:none;margin-top:auto;padding-bottom:0.8rem;}
+  .timer-box{position:absolute;bottom:0;left:0;right:0;opacity:0;transition:opacity 0.4s;pointer-events:none;padding-bottom:0.5rem;}
   .timer-box.show{opacity:1;}
   .timer-box.p2-timer{transform:none;}
-  .timer-display{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;display:none;}
+  .timer-display{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;display:none;position:absolute;bottom:0.5rem;right:12px;}
   .timer-display.urgent{color:var(--accent2);animation:timerFlash 0.7s ease-in-out infinite;}
   @keyframes timerFlash{0%,100%{opacity:1;}50%{opacity:0.2;}}
 
@@ -173,7 +175,7 @@
   .gg-log-entry{font-family:'Rajdhani',sans-serif;font-size:0.95rem;color:var(--gold);padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;}
   .gg-log-entry:last-child{border-bottom:none;}
   .gg-log-empty{font-size:0.78rem;color:var(--muted);text-align:center;}
-  #gg-actions{display:flex;gap:0;flex-shrink:0;border-top:1px solid rgba(79,195,247,0.15);}
+  #gg-actions{display:flex;gap:0;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.4);}
   .gg-action-btn{flex:1;padding:0.75rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px;font-size:0.85rem;cursor:pointer;text-transform:uppercase;text-align:center;color:var(--gold);background:rgba(255,213,79,0.08);}
   #rematch-btn{border-right:1px solid rgba(255,213,79,0.25);}
   .gg-action-btn.next{color:var(--gold);background:rgba(255,213,79,0.12);}
@@ -293,7 +295,7 @@
   #big-dice.shaking{animation:diceShake 0.5s ease-in-out;}
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
-  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:2px;}
+  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;}
   .pregame-bo-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:auto;padding-bottom:0.8rem;display:none;}
 </style>
 </head>
@@ -329,6 +331,7 @@
       <div class="pzone-bg" id="bg2"></div>
       <div class="log-btn" id="logbtn2" onclick="openLog(2)"><span id="logcount2"></span></div>
       <div class="xp-btn" onclick="openXP(2)"><span class="xp-val" id="xpval2">0 XP</span></div>
+      <div class="concede-btn" id="concede-btn2" onclick="concedePrompt(2)" style="display:none;">CONCEDE?</div>
       <div class="tap-zones">
         <div class="tap-zone" onclick="adj(2,-1)"><span class="tap-hint">−</span></div>
         <div class="tap-zone" onclick="adj(2,1)"><span class="tap-hint">+</span></div>
@@ -342,7 +345,7 @@
       <div class="timer-box p2-timer" id="timer-p2">
         <div class="timer-display" id="timer-display-p2">60:00</div>
         <div class="timer-round-sub" id="timer-round-p2"></div>
-        <div id="pregame-bo-p2" style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;display:none;transform:rotate(180deg);"></div>
+        <div id="pregame-bo-p2" style="font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;display:none;transform:rotate(180deg);text-align:center;width:100%;padding-bottom:0.5rem;"></div>
       </div>
     </div>
 
@@ -369,6 +372,7 @@
       <div class="pzone-bg" id="bg1"></div>
       <div class="log-btn" id="logbtn1" onclick="openLog(1)"><span id="logcount1"></span></div>
       <div class="xp-btn" onclick="openXP(1)"><span class="xp-val" id="xpval1">0 XP</span></div>
+      <div class="concede-btn" id="concede-btn1" onclick="concedePrompt(1)" style="display:none;">CONCEDE?</div>
       <div class="tap-zones">
         <div class="tap-zone" onclick="adj(1,-1)"><span class="tap-hint">−</span></div>
         <div class="tap-zone" onclick="adj(1,1)"><span class="tap-hint">+</span></div>
@@ -382,7 +386,7 @@
       <div class="timer-box" id="timer-p1">
         <div class="timer-display" id="timer-display-p1">60:00</div>
         <div class="timer-round-sub" id="timer-round-p1"></div>
-        <div id="pregame-bo-p1" style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;display:none;"></div>
+        <div id="pregame-bo-p1" style="font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;display:none;text-align:center;width:100%;padding-bottom:0.5rem;"></div>
       </div>
     </div>
   </div>
@@ -456,18 +460,18 @@
   <div class="overtime-half p2side">
     <div class="overtime-title">OVERTIME</div>
     <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THEIR TURN</div>
-    <div class="overtime-sub" id="ot-turns-p2">THEN BOTH PLAYERS PLAY 5 MORE TURNS TOTAL</div>
-    <div class="overtime-sub" id="ot-result-p2">MOST POINTS → WINS THE ROUND</div>
-    <div class="overtime-sub" id="ot-draw-p2">TIED ON POINTS → ROUND IS A DRAW</div>
+    <div class="overtime-sub" id="ot-turns-p2">3 MORE TURNS EACH</div>
+    <div class="overtime-sub" id="ot-result-p2">NEED A 2-POINT LEAD TO WIN</div>
+    <div class="overtime-sub" id="ot-draw-p2">OTHERWISE FEWER POINTS LOSES</div>
     <div class="overtime-tap">TAP TO CONTINUE</div>
   </div>
   <div style="height:1px;background:rgba(255,213,79,0.2);flex-shrink:0;"></div>
   <div class="overtime-half">
     <div class="overtime-title">OVERTIME</div>
     <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THEIR TURN</div>
-    <div class="overtime-sub" id="ot-turns-p1">THEN BOTH PLAYERS PLAY 5 MORE TURNS TOTAL</div>
-    <div class="overtime-sub" id="ot-result-p1">MOST POINTS → WINS THE ROUND</div>
-    <div class="overtime-sub" id="ot-draw-p1">TIED ON POINTS → ROUND IS A DRAW</div>
+    <div class="overtime-sub" id="ot-turns-p1">3 MORE TURNS EACH</div>
+    <div class="overtime-sub" id="ot-result-p1">NEED A 2-POINT LEAD TO WIN</div>
+    <div class="overtime-sub" id="ot-draw-p1">OTHERWISE FEWER POINTS LOSES</div>
     <div class="overtime-tap">TAP TO CONTINUE</div>
   </div>
 </div>
@@ -1067,7 +1071,7 @@ function updateTimerDisplay(){
     const el=document.getElementById('timer-display-'+p);
     el.textContent=str;
     const sub=document.getElementById('timer-round-'+p);
-    if(sub){var lbl=getRoundLabel();sub.textContent=lbl?lbl+' - '+str:str;}
+    if(sub){var lbl=getRoundLabel();sub.textContent=lbl?lbl:str;}
   });
 }
 
@@ -1093,8 +1097,10 @@ function showTimers(){
   }
   document.getElementById('gg-btn').classList.add('show');
   document.getElementById('pause-btn').classList.add('show');
-  document.getElementById('timer-display-p1').style.display='';
-  document.getElementById('timer-display-p2').style.display='';
+  document.getElementById('concede-btn1').style.display='';
+  document.getElementById('concede-btn2').style.display='';
+  document.getElementById('timer-display-p1').style.display='block';
+  document.getElementById('timer-display-p2').style.display='block';
   document.getElementById('timer-round-p1').style.display='';
   document.getElementById('timer-round-p2').style.display='';
   ['p1','p2'].forEach(p=>{
@@ -1118,6 +1124,7 @@ function confirmGG(){
   document.getElementById('confirm-yes').onclick=function(){
     var act=_confirmAction;
     closeConfirm();
+    if(act==='concede'){concedeConfirm();return;}
     if(act==='gg') openGG();
   };
   document.getElementById('confirm-overlay').classList.add('show');
@@ -1257,6 +1264,7 @@ function confirmAction(action){
   document.getElementById('confirm-yes').onclick=function(){
     var act=_confirmAction;
     closeConfirm();
+    if(act==='concede'){concedeConfirm();return;}
     if(act==='reset')resetScores();
     else if(act==='menu')goSetup();
   };
@@ -1264,6 +1272,7 @@ function confirmAction(action){
 }
 function closeConfirm(){
   document.getElementById('confirm-overlay').classList.remove('show');
+  var card=document.getElementById('confirm-card');if(card)card.style.transform='';
   _confirmAction=null;
 }
 
@@ -1397,6 +1406,7 @@ function setPreGameState(on){
   if(rollBtn)rollBtn.style.visibility=on?'hidden':'';
   logos.forEach(function(l){l.style.visibility=on?'hidden':'';});
   document.querySelectorAll('.xp-btn').forEach(function(b){b.style.visibility=on?'hidden':'';});
+  document.querySelectorAll('.concede-btn').forEach(function(b){b.style.visibility=on?'hidden':'';});
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
   ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
@@ -1447,6 +1457,7 @@ function confirmDone(){
   document.getElementById('confirm-yes').onclick=function(){
     var act=_confirmAction;
     closeConfirm();
+    if(act==='concede'){concedeConfirm();return;}
     if(act==='menu_from_gg'){
       document.getElementById('gg-overlay').classList.remove('show');
       goSetup();
@@ -1532,6 +1543,15 @@ function stopDiceAnim(){
   if(_diceAnimInterval){clearInterval(_diceAnimInterval);_diceAnimInterval=null;}
 }
 
+// Prevent any selection or delay on score tap zones
+document.querySelectorAll&&document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.tap-zone').forEach(function(el){
+    el.addEventListener('touchstart',function(e){
+      e.target.style.webkitUserSelect='none';
+      e.target.style.userSelect='none';
+    },{passive:true});
+  });
+});
 // Prevent text selection globally
 document.addEventListener('contextmenu',function(e){e.preventDefault();return false;},{capture:true,passive:false});
 document.addEventListener('selectstart',function(e){if(e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA'){e.preventDefault();return false;}},{capture:true,passive:false});
@@ -1631,6 +1651,26 @@ document.addEventListener('pointercancel',function(){
   document.getElementById('gabe-overlay').classList.remove('show');
   document.getElementById('greg-overlay').classList.remove('show');
 });
+
+var _concedePlayer=null;
+function concedePrompt(p){
+  _concedePlayer=p;
+  var card=document.getElementById('confirm-card');
+  if(card)card.style.transform=p===2?'rotate(180deg)':'';
+  confirmAction('concede');
+}
+function concedeConfirm(){
+  if(_concedePlayer===null)return;
+  var loser=_concedePlayer;
+  var winner=loser===1?2:1;
+  _concedePlayer=null;
+  // Force loser score to 0 and winner to 1 so openGG always awards winner
+  state.scores[loser-1]=0;
+  state.scores[winner-1]=Math.max(1,state.scores[winner-1]);
+  document.getElementById('score'+loser).textContent=0;
+  document.getElementById('score'+winner).textContent=state.scores[winner-1];
+  openGG();
+}
 </script>
 </body>
 </html>
