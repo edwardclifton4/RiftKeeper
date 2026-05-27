@@ -89,13 +89,13 @@
   .tap-hint{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;opacity:0.45;pointer-events:none;user-select:none;color:var(--gold);}
 
   /* CORNER BUTTONS */
-  .log-btn{position:absolute;bottom:0.5rem;left:12px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 10px;cursor:pointer;display:flex;align-items:flex-start;font-size:11px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;color:var(--gold);z-index:5;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:pre-line;line-height:1.5;}
+  .log-btn{display:none !important;}
   .log-btn.has-entries{opacity:1;pointer-events:all;}
-  .concede-btn{position:absolute;top:16px;left:12px;background:rgba(255,107,107,0.12);border:1px solid rgba(255,107,107,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;z-index:5;font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:#ff6b6b;letter-spacing:1px;touch-action:manipulation;}
+  .concede-btn{position:absolute;top:16px;left:12px;background:rgba(255,107,107,0.12);border:1px solid rgba(255,107,107,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:#ff6b6b;letter-spacing:1px;touch-action:manipulation;min-width:70px;}
   .player-zone.p2 .concede-btn{top:16px;left:12px;}
-  .xp-btn{position:absolute;top:16px;right:12px;background:rgba(255,213,79,0.12);border:1px solid rgba(255,213,79,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;z-index:5;}
+  .xp-btn{position:absolute;top:16px;right:12px;background:rgba(255,213,79,0.12);border:1px solid rgba(255,213,79,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;min-width:70px;}
   .xp-val{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--gold);letter-spacing:1px;}
-  .player-zone.p2 .log-btn{bottom:0.5rem;top:auto;left:12px;right:auto;transform:none;}
+
   .player-zone.p2 .xp-btn{top:16px;bottom:auto;right:12px;left:auto;transform:none;}
 
   /* MIDBAR */
@@ -147,7 +147,7 @@
   .timer-box{position:absolute;bottom:0;left:0;right:0;opacity:0;transition:opacity 0.4s;pointer-events:none;padding-bottom:0.5rem;}
   .timer-box.show{opacity:1;}
   .timer-box.p2-timer{transform:none;}
-  .timer-display{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;display:none;position:absolute;bottom:0.5rem;right:12px;}
+  .timer-display{display:none;}
   .timer-display.urgent{color:var(--accent2);animation:timerFlash 0.7s ease-in-out infinite;}
   @keyframes timerFlash{0%,100%{opacity:1;}50%{opacity:0.2;}}
 
@@ -274,7 +274,7 @@
   .overtime-half.p2side{transform:rotate(180deg);}
   .overtime-title{font-family:'Rajdhani',sans-serif;font-size:clamp(2rem,7.5vw,3.2rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;}
   .overtime-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(1.1rem,4.5vw,1.5rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.75);text-align:center;line-height:1.8;}
-  .overtime-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.5);text-align:center;margin-top:0.8rem;animation:fosFlash 8s ease-in-out infinite;}
+  .overtime-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:0.8rem;animation:fosFlash 1.2s ease-in-out infinite;}
   #bo1-rules-overlay.show{display:flex;}
   #gabe-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
   #gabe-overlay.show{display:block;}
@@ -331,7 +331,7 @@
       <div class="pzone-bg" id="bg2"></div>
       <div class="log-btn" id="logbtn2" onclick="openLog(2)"><span id="logcount2"></span></div>
       <div class="xp-btn" onclick="openXP(2)"><span class="xp-val" id="xpval2">0 XP</span></div>
-      <div class="concede-btn" id="concede-btn2" onclick="concedePrompt(2)" style="display:none;">CONCEDE?</div>
+      <div class="concede-btn" id="concede-btn2" onclick="concedePrompt(2)" style="display:none;">FF?</div>
       <div class="tap-zones">
         <div class="tap-zone" id="tap2m"><span class="tap-hint">−</span></div>
         <div class="tap-zone" id="tap2p"><span class="tap-hint">+</span></div>
@@ -345,7 +345,7 @@
       <div class="timer-box p2-timer" id="timer-p2">
         <div class="timer-display" id="timer-display-p2">60:00</div>
         <div class="timer-round-sub" id="timer-round-p2"></div>
-        <div id="pregame-bo-p2" style="font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;display:none;transform:rotate(180deg);text-align:center;width:100%;padding-bottom:0.5rem;"></div>
+        <div id="pregame-bo-p2" style="font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;display:none;text-align:center;width:100%;padding-bottom:0.5rem;"></div>
       </div>
     </div>
 
@@ -372,7 +372,7 @@
       <div class="pzone-bg" id="bg1"></div>
       <div class="log-btn" id="logbtn1" onclick="openLog(1)"><span id="logcount1"></span></div>
       <div class="xp-btn" onclick="openXP(1)"><span class="xp-val" id="xpval1">0 XP</span></div>
-      <div class="concede-btn" id="concede-btn1" onclick="concedePrompt(1)" style="display:none;">CONCEDE?</div>
+      <div class="concede-btn" id="concede-btn1" onclick="concedePrompt(1)" style="display:none;">FF?</div>
       <div class="tap-zones">
         <div class="tap-zone" id="tap1m"><span class="tap-hint">−</span></div>
         <div class="tap-zone" id="tap1p"><span class="tap-hint">+</span></div>
@@ -459,19 +459,17 @@
 <div id="overtime-overlay">
   <div class="overtime-half p2side">
     <div class="overtime-title">OVERTIME</div>
-    <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THEIR TURN</div>
+    <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THE TURN</div>
     <div class="overtime-sub" id="ot-turns-p2">3 MORE TURNS EACH</div>
     <div class="overtime-sub" id="ot-result-p2">NEED A 2-POINT LEAD TO WIN</div>
-    <div class="overtime-sub" id="ot-draw-p2">OTHERWISE FEWER POINTS LOSES</div>
     <div class="overtime-tap">TAP TO CONTINUE</div>
   </div>
   <div style="height:1px;background:rgba(255,213,79,0.2);flex-shrink:0;"></div>
   <div class="overtime-half">
     <div class="overtime-title">OVERTIME</div>
-    <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THEIR TURN</div>
+    <div class="overtime-sub">ACTIVE PLAYER WILL FINISH THE TURN</div>
     <div class="overtime-sub" id="ot-turns-p1">3 MORE TURNS EACH</div>
     <div class="overtime-sub" id="ot-result-p1">NEED A 2-POINT LEAD TO WIN</div>
-    <div class="overtime-sub" id="ot-draw-p1">OTHERWISE FEWER POINTS LOSES</div>
     <div class="overtime-tap">TAP TO CONTINUE</div>
   </div>
 </div>
@@ -775,7 +773,7 @@ function startGame(){
   var z1=document.getElementById('zone1');
   var z2=document.getElementById('zone2');
   if(z1){var r1=z1.getBoundingClientRect();var el1=document.getElementById('pregame-bo-p1');if(el1){el1.textContent=boTxt2;el1.style.bottom='';el1.style.top=(r1.bottom-40)+'px';el1.style.left=(r1.left+8)+'px';el1.style.display='';}}
-  if(z2){var r2=z2.getBoundingClientRect();var el2=document.getElementById('pregame-bo-p2');if(el2){el2.textContent=boTxt2;el2.style.top='';el2.style.bottom=(window.innerHeight-r2.top-40)+'px';el2.style.left=(r2.left+8)+'px';el2.style.display='';el2.style.transform='rotate(180deg)';}}
+  if(z2){var r2=z2.getBoundingClientRect();var el2=document.getElementById('pregame-bo-p2');if(el2){el2.textContent=boTxt2;el2.style.top='';el2.style.bottom=(window.innerHeight-r2.top-40)+'px';el2.style.left=(r2.left+8)+'px';el2.style.display='';el2.style.transform='';}}
 }
 
 function adj(p,d){
@@ -1071,7 +1069,7 @@ function updateTimerDisplay(){
     const el=document.getElementById('timer-display-'+p);
     el.textContent=str;
     const sub=document.getElementById('timer-round-'+p);
-    if(sub){var lbl=getRoundLabel();sub.textContent=lbl?lbl:str;}
+    if(sub){var lbl=timerOver?'OVERTIME':getRoundLabel();sub.textContent=lbl?lbl+' — '+str:str;}
   });
 }
 
@@ -1099,8 +1097,6 @@ function showTimers(){
   document.getElementById('pause-btn').classList.add('show');
   document.getElementById('concede-btn1').style.display='';
   document.getElementById('concede-btn2').style.display='';
-  document.getElementById('timer-display-p1').style.display='block';
-  document.getElementById('timer-display-p2').style.display='block';
   document.getElementById('timer-round-p1').style.display='';
   document.getElementById('timer-round-p2').style.display='';
   ['p1','p2'].forEach(p=>{
@@ -1265,7 +1261,7 @@ function confirmAction(action){
     var act=_confirmAction;
     closeConfirm();
     if(act==='concede'){concedeConfirm();return;}
-    if(act==='reset')resetScores();
+    if(act==='reset'){document.getElementById('gg-overlay').classList.remove('show');startGame();return;}
     else if(act==='menu')goSetup();
   };
   document.getElementById('confirm-overlay').classList.add('show');
@@ -1385,8 +1381,6 @@ function setPreGameState(on){
   document.getElementById('timer-p1').style.opacity=on?'1':'';
   document.getElementById('timer-p2').style.opacity=on?'1':'';
   // Hide timer-display and timer-round-sub, only show bo label
-  document.getElementById('timer-display-p1').style.display=on?'none':'';
-  document.getElementById('timer-display-p2').style.display=on?'none':'';
   document.getElementById('timer-round-p1').style.display=on?'none':'';
   document.getElementById('timer-round-p2').style.display=on?'none':'';
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
@@ -1485,11 +1479,12 @@ function playBeeps(n,cb){
 }
 
 function triggerOvertime(){
+  timerSeconds=2;updateTimerDisplay();
   playBeeps(5,null);
   var turns=state.bo===1?'3':'5';
   ['p1','p2'].forEach(function(p){
     var el=document.getElementById('ot-turns-'+p);
-    if(el)el.textContent='THEN BOTH PLAYERS PLAY '+turns+' MORE TURNS TOTAL';
+    if(el)el.textContent='3 MORE TURNS EACH';
     var rd=document.getElementById('ot-result-'+p);
     if(rd)rd.textContent=state.bo===1?'NEED 2-POINT LEAD TO WIN':'MOST POINTS → WINS THE ROUND';
     var dr=document.getElementById('ot-draw-'+p);
@@ -1672,21 +1667,12 @@ function concedeConfirm(){
   openGG();
 }
 
-// Wire up score tap zones - touchstart for instant response, click as fallback
 (function(){
-  function addTap(id, fn){
-    var el=document.getElementById(id);
-    if(!el)return;
+  function addTap(id,fn){
+    var el=document.getElementById(id);if(!el)return;
     var _fired=false;
-    el.addEventListener('touchstart',function(e){
-      e.preventDefault();
-      _fired=true;
-      fn();
-    },{passive:false});
-    el.addEventListener('click',function(e){
-      if(_fired){_fired=false;return;}
-      fn();
-    });
+    el.addEventListener('touchstart',function(e){e.preventDefault();_fired=true;fn();},{passive:false});
+    el.addEventListener('click',function(e){if(_fired){_fired=false;return;}fn();});
   }
   addTap('tap1p',function(){adj(1,1);});
   addTap('tap1m',function(){adj(1,-1);});
