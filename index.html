@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="RiftKeeper">
@@ -89,13 +89,13 @@
   .tap-hint{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;opacity:0.45;pointer-events:none;user-select:none;color:var(--gold);}
 
   /* CORNER BUTTONS */
-  .log-btn{position:absolute;bottom:0.5rem;left:12px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 10px;cursor:pointer;display:flex;align-items:flex-start;font-size:11px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;color:var(--gold);z-index:5;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:pre-line;line-height:1.5;}
+  .log-btn{position:absolute;bottom:calc(0.5rem + env(safe-area-inset-bottom, 0px));left:12px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:6px 10px;cursor:pointer;display:flex;align-items:flex-start;font-size:11px;font-family:'Rajdhani',sans-serif;letter-spacing:1px;color:var(--gold);z-index:5;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:pre-line;line-height:1.5;}
   .log-btn.has-entries{opacity:1;pointer-events:all;}
   .concede-btn{position:absolute;top:16px;left:12px;background:rgba(255,107,107,0.12);border:1px solid rgba(255,107,107,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;z-index:5;font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:#ff6b6b;letter-spacing:1px;touch-action:manipulation;}
   .player-zone.p2 .concede-btn{top:16px;left:12px;}
   .xp-btn{position:absolute;top:16px;right:12px;background:rgba(255,213,79,0.12);border:1px solid rgba(255,213,79,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;z-index:5;}
   .xp-val{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--gold);letter-spacing:1px;}
-  .player-zone.p2 .log-btn{bottom:0.5rem;top:auto;left:12px;right:auto;transform:none;}
+  .player-zone.p2 .log-btn{bottom:calc(0.5rem + env(safe-area-inset-bottom, 0px));top:auto;left:12px;right:auto;transform:none;}
   .player-zone.p2 .xp-btn{top:16px;bottom:auto;right:12px;left:auto;transform:none;}
 
   /* MIDBAR */
@@ -147,7 +147,7 @@
   .timer-box{position:absolute;bottom:0;left:0;right:0;opacity:0;transition:opacity 0.4s;pointer-events:none;padding-bottom:0.5rem;}
   .timer-box.show{opacity:1;}
   .timer-box.p2-timer{transform:none;}
-  .timer-display{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;display:none;position:absolute;bottom:0.5rem;right:12px;}
+  .timer-display{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;display:none;position:absolute;bottom:calc(0.5rem + env(safe-area-inset-bottom, 0px));right:12px;}
   .timer-display.urgent{color:var(--accent2);animation:timerFlash 0.7s ease-in-out infinite;}
   @keyframes timerFlash{0%,100%{opacity:1;}50%{opacity:0.2;}}
 
@@ -295,7 +295,7 @@
   #big-dice.shaking{animation:diceShake 0.5s ease-in-out;}
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
-  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;}
+  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;position:absolute;bottom:calc(0.5rem + env(safe-area-inset-bottom, 0px));left:0;right:0;text-align:center;}
   .pregame-bo-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:auto;padding-bottom:0.8rem;display:none;}
 </style>
 </head>
@@ -333,8 +333,8 @@
       <div class="xp-btn" onclick="openXP(2)"><span class="xp-val" id="xpval2">0 XP</span></div>
       <div class="concede-btn" id="concede-btn2" onclick="concedePrompt(2)" style="display:none;">CONCEDE?</div>
       <div class="tap-zones">
-        <div class="tap-zone" onclick="adj(2,-1)"><span class="tap-hint">−</span></div>
-        <div class="tap-zone" onclick="adj(2,1)"><span class="tap-hint">+</span></div>
+        <div class="tap-zone" id="tap2m"><span class="tap-hint">−</span></div>
+        <div class="tap-zone" id="tap2p"><span class="tap-hint">+</span></div>
       </div>
       <div class="player-name" id="pname2">PLAYER 2</div>
       <div class="legend-sub" id="legendsub2"></div>
@@ -374,8 +374,8 @@
       <div class="xp-btn" onclick="openXP(1)"><span class="xp-val" id="xpval1">0 XP</span></div>
       <div class="concede-btn" id="concede-btn1" onclick="concedePrompt(1)" style="display:none;">CONCEDE?</div>
       <div class="tap-zones">
-        <div class="tap-zone" onclick="adj(1,-1)"><span class="tap-hint">−</span></div>
-        <div class="tap-zone" onclick="adj(1,1)"><span class="tap-hint">+</span></div>
+        <div class="tap-zone" id="tap1m"><span class="tap-hint">−</span></div>
+        <div class="tap-zone" id="tap1p"><span class="tap-hint">+</span></div>
       </div>
       <div class="player-name" id="pname1">PLAYER 1</div>
       <div class="legend-sub" id="legendsub1"></div>
@@ -1671,6 +1671,29 @@ function concedeConfirm(){
   document.getElementById('score'+winner).textContent=state.scores[winner-1];
   openGG();
 }
+
+// Wire up score tap zones - touchstart for instant response, click as fallback
+(function(){
+  function addTap(id, fn){
+    var el=document.getElementById(id);
+    if(!el)return;
+    var _fired=false;
+    el.addEventListener('touchstart',function(e){
+      e.preventDefault();
+      _fired=true;
+      fn();
+    },{passive:false});
+    el.addEventListener('click',function(e){
+      if(_fired){_fired=false;return;}
+      fn();
+    });
+  }
+  addTap('tap1p',function(){adj(1,1);});
+  addTap('tap1m',function(){adj(1,-1);});
+  addTap('tap2p',function(){adj(2,1);});
+  addTap('tap2m',function(){adj(2,-1);});
+})();
+
 </script>
 </body>
 </html>
