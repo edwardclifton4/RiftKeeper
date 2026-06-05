@@ -136,9 +136,9 @@
   #confirm-card{background:#0a1828;border:1px solid rgba(79,195,247,0.25);border-radius:14px;padding:2rem;width:85%;max-width:340px;display:flex;flex-direction:column;gap:1.2rem;text-align:center;}
   #confirm-msg{font-family:'Rajdhani',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--text);text-transform:uppercase;}
   #confirm-btns{display:flex;gap:0.6rem;}
-  .confirm-btn{flex:1;padding:0.9rem;border-radius:10px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;text-align:center;border:1px solid rgba(255,255,255,0.1);}
-  .confirm-btn.yes{background:rgba(229,115,115,0.15);color:var(--accent2);border-color:rgba(229,115,115,0.3);}
-  .confirm-btn.no{background:rgba(255,255,255,0.05);color:var(--muted);}
+  .confirm-btn{flex:1;padding:1.5rem;border-radius:12px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:1.7rem;letter-spacing:2px;text-transform:uppercase;text-align:center;border:1px solid rgba(255,255,255,0.1);}
+  .confirm-btn.yes{background:rgba(255,255,255,0.05);color:var(--muted);}
+  .confirm-btn.no{background:rgba(229,115,115,0.15);color:var(--accent2);border-color:rgba(229,115,115,0.3);}
   .midbar-btns{display:flex;align-items:center;gap:1rem;}
   .midbar-logo{font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:2px;line-height:1.2;text-align:center;pointer-events:none;user-select:none;flex-shrink:0;}
   .midbar-logo .r{color:var(--accent);}
@@ -176,7 +176,7 @@
   .gg-log-entry:last-child{border-bottom:none;}
   .gg-log-empty{font-size:0.78rem;color:var(--muted);text-align:center;}
   #gg-actions{display:flex;gap:0;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.4);}
-  .gg-action-btn{flex:1;padding:0.75rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px;font-size:0.85rem;cursor:pointer;text-transform:uppercase;text-align:center;color:var(--gold);background:rgba(255,213,79,0.08);}
+  .gg-action-btn{flex:1;padding:1.4rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px;font-size:1.3rem;cursor:pointer;text-transform:uppercase;text-align:center;color:var(--gold);background:rgba(255,213,79,0.08);}
   #rematch-btn{border-right:1px solid rgba(255,213,79,0.25);}
   .gg-action-btn.next{color:var(--gold);background:rgba(255,213,79,0.12);}
   .gg-action-btn:active{background:rgba(255,213,79,0.2);}
@@ -802,10 +802,12 @@ function adj(p,d){
 
 function resetRound(){
   state.scores=[0,0];
+  state.xp=[0,0];
   state.logs=[[],[]];
   state.roundCounted=false;
   ['1','2'].forEach(p=>{
     document.getElementById('score'+p).textContent='0';
+    document.getElementById('xpval'+p).textContent='0 XP';
     document.getElementById('logcount'+p).textContent='';
     const btn=document.getElementById('logbtn'+p);
     if(btn)btn.classList.remove('has-entries');
@@ -1185,9 +1187,14 @@ function openGG(){
   var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='';
   } else if(state.bo===3){
     nextBtn.style.display='';cb.style.display='none';
+    // Auto-advance after 3 seconds
+    if(window._autoNextTimer)clearTimeout(window._autoNextTimer);
+    window._autoNextTimer=setTimeout(function(){
+      if(document.getElementById('gg-overlay').classList.contains('show'))nextGame();
+    },3000);
   } else {
     nextBtn.style.display='none';cb.style.display='';
-  var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='';
+    if(state.bo===1){var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='';}
   }
   // Highlight winner score
   document.getElementById('gg-val1').style.color=s1>=s2?'var(--gold)':'var(--muted)';
@@ -1218,7 +1225,9 @@ function openGG(){
 }
 function closeGG(){
   document.getElementById('gg-overlay').classList.remove('show');
-  // timer runs continuously - no restart needed
+  var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='none';
+  var nb=document.getElementById('next-game-btn');if(nb)nb.style.display='none';
+  var cb=document.getElementById('gg-close-btn');if(cb)cb.style.display='none';
 }
 
 /* ---- PAUSE ---- */
@@ -1431,6 +1440,7 @@ function showRoundTab(idx){
 }
 
 function nextGame(){
+  if(window._autoNextTimer){clearTimeout(window._autoNextTimer);window._autoNextTimer=null;}
   var loser=state.roundLoser;
   closeGG();
   resetRound();
