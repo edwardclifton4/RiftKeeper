@@ -351,7 +351,7 @@
     </div>
 
     <div id="midbar">
-      <div class="mid-btn" id="log-midbar-btn" onclick="openCombinedLog()" style="font-size:1.4rem;border-right:1px solid rgba(255,213,79,0.3);display:none;">📄</div>
+      <div class="mid-btn" id="log-midbar-btn" onclick="openCombinedLog()" style="font-size:1.4rem;border-right:1px solid rgba(255,213,79,0.3);display:none;">📝</div>
       <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()" title="End Round"><svg width="30" height="22" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="30" height="22" fill="none" stroke="#66bb6a" stroke-width="1"/><rect x="1" y="1" width="5" height="4" fill="#66bb6a"/><rect x="6" y="1" width="6" height="4" fill="#111"/><rect x="12" y="1" width="6" height="4" fill="#66bb6a"/><rect x="18" y="1" width="6" height="4" fill="#111"/><rect x="24" y="1" width="5" height="4" fill="#66bb6a"/><rect x="1" y="5" width="5" height="4" fill="#111"/><rect x="6" y="5" width="6" height="4" fill="#66bb6a"/><rect x="12" y="5" width="6" height="4" fill="#111"/><rect x="18" y="5" width="6" height="4" fill="#66bb6a"/><rect x="24" y="5" width="5" height="4" fill="#111"/><rect x="1" y="9" width="5" height="4" fill="#66bb6a"/><rect x="6" y="9" width="6" height="4" fill="#111"/><rect x="12" y="9" width="6" height="4" fill="#66bb6a"/><rect x="18" y="9" width="6" height="4" fill="#111"/><rect x="24" y="9" width="5" height="4" fill="#66bb6a"/><rect x="1" y="13" width="5" height="4" fill="#111"/><rect x="6" y="13" width="6" height="4" fill="#66bb6a"/><rect x="12" y="13" width="6" height="4" fill="#111"/><rect x="18" y="13" width="6" height="4" fill="#66bb6a"/><rect x="24" y="13" width="5" height="4" fill="#111"/><rect x="1" y="17" width="5" height="4" fill="#66bb6a"/><rect x="6" y="17" width="6" height="4" fill="#111"/><rect x="12" y="17" width="6" height="4" fill="#66bb6a"/><rect x="18" y="17" width="6" height="4" fill="#111"/><rect x="24" y="17" width="5" height="4" fill="#66bb6a"/></svg></div>
       <div id="big-dice-container">
         <svg id="big-dice" class="idle" onclick="rollDice()" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -1879,7 +1879,7 @@ function renderCardResults(cards){
     <input id="card-search-input" type="text" placeholder="Search card name..." style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(79,195,247,0.2);border-radius:10px;padding:0.7rem 1rem;font-family:'Rajdhani',sans-serif;font-size:1.1rem;color:#e0f0ff;letter-spacing:1px;outline:none;text-align:center;" oninput="searchCards(this.value)">
     <div style="min-width:90px;"></div>
   </div>
-  <div id="card-results" style="flex:1;overflow-y:auto;padding:0.8rem;display:grid;grid-template-columns:repeat(6,1fr);gap:0.3rem;scrollbar-width:none;align-content:start;"><div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:3rem 1rem;font-size:0.9rem;">TYPE A CARD NAME TO SEARCH</div></div>
+  <div id="card-results" style="flex:1;overflow-y:auto;padding:0.8rem;display:grid;grid-template-columns:repeat(4,1fr);gap:0.3rem;scrollbar-width:none;align-content:start;"><div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:3rem 1rem;font-size:0.9rem;">TYPE A CARD NAME TO SEARCH</div></div>
 </div>
 
 <!-- CARD DETAIL MODAL -->
