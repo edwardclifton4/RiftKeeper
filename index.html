@@ -323,6 +323,7 @@
       <div class="bo-btn active" id="bo3-btn" onclick="setBo(3)">BEST OF 3</div>
     </div>
     <button id="start-btn" onclick="startGame()">START GAME</button>
+    <button id="card-lookup-btn" onclick="openCardLookup()" style="background:rgba(255,213,79,0.08);border:1px solid rgba(255,213,79,0.25);color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;padding:0.6rem 1.2rem;border-radius:10px;cursor:pointer;text-transform:uppercase;margin-top:0.5rem;">🃏 CARD LOOKUP</button>
     <a id="donate-link" href="https://www.paypal.com/donate/?business=EUJMUQZQT8KS6&no_recurring=0&item_name=Thank+you+for+supporting+me+to+keep+this+going%21&currency_code=USD" target="_blank">💛 Support me with a donation!</a>
   </div>
 
@@ -350,7 +351,7 @@
     </div>
 
     <div id="midbar">
-      <div class="mid-btn danger" onclick="confirmAction('reset')" title="Reset"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#ff6b6b"/></svg></div>
+      <div class="mid-btn" id="log-midbar-btn" onclick="openCombinedLog()" style="font-size:1.4rem;border-right:1px solid rgba(255,213,79,0.3);display:none;">📄</div>
       <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()" title="End Round"><svg width="30" height="22" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="30" height="22" fill="none" stroke="#66bb6a" stroke-width="1"/><rect x="1" y="1" width="5" height="4" fill="#66bb6a"/><rect x="6" y="1" width="6" height="4" fill="#111"/><rect x="12" y="1" width="6" height="4" fill="#66bb6a"/><rect x="18" y="1" width="6" height="4" fill="#111"/><rect x="24" y="1" width="5" height="4" fill="#66bb6a"/><rect x="1" y="5" width="5" height="4" fill="#111"/><rect x="6" y="5" width="6" height="4" fill="#66bb6a"/><rect x="12" y="5" width="6" height="4" fill="#111"/><rect x="18" y="5" width="6" height="4" fill="#66bb6a"/><rect x="24" y="5" width="5" height="4" fill="#111"/><rect x="1" y="9" width="5" height="4" fill="#66bb6a"/><rect x="6" y="9" width="6" height="4" fill="#111"/><rect x="12" y="9" width="6" height="4" fill="#66bb6a"/><rect x="18" y="9" width="6" height="4" fill="#111"/><rect x="24" y="9" width="5" height="4" fill="#66bb6a"/><rect x="1" y="13" width="5" height="4" fill="#111"/><rect x="6" y="13" width="6" height="4" fill="#66bb6a"/><rect x="12" y="13" width="6" height="4" fill="#111"/><rect x="18" y="13" width="6" height="4" fill="#66bb6a"/><rect x="24" y="13" width="5" height="4" fill="#111"/><rect x="1" y="17" width="5" height="4" fill="#66bb6a"/><rect x="6" y="17" width="6" height="4" fill="#111"/><rect x="12" y="17" width="6" height="4" fill="#66bb6a"/><rect x="18" y="17" width="6" height="4" fill="#111"/><rect x="24" y="17" width="5" height="4" fill="#66bb6a"/></svg></div>
       <div id="big-dice-container">
         <svg id="big-dice" class="idle" onclick="rollDice()" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -365,7 +366,7 @@
         <div class="midbar-logo" id="midbar-logo-p1" style="position:relative;left:1px;"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
       </div>
       <div class="mid-btn pause" id="pause-btn" onclick="togglePause()"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/></svg></div>
-      <div class="mid-btn menu-btn" onclick="confirmAction('menu')" title="Menu"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="2" rx="1" fill="#4fc3f7"/><rect x="3" y="11" width="18" height="2" rx="1" fill="#4fc3f7"/><rect x="3" y="17" width="18" height="2" rx="1" fill="#4fc3f7"/></svg></div>
+      <div class="mid-btn menu-btn" onclick="openMenuPanel()" title="Menu"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="2" rx="1" fill="#4fc3f7"/><rect x="3" y="11" width="18" height="2" rx="1" fill="#4fc3f7"/><rect x="3" y="17" width="18" height="2" rx="1" fill="#4fc3f7"/></svg></div>
     </div>
 
     <div class="player-zone p1" id="zone1">
@@ -999,6 +1000,41 @@ function adjXP(d){
 }
 function closeXP(){document.getElementById('xp-popup').classList.remove('show');document.getElementById('xp-popup-backdrop').classList.remove('show');}
 
+function openCombinedLog(){
+  // Populate GG overlay with current round data (read-only view)
+  var s1=state.scores[0],s2=state.scores[1];
+  var n1=state.names[0],n2=state.names[1];
+  var _rn=state.roundHistory.length+1;
+  document.getElementById('gg-winner').textContent='ROUND '+_rn+' LOG';
+  document.getElementById('gg-time').textContent='';
+  document.getElementById('gg-rounds').textContent='';
+  document.getElementById('gg-name1').textContent=n1;
+  document.getElementById('gg-name2').textContent=n2;
+  document.getElementById('gg-val1').textContent=s1;
+  document.getElementById('gg-val2').textContent=s2;
+  document.getElementById('gg-name1').style.color=s1>s2?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-name1').style.fontWeight=s1>s2?'700':'400';
+  document.getElementById('gg-name2').style.color=s2>s1?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-name2').style.fontWeight=s2>s1?'700':'400';
+  document.getElementById('gg-val1').style.color=s1>=s2?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-val2').style.color=s2>=s1?'var(--gold)':'var(--muted)';
+  document.getElementById('gg-tabs').style.display='none';
+  var rNum=state.roundHistory.length+1;
+  var rLabel='ROUND '+rNum+' LOG';
+  ['1','2'].forEach(function(idx){
+    var p=parseInt(idx);
+    var entries=state.logs[p-1];
+    document.getElementById('gg-log-title'+p).textContent=rLabel;
+    var el=document.getElementById('gg-log-entries'+p);
+    el.innerHTML=entries.length===0?'<div class="gg-log-empty">no changes</div>':entries.map(function(e){return '<div class="gg-log-entry">'+e+'</div>';}).join('');
+  });
+  // Show close button only, no next/rematch
+  document.getElementById('next-game-btn').style.display='none';
+  document.getElementById('rematch-btn').style.display='none';
+  document.getElementById('gg-close-btn').style.display='';
+  document.getElementById('gg-close-btn').onclick=function(){closeGG();};
+  document.getElementById('gg-overlay').classList.add('show');
+}
 function openLog(p){
   document.getElementById('logTitle').textContent='LOG — '+state.names[p-1];
   const list=document.getElementById('logList');
@@ -1097,6 +1133,7 @@ function showTimers(){
   }
   document.getElementById('gg-btn').classList.add('show');
   document.getElementById('pause-btn').classList.add('show');
+  var lb=document.getElementById('log-midbar-btn');if(lb)lb.style.display='';
   document.getElementById('concede-btn1').style.display='';
   document.getElementById('concede-btn2').style.display='';
   document.getElementById('timer-round-p1').style.display='';
@@ -1409,6 +1446,7 @@ function setPreGameState(on){
   if(rollBtn)rollBtn.style.visibility=on?'hidden':'';
   logos.forEach(function(l){l.style.visibility=on?'hidden':'';});
   document.querySelectorAll('.xp-btn').forEach(function(b){b.style.visibility=on?'hidden':'';});
+  var lb=document.getElementById('log-midbar-btn');if(lb)lb.style.visibility=on?'hidden':'';
   document.querySelectorAll('.concede-btn').forEach(function(b){b.style.visibility=on?'hidden':'';});
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
   ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
@@ -1690,6 +1728,167 @@ function concedeConfirm(){
   addTap('tap2m',function(){adj(2,-1);});
 })();
 
+
+// Wake Lock - prevent screen from sleeping during game
+var _wakeLock = null;
+async function requestWakeLock() {
+  try {
+    if ('wakeLock' in navigator) {
+      _wakeLock = await navigator.wakeLock.request('screen');
+    }
+  } catch(e) {}
+}
+function releaseWakeLock() {
+  if (_wakeLock) { _wakeLock.release(); _wakeLock = null; }
+}
+// Re-acquire wake lock when page becomes visible again
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible') requestWakeLock();
+});
+// Request on load
+requestWakeLock();
+
+
+// Menu panel
+function openMenuPanel(){
+  var mp=document.getElementById('menu-panel');
+  if(mp){mp.style.display='flex';}
+}
+function closeMenuPanel(){
+  var mp=document.getElementById('menu-panel');
+  if(mp){mp.style.display='none';}
+}
+
+// Card lookup
+var _cardSearchTimer=null;
+var _allCards=[];
+var _cardsLoaded=false;
+
+function openCardLookup(){
+  var ov=document.getElementById('card-lookup-overlay');
+  if(ov){ov.style.display='flex';}
+  document.getElementById('card-search-input').value='';
+  document.getElementById('card-results').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:3rem 1rem;font-size:0.9rem;">TYPE A CARD NAME TO SEARCH</div>';
+  setTimeout(function(){document.getElementById('card-search-input').focus();},100);
+}
+function closeCardLookup(){
+  var ov=document.getElementById('card-lookup-overlay');
+  if(ov){ov.style.display='none';}
+}
+function closeCardDetail(){
+  var m=document.getElementById('card-detail-modal');
+  if(m){m.style.display='none';}
+}
+function showCardDetail(img){
+  document.getElementById('card-detail-img').src=img;
+  document.getElementById('card-detail-modal').style.display='flex';
+}
+
+async function loadAllCards(){
+  var el=document.getElementById('card-results');
+  el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING CARDS...</div>';
+  try{
+    var all=[];
+    var sets=['ogn','sfd','unl'];
+    for(var si=0;si<sets.length;si++){
+      var page=1;var setTotal=999;var setCards=[];
+      while(setCards.length<setTotal){
+        var res=await fetch('https://api.riftcodex.com/cards?size=100&sort=name&page='+page+'&set_id='+sets[si]);
+        if(!res.ok)break;
+        var data=await res.json();
+        setTotal=data.total||0;
+        var items=data.items||[];
+        setCards=setCards.concat(items);
+        page++;
+        if(items.length===0||setCards.length>=setTotal)break;
+      }
+      all=all.concat(setCards);
+    }
+    // Sort by name
+    all.sort(function(a,b){return (a.name||'').localeCompare(b.name||'');});
+    _allCards=all;
+    _cardsLoaded=true;
+    renderCardResults(_allCards);
+  }catch(e){
+    console.error('Card load error:',e);
+    el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#ff6b6b;font-family:Rajdhani;letter-spacing:2px;padding:2rem;">FAILED TO LOAD — CHECK CONNECTION</div>';
+  }
+}
+
+function searchCards(q){
+  if(_cardSearchTimer)clearTimeout(_cardSearchTimer);
+  var trimmed=q.trim();
+  if(!trimmed){
+    document.getElementById('card-results').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:3rem 1rem;font-size:0.9rem;">TYPE A CARD NAME TO SEARCH</div>';
+    return;
+  }
+  _cardSearchTimer=setTimeout(async function(){
+    // Load all cards first if not cached
+    if(!_cardsLoaded){
+      document.getElementById('card-results').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING...</div>';
+      await loadAllCards();
+    }
+    var lq=trimmed.toLowerCase();
+    // Filter: name must START with search term
+    var filtered=_allCards.filter(function(c){
+      return c.name&&c.name.toLowerCase().startsWith(lq);
+    });
+    // If no startsWith matches, fall back to contains
+    if(filtered.length===0){
+      filtered=_allCards.filter(function(c){
+        return c.name&&c.name.toLowerCase().indexOf(lq)>-1;
+      });
+    }
+    renderCardResults(filtered);
+  },300);
+}
+
+function renderCardResults(cards){
+  var el=document.getElementById('card-results');
+  if(!cards.length){
+    el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">NO CARDS FOUND</div>';
+    return;
+  }
+  el.innerHTML=cards.map(function(c){
+    var img=(c.media&&c.media.image_url)||'';
+    var name=c.name||'';
+    var rarity=(c.classification&&c.classification.rarity)||'';
+    var escapedImg=img.replace(/'/g,"%27");
+    return '<div onclick="showCardDetail(this.getAttribute(\'data-img\'))" data-img="'+escapedImg+'" style="cursor:pointer;">'
+      +(img?'<img src="'+img+'" style="width:100%;display:block;border-radius:6px;" loading="lazy">':'<div style="aspect-ratio:3/4;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.7rem;font-family:Rajdhani;border-radius:6px;">NO IMG</div>')
+      +'</div>';
+  }).join('');
+}
+
 </script>
+
+<!-- MENU PANEL -->
+<div id="menu-panel" style="display:none;position:fixed;inset:0;z-index:400;background:rgba(2,5,12,0.85);align-items:center;justify-content:center;">
+  <div style="background:#0a1828;border:1px solid rgba(79,195,247,0.25);border-radius:16px;padding:1.5rem;width:80%;max-width:300px;display:flex;flex-direction:column;gap:0.8rem;">
+    <div style="font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:3px;color:var(--muted);text-align:center;text-transform:uppercase;margin-bottom:0.2rem;">OPTIONS</div>
+    <div onclick="openCardLookup();closeMenuPanel();" style="font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:rgba(255,213,79,0.08);border:1px solid rgba(255,213,79,0.25);border-radius:10px;padding:1rem;text-align:center;cursor:pointer;">🃏 CARD LOOKUP</div>
+    <div onclick="closeMenuPanel();confirmAction('menu');" style="font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.25);border-radius:10px;padding:1rem;text-align:center;cursor:pointer;">↩ RETURN TO MENU</div>
+    <div onclick="closeMenuPanel();" style="font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;cursor:pointer;padding:0.5rem;">CANCEL</div>
+  </div>
+</div>
+
+<!-- CARD LOOKUP OVERLAY -->
+<div id="card-lookup-overlay" style="display:none;position:fixed;inset:0;z-index:500;background:#02050c;flex-direction:column;">
+  <div style="display:flex;align-items:center;padding:0.6rem 1rem;border-bottom:1px solid rgba(79,195,247,0.15);flex-shrink:0;">
+    <div onclick="closeCardLookup()" style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;color:var(--accent);cursor:pointer;letter-spacing:1px;min-width:90px;padding-right:0.5rem;">← BACK</div>
+    <input id="card-search-input" type="text" placeholder="Search card name..." style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(79,195,247,0.2);border-radius:10px;padding:0.7rem 1rem;font-family:'Rajdhani',sans-serif;font-size:1.1rem;color:#e0f0ff;letter-spacing:1px;outline:none;text-align:center;" oninput="searchCards(this.value)">
+    <div style="min-width:90px;"></div>
+  </div>
+  <div id="card-results" style="flex:1;overflow-y:auto;padding:0.8rem;display:grid;grid-template-columns:repeat(6,1fr);gap:0.3rem;scrollbar-width:none;align-content:start;"><div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:3rem 1rem;font-size:0.9rem;">TYPE A CARD NAME TO SEARCH</div></div>
+</div>
+
+<!-- CARD DETAIL MODAL -->
+<div id="card-detail-modal" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(2,5,12,0.95);align-items:center;justify-content:center;" onclick="closeCardDetail()">
+  <div id="card-detail-inner" style="max-width:380px;width:90%;position:relative;" onclick="event.stopPropagation()">
+    <img id="card-detail-img" src="" style="width:100%;display:block;border-radius:12px;box-shadow:0 0 30px rgba(79,195,247,0.3);">
+    <div onclick="closeCardDetail()" style="position:absolute;top:-12px;right:-12px;width:28px;height:28px;border-radius:50%;background:#0a1828;border:1px solid rgba(79,195,247,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--muted);">✕</div>
+  </div>
+</div>
+
 </body>
 </html>
