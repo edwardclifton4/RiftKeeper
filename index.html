@@ -1763,6 +1763,10 @@ function closeMenuPanel(){
 var _cardSearchTimer=null;
 var _allCards=[];
 var _cardsLoaded=false;
+var _cardsLoading=null;
+var CARD_SETS=['ogn','sfd','unl'];
+var CARD_CACHE_KEY='rk_cards_'+CARD_SETS.join('_');
+var CARD_CACHE_TTL=24*60*60*1000; // refresh card DB at most once a day
 
 function openCardLookup(){
   var ov=document.getElementById('card-lookup-overlay');
@@ -1770,6 +1774,7 @@ function openCardLookup(){
   document.getElementById('card-search-input').value='';
   document.getElementById('card-results').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:3rem 1rem;font-size:0.9rem;">TYPE A CARD NAME TO SEARCH</div>';
   setTimeout(function(){document.getElementById('card-search-input').focus();},100);
+  loadAllCards().catch(function(){}); // warm the card DB while the user types
 }
 function closeCardLookup(){
   var ov=document.getElementById('card-lookup-overlay');
@@ -1779,40 +1784,70 @@ function closeCardDetail(){
   var m=document.getElementById('card-detail-modal');
   if(m){m.style.display='none';}
 }
+function cdnImg(url,w){
+  // Sanity CDN on-the-fly resize/convert; leave non-Sanity URLs untouched
+  if(!url||url.indexOf('cmsassets.rgpub.io/sanity/images/')===-1)return url;
+  return url+(url.indexOf('?')>-1?'&':'?')+'w='+w+'&fm=webp&q=80';
+}
+
 function showCardDetail(img){
-  document.getElementById('card-detail-img').src=img;
+  document.getElementById('card-detail-img').src=cdnImg(img,760);
   document.getElementById('card-detail-modal').style.display='flex';
 }
 
-async function loadAllCards(){
-  var el=document.getElementById('card-results');
-  el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING CARDS...</div>';
+function fetchSetPage(setId,page){
+  return fetch('https://api.riftcodex.com/cards?size=100&sort=name&page='+page+'&set_id='+setId)
+    .then(function(r){return r.ok?r.json():{total:0,items:[]};});
+}
+
+function slimCard(c){
+  return {
+    name:c.name||'',
+    img:(c.media&&c.media.image_url)||'',
+    rarity:(c.classification&&c.classification.rarity)||''
+  };
+}
+
+function loadAllCards(){
+  if(_cardsLoaded)return Promise.resolve(_allCards);
+  if(_cardsLoading)return _cardsLoading;
+
+  // Instant on repeat visits: serve from localStorage if fresh
   try{
-    var all=[];
-    var sets=['ogn','sfd','unl'];
-    for(var si=0;si<sets.length;si++){
-      var page=1;var setTotal=999;var setCards=[];
-      while(setCards.length<setTotal){
-        var res=await fetch('https://api.riftcodex.com/cards?size=100&sort=name&page='+page+'&set_id='+sets[si]);
-        if(!res.ok)break;
-        var data=await res.json();
-        setTotal=data.total||0;
-        var items=data.items||[];
-        setCards=setCards.concat(items);
-        page++;
-        if(items.length===0||setCards.length>=setTotal)break;
-      }
-      all=all.concat(setCards);
+    var cached=JSON.parse(localStorage.getItem(CARD_CACHE_KEY)||'null');
+    if(cached&&cached.cards&&cached.cards.length&&(Date.now()-cached.ts)<CARD_CACHE_TTL){
+      _allCards=cached.cards;
+      _cardsLoaded=true;
+      return Promise.resolve(_allCards);
     }
-    // Sort by name
-    all.sort(function(a,b){return (a.name||'').localeCompare(b.name||'');});
+  }catch(e){}
+
+  // Fetch page 1 of every set in parallel, then all remaining pages in parallel
+  _cardsLoading=Promise.all(CARD_SETS.map(function(setId){
+    return fetchSetPage(setId,1).then(function(first){
+      var pages=Math.ceil((first.total||0)/100);
+      var rest=[];
+      for(var p=2;p<=pages;p++)rest.push(fetchSetPage(setId,p));
+      return Promise.all(rest).then(function(more){
+        var items=first.items||[];
+        more.forEach(function(d){items=items.concat(d.items||[]);});
+        return items;
+      });
+    });
+  })).then(function(perSet){
+    var all=[];
+    perSet.forEach(function(items){all=all.concat(items.map(slimCard));});
+    all.sort(function(a,b){return a.name.localeCompare(b.name);});
     _allCards=all;
     _cardsLoaded=true;
-    renderCardResults(_allCards);
-  }catch(e){
-    console.error('Card load error:',e);
-    el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#ff6b6b;font-family:Rajdhani;letter-spacing:2px;padding:2rem;">FAILED TO LOAD — CHECK CONNECTION</div>';
-  }
+    _cardsLoading=null;
+    try{localStorage.setItem(CARD_CACHE_KEY,JSON.stringify({ts:Date.now(),cards:all}));}catch(e){}
+    return all;
+  }).catch(function(e){
+    _cardsLoading=null;
+    throw e;
+  });
+  return _cardsLoading;
 }
 
 function searchCards(q){
@@ -1826,7 +1861,18 @@ function searchCards(q){
     // Load all cards first if not cached
     if(!_cardsLoaded){
       document.getElementById('card-results').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING...</div>';
-      await loadAllCards();
+      try{await loadAllCards();}
+      catch(e){
+        console.error('Card load error:',e);
+        document.getElementById('card-results').innerHTML='<div style="grid-column:1/-1;text-align:center;color:#ff6b6b;font-family:Rajdhani;letter-spacing:2px;padding:2rem;">FAILED TO LOAD — CHECK CONNECTION</div>';
+        return;
+      }
+      // Input may have changed while loading — filter on the current value
+      trimmed=document.getElementById('card-search-input').value.trim();
+      if(!trimmed){
+        document.getElementById('card-results').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:3rem 1rem;font-size:0.9rem;">TYPE A CARD NAME TO SEARCH</div>';
+        return;
+      }
     }
     var lq=trimmed.toLowerCase();
     // Filter: name must START with search term
@@ -1850,12 +1896,12 @@ function renderCardResults(cards){
     return;
   }
   el.innerHTML=cards.map(function(c){
-    var img=(c.media&&c.media.image_url)||'';
+    var img=c.img||'';
     var name=c.name||'';
-    var rarity=(c.classification&&c.classification.rarity)||'';
+    var rarity=c.rarity||'';
     var escapedImg=img.replace(/'/g,"%27");
     return '<div onclick="showCardDetail(this.getAttribute(\'data-img\'))" data-img="'+escapedImg+'" style="cursor:pointer;">'
-      +(img?'<img src="'+img+'" style="width:100%;display:block;border-radius:6px;" loading="lazy">':'<div style="aspect-ratio:3/4;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.7rem;font-family:Rajdhani;border-radius:6px;">NO IMG</div>')
+      +(img?'<img src="'+cdnImg(img,250)+'" style="width:100%;display:block;border-radius:6px;" loading="lazy">':'<div style="aspect-ratio:3/4;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.7rem;font-family:Rajdhani;border-radius:6px;">NO IMG</div>')
       +'</div>';
   }).join('');
 }
