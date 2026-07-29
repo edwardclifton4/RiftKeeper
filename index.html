@@ -591,10 +591,10 @@ function updateRoundDisplay(){
 }
 function tsLog(){
   const n=new Date();
-  let h=n.getHours(), m=n.getMinutes().toString().padStart(2,'0');
+  let h=n.getHours(), m=n.getMinutes().toString().padStart(2,'0'), s=n.getSeconds().toString().padStart(2,'0');
   const ampm=h>=12?'pm':'am';
   h=h%12||12;
-  return h+':'+m+ampm;
+  return h+':'+m+':'+s+ampm;
 }
 
 function addLog(p,msg){
@@ -648,7 +648,17 @@ const LEGENDS=[
   {n:'Vi',sub:'The Piltover Enforcer',k:'Vi'},
   {n:'Viktor',sub:'The Machine Herald',k:'Viktor'},
   {n:'Volibear',sub:'The Relentless Storm',k:'Volibear'},
-  {n:'Yasuo',sub:'The Unforgiven',k:'Yasuo'}
+  {n:'Yasuo',sub:'The Unforgiven',k:'Yasuo'},
+  // Vendetta (Set 4)
+  {n:'Akali',sub:'Rogue Assassin',k:'Akali'},
+  {n:'Ambessa',sub:'Matriarch of War',k:'Ambessa'},
+  {n:'Jayce',sub:'Defender of Tomorrow',k:'Jayce'},
+  {n:'Kennen',sub:'Heart of the Tempest',k:'Kennen'},
+  {n:'Mel',sub:'Soul\'s Reflection',k:'Mel'},
+  {n:'Nasus',sub:'Curator of the Sands',k:'Nasus'},
+  {n:'Renekton',sub:'Butcher of the Sands',k:'Renekton'},
+  {n:'Shen',sub:'Eye of Twilight',k:'Shen'},
+  {n:'Zed',sub:'Master of Shadows',k:'Zed'}
 ].sort((a,b)=>a.n.localeCompare(b.n));
 
 let activeLegendPlayer=null;
@@ -787,7 +797,7 @@ function adj(p,d){
   scoreEl.style.animation='none';
   void scoreEl.offsetWidth;
   scoreEl.style.animation='scorePop 0.3s ease-out';
-  addLog(p,s+(d>0?'+':'-')+tsLog());
+  addLog(p,s+(d>0?' + ':' - ')+tsLog());
   // Auto-swap roll dice to GG on first score
   if(!document.getElementById('gg-btn').classList.contains('show')){
     showTimers();
@@ -1800,32 +1810,28 @@ function showCardDetail(img){
 
 async function loadAllCards(){
   var el=document.getElementById('card-results');
-  el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING CARDS...</div>';
+  el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING...</div>';
   try{
     var all=[];
-    var sets=['ogn','sfd','unl'];
-    for(var si=0;si<sets.length;si++){
-      var page=1;var setTotal=999;var setCards=[];
-      while(setCards.length<setTotal){
-        var res=await fetch('https://api.riftcodex.com/cards?size=100&sort=name&page='+page+'&set_id='+sets[si]);
-        if(!res.ok)break;
-        var data=await res.json();
-        setTotal=data.total||0;
-        var items=data.items||[];
-        setCards=setCards.concat(items);
-        page++;
-        if(items.length===0||setCards.length>=setTotal)break;
-      }
-      all=all.concat(setCards);
+    var page=1;var total=9999;
+    while(all.length<total){
+      var res=await fetch('https://api.riftcodex.com/cards?size=100&sort=name&page='+page);
+      if(!res.ok)break;
+      var data=await res.json();
+      total=data.total||0;
+      var items=data.items||[];
+      if(items.length===0)break;
+      all=all.concat(items);
+      page++;
+      if(all.length>=total)break;
     }
-    // Sort by name
     all.sort(function(a,b){return (a.name||'').localeCompare(b.name||'');});
     _allCards=all;
     _cardsLoaded=true;
-    renderCardResults(_allCards);
   }catch(e){
     console.error('Card load error:',e);
     el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#ff6b6b;font-family:Rajdhani;letter-spacing:2px;padding:2rem;">FAILED TO LOAD — CHECK CONNECTION</div>';
+    return;
   }
 }
 
