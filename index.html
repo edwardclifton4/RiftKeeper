@@ -1740,11 +1740,32 @@ function concedeConfirm(){
 }
 
 (function(){
+  var MOVE_LIMIT=12;  // px of finger travel before it counts as a scroll/swipe, not a tap
+  var MIN_HOLD=80;    // ms - filters the fast swipe-up-to-home gesture
   function addTap(id,fn){
     var el=document.getElementById(id);if(!el)return;
-    var _fired=false;
-    el.addEventListener('touchstart',function(e){e.preventDefault();_fired=true;fn();},{passive:false});
-    el.addEventListener('click',function(e){if(_fired){_fired=false;return;}fn();});
+    var sx=0,sy=0,st=0,moved=false,handled=false;
+    el.addEventListener('touchstart',function(e){
+      var t=e.touches[0];
+      sx=t.clientX;sy=t.clientY;st=Date.now();
+      moved=false;handled=false;
+    },{passive:true});
+    el.addEventListener('touchmove',function(e){
+      var t=e.touches[0];
+      if(Math.abs(t.clientX-sx)>MOVE_LIMIT||Math.abs(t.clientY-sy)>MOVE_LIMIT)moved=true;
+    },{passive:true});
+    el.addEventListener('touchend',function(e){
+      if(moved)return;                        // finger travelled - it was a scroll
+      if(Date.now()-st<MIN_HOLD)return;       // too fast - likely a swipe gesture
+      e.preventDefault();                     // suppress the synthetic click
+      handled=true;
+      fn();
+    },{passive:false});
+    el.addEventListener('touchcancel',function(){moved=true;});
+    el.addEventListener('click',function(){
+      if(handled){handled=false;return;}
+      fn();
+    });
   }
   addTap('tap1p',function(){adj(1,1);});
   addTap('tap1m',function(){adj(1,-1);});
