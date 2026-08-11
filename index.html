@@ -787,6 +787,19 @@ function startGame(){
   if(z2){var r2=z2.getBoundingClientRect();var el2=document.getElementById('pregame-bo-p2');if(el2){el2.textContent=boTxt2;el2.style.top='';el2.style.bottom=(window.innerHeight-r2.top-40)+'px';el2.style.left=(r2.left+8)+'px';el2.style.display='';el2.style.transform='';}}
 }
 
+function undoAdj(p,d){
+  var s=state.scores[p-1]-d;
+  if(s<0)s=0;if(s>8)s=8;
+  state.scores[p-1]=s;
+  document.getElementById('score'+p).textContent=s;
+  if(state.logs[p-1].length)state.logs[p-1].pop();
+  var all=state.logs[p-1];
+  var lc=document.getElementById('logcount'+p);
+  if(lc)lc.textContent=all.slice(-2).join('\n');
+  var lb=document.getElementById('logbtn'+p);
+  if(lb){if(all.length>0)lb.classList.add('has-entries');else lb.classList.remove('has-entries');}
+  if(_confirmAction==='gg')closeConfirm();
+}
 function adj(p,d){
   let s=state.scores[p-1]+d;
   if(s<0)s=0;if(s>8)s=8;
@@ -1740,37 +1753,41 @@ function concedeConfirm(){
 }
 
 (function(){
-  var MOVE_LIMIT=12;  // px of finger travel before it counts as a scroll/swipe, not a tap
-  var MIN_HOLD=80;    // ms - filters the fast swipe-up-to-home gesture
-  function addTap(id,fn){
+  var MOVE_LIMIT=12;   // px of travel before we treat it as a scroll and roll back
+  var EDGE_GUARD=28;   // px strip at screen bottom where the iOS home swipe starts
+  var lastTouch=0;
+  function addTap(id,fn,undo){
     var el=document.getElementById(id);if(!el)return;
-    var sx=0,sy=0,st=0,moved=false,handled=false;
+    var sx=0,sy=0,moved=false,applied=false;
     el.addEventListener('touchstart',function(e){
       var t=e.touches[0];
-      sx=t.clientX;sy=t.clientY;st=Date.now();
-      moved=false;handled=false;
+      sx=t.clientX;sy=t.clientY;
+      moved=false;applied=false;
+      lastTouch=Date.now();
+      if(window.innerHeight-t.clientY<EDGE_GUARD)return;  // home-gesture zone
+      fn();          // instant - no waiting for touchend
+      applied=true;
     },{passive:true});
     el.addEventListener('touchmove',function(e){
+      if(moved||!applied)return;
       var t=e.touches[0];
-      if(Math.abs(t.clientX-sx)>MOVE_LIMIT||Math.abs(t.clientY-sy)>MOVE_LIMIT)moved=true;
+      if(Math.abs(t.clientX-sx)>MOVE_LIMIT||Math.abs(t.clientY-sy)>MOVE_LIMIT){
+        moved=true;applied=false;
+        undo();      // it was a scroll or swipe - take the point back
+      }
     },{passive:true});
-    el.addEventListener('touchend',function(e){
-      if(moved)return;                        // finger travelled - it was a scroll
-      if(Date.now()-st<MIN_HOLD)return;       // too fast - likely a swipe gesture
-      e.preventDefault();                     // suppress the synthetic click
-      handled=true;
-      fn();
-    },{passive:false});
-    el.addEventListener('touchcancel',function(){moved=true;});
+    el.addEventListener('touchcancel',function(){
+      if(applied){undo();applied=false;}
+    },{passive:true});
     el.addEventListener('click',function(){
-      if(handled){handled=false;return;}
+      if(Date.now()-lastTouch<600)return;  // touch already handled it
       fn();
     });
   }
-  addTap('tap1p',function(){adj(1,1);});
-  addTap('tap1m',function(){adj(1,-1);});
-  addTap('tap2p',function(){adj(2,1);});
-  addTap('tap2m',function(){adj(2,-1);});
+  addTap('tap1p',function(){adj(1,1);},function(){undoAdj(1,1);});
+  addTap('tap1m',function(){adj(1,-1);},function(){undoAdj(1,-1);});
+  addTap('tap2p',function(){adj(2,1);},function(){undoAdj(2,1);});
+  addTap('tap2m',function(){adj(2,-1);},function(){undoAdj(2,-1);});
 })();
 
 
@@ -1786,12 +1803,20 @@ async function requestWakeLock() {
 function releaseWakeLock() {
   if (_wakeLock) { _wakeLock.release(); _wakeLock = null; }
 }
-// Re-acquire wake lock when page becomes visible again
+// Re-acquire when the app comes back to the foreground
 document.addEventListener('visibilitychange', function() {
   if (document.visibilityState === 'visible') requestWakeLock();
 });
-// Request on load
-requestWakeLock();
+// iOS only grants the lock after a real user gesture, so arm it on first touch
+(function(){
+  function arm(){
+    requestWakeLock();
+    document.removeEventListener('touchend', arm);
+    document.removeEventListener('click', arm);
+  }
+  document.addEventListener('touchend', arm, {passive:true});
+  document.addEventListener('click', arm);
+})();
 
 
 // Menu panel
