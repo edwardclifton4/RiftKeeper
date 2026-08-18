@@ -1753,19 +1753,20 @@ function concedeConfirm(){
 }
 
 (function(){
-  var MOVE_LIMIT=12;   // px of travel before we treat it as a scroll and roll back
+  var MOVE_LIMIT=12;   // px of travel before we treat it as a scroll/swipe and roll back
   var EDGE_GUARD=28;   // px strip at screen bottom where the iOS home swipe starts
-  var lastTouch=0;
+  var isTouch=false;   // once true, click events are ignored entirely
   function addTap(id,fn,undo){
     var el=document.getElementById(id);if(!el)return;
     var sx=0,sy=0,moved=false,applied=false;
     el.addEventListener('touchstart',function(e){
+      isTouch=true;
+      if(e.touches.length>1)return;                        // ignore multi-touch
       var t=e.touches[0];
       sx=t.clientX;sy=t.clientY;
       moved=false;applied=false;
-      lastTouch=Date.now();
-      if(window.innerHeight-t.clientY<EDGE_GUARD)return;  // home-gesture zone
-      fn();          // instant - no waiting for touchend
+      if(window.innerHeight-t.clientY<EDGE_GUARD)return;   // home-gesture zone
+      fn();          // instant - lands on touch down
       applied=true;
     },{passive:true});
     el.addEventListener('touchmove',function(e){
@@ -1773,14 +1774,14 @@ function concedeConfirm(){
       var t=e.touches[0];
       if(Math.abs(t.clientX-sx)>MOVE_LIMIT||Math.abs(t.clientY-sy)>MOVE_LIMIT){
         moved=true;applied=false;
-        undo();      // it was a scroll or swipe - take the point back
+        undo();      // scroll or swipe in any direction - take the point back
       }
     },{passive:true});
     el.addEventListener('touchcancel',function(){
       if(applied){undo();applied=false;}
     },{passive:true});
     el.addEventListener('click',function(){
-      if(Date.now()-lastTouch<600)return;  // touch already handled it
+      if(isTouch)return;   // touch already handled it - never double up
       fn();
     });
   }
