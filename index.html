@@ -171,13 +171,13 @@
   .gg-col{flex:1;display:flex;flex-direction:column;padding:0.8rem;overflow-y:auto;scrollbar-width:none;}
   .gg-col::-webkit-scrollbar{display:none;}
   .gg-col:first-child{border-right:1px solid rgba(79,195,247,0.12);}
-  .gg-score-name{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:0.1rem;text-align:center;}
+  .gg-score-name{font-family:'Rajdhani',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:0.15rem;text-align:center;}
   .gg-legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.6rem;letter-spacing:1px;color:rgba(79,195,247,0.5);text-transform:uppercase;text-align:center;margin-bottom:0.3rem;min-height:0.8em;}
-  .gg-score-val{font-family:'Rajdhani',sans-serif;font-size:3rem;font-weight:700;line-height:1;margin-bottom:0.6rem;text-align:center;}
-  .gg-log-title{font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:0.3rem;padding-bottom:0.25rem;border-bottom:1px solid rgba(79,195,247,0.15);text-align:center;}
-  .gg-log-entry{font-family:'Rajdhani',sans-serif;font-size:0.95rem;color:var(--gold);padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;}
+  .gg-score-val{font-family:'Rajdhani',sans-serif;font-size:3.4rem;font-weight:700;line-height:1;margin-bottom:0.6rem;text-align:center;}
+  .gg-log-title{font-family:'Rajdhani',sans-serif;font-size:0.95rem;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:0.3rem;padding-bottom:0.25rem;border-bottom:1px solid rgba(79,195,247,0.15);text-align:center;}
+  .gg-log-entry{font-family:'Rajdhani',sans-serif;font-size:1.25rem;color:var(--gold);padding:0.3rem 0;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;}
   .gg-log-entry:last-child{border-bottom:none;}
-  .gg-log-empty{font-size:0.78rem;color:var(--muted);text-align:center;}
+  .gg-log-empty{font-size:1rem;color:var(--muted);text-align:center;}
   #gg-actions{display:flex;gap:0;flex-shrink:0;border-top:1px solid rgba(255,213,79,0.4);}
   .gg-action-btn{flex:1;padding:1.4rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px;font-size:1.3rem;cursor:pointer;text-transform:uppercase;text-align:center;color:var(--gold);background:rgba(255,213,79,0.08);}
   #rematch-btn{border-right:1px solid rgba(255,213,79,0.25);}
@@ -193,7 +193,10 @@
   .xp-popup-btn:active{transform:scale(0.88);background:rgba(255,213,79,0.22);}
   #xp-popup-backdrop{position:fixed;inset:0;z-index:149;display:none;}
   #xp-popup-backdrop.show{display:block;}
-  .log-list{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:0.3rem;}
+  .log-list{max-height:60vh;overflow-y:auto;}
+  #logOverlay .panel{max-width:420px;}
+  #logOverlay h2{font-size:1.1rem;}
+  #logList .gg-col:first-child{border-right:1px solid rgba(79,195,247,0.12);}
   .log-entry{font-size:0.9rem;color:var(--gold);background:rgba(255,255,255,0.04);border-radius:6px;padding:0.45rem 0.8rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px;}
   .log-empty{color:var(--muted);font-size:0.85rem;text-align:center;padding:1.2rem;}
 
@@ -336,7 +339,7 @@
       <div class="pzone-bg" id="bg2"></div>
       <div class="log-btn" id="logbtn2" onclick="openLog(2)"><span id="logcount2"></span></div>
       <div class="xp-btn" onclick="openXP(2)"><span class="xp-val" id="xpval2">0 XP</span></div>
-      <div class="concede-btn" id="concede-btn2" onclick="concedePrompt(2)" style="display:none;">FF?</div>
+      <div class="concede-btn" id="concede-btn2" onclick="endRoundPrompt(2)" style="display:none;">END?</div>
       <div class="tap-zones">
         <div class="tap-zone" id="tap2m"><span class="tap-hint">−</span></div>
         <div class="tap-zone" id="tap2p"><span class="tap-hint">+</span></div>
@@ -355,8 +358,8 @@
     </div>
 
     <div id="midbar">
-      <div class="mid-btn" id="log-midbar-btn" onclick="openCombinedLog()" style="font-size:1.4rem;border-right:1px solid rgba(255,213,79,0.3);display:none;">📝</div>
-      <div class="mid-btn gg" id="gg-btn" onclick="confirmGG()" title="End Round"><svg width="30" height="22" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="30" height="22" fill="none" stroke="#66bb6a" stroke-width="1"/><rect x="1" y="1" width="5" height="4" fill="#66bb6a"/><rect x="6" y="1" width="6" height="4" fill="#111"/><rect x="12" y="1" width="6" height="4" fill="#66bb6a"/><rect x="18" y="1" width="6" height="4" fill="#111"/><rect x="24" y="1" width="5" height="4" fill="#66bb6a"/><rect x="1" y="5" width="5" height="4" fill="#111"/><rect x="6" y="5" width="6" height="4" fill="#66bb6a"/><rect x="12" y="5" width="6" height="4" fill="#111"/><rect x="18" y="5" width="6" height="4" fill="#66bb6a"/><rect x="24" y="5" width="5" height="4" fill="#111"/><rect x="1" y="9" width="5" height="4" fill="#66bb6a"/><rect x="6" y="9" width="6" height="4" fill="#111"/><rect x="12" y="9" width="6" height="4" fill="#66bb6a"/><rect x="18" y="9" width="6" height="4" fill="#111"/><rect x="24" y="9" width="5" height="4" fill="#66bb6a"/><rect x="1" y="13" width="5" height="4" fill="#111"/><rect x="6" y="13" width="6" height="4" fill="#66bb6a"/><rect x="12" y="13" width="6" height="4" fill="#111"/><rect x="18" y="13" width="6" height="4" fill="#66bb6a"/><rect x="24" y="13" width="5" height="4" fill="#111"/><rect x="1" y="17" width="5" height="4" fill="#66bb6a"/><rect x="6" y="17" width="6" height="4" fill="#111"/><rect x="12" y="17" width="6" height="4" fill="#66bb6a"/><rect x="18" y="17" width="6" height="4" fill="#111"/><rect x="24" y="17" width="5" height="4" fill="#66bb6a"/></svg></div>
+      <div class="mid-btn danger" onclick="resetMatch()" title="Reset"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#ff6b6b"/></svg></div>
+      <div class="mid-btn gg" id="gg-btn" onclick="openCombinedLog()" title="Log" style="font-size:1.4rem;">📝</div>
       <div id="big-dice-container">
         <svg id="big-dice" class="idle" onclick="rollDice()" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <rect x="5" y="5" width="90" height="90" rx="18" fill="#0d2035" stroke="#ffd54f" stroke-width="3"/>
@@ -377,7 +380,7 @@
       <div class="pzone-bg" id="bg1"></div>
       <div class="log-btn" id="logbtn1" onclick="openLog(1)"><span id="logcount1"></span></div>
       <div class="xp-btn" onclick="openXP(1)"><span class="xp-val" id="xpval1">0 XP</span></div>
-      <div class="concede-btn" id="concede-btn1" onclick="concedePrompt(1)" style="display:none;">FF?</div>
+      <div class="concede-btn" id="concede-btn1" onclick="endRoundPrompt(1)" style="display:none;">END?</div>
       <div class="tap-zones">
         <div class="tap-zone" id="tap1m"><span class="tap-hint">−</span></div>
         <div class="tap-zone" id="tap1p"><span class="tap-hint">+</span></div>
@@ -486,6 +489,7 @@
       <div class="confirm-btn yes" id="confirm-yes">YES</div>
       <div class="confirm-btn no" onclick="closeConfirm()">NO</div>
     </div>
+    <div class="confirm-btn" id="confirm-forfeit" onclick="forfeitRound()" style="display:none;background:rgba(229,115,115,0.12);color:#ff6b6b;border-color:rgba(229,115,115,0.35);font-size:1.2rem;padding:1rem;">FORFEIT — I LOSE</div>
   </div>
 </div>
 <!-- GG OVERLAY -->
@@ -856,7 +860,7 @@ function resetScores(){
   document.getElementById('midbar-round-p1').style.display='none';
   setPreGameState(true);
   document.getElementById('gg-btn').classList.remove('show');
-  document.getElementById('gg-btn').innerHTML='<svg width="34" height="26" viewBox="0 0 28 19" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="28" height="19" fill="none" stroke="#66bb6a" stroke-width="1.5"/><rect x="1" y="1" width="5" height="4" fill="#66bb6a"/><rect x="6" y="1" width="5" height="4" fill="#1a1a1a"/><rect x="11" y="1" width="5" height="4" fill="#66bb6a"/><rect x="16" y="1" width="5" height="4" fill="#1a1a1a"/><rect x="21" y="1" width="5" height="4" fill="#66bb6a"/><rect x="1" y="5" width="5" height="4" fill="#1a1a1a"/><rect x="6" y="5" width="5" height="4" fill="#66bb6a"/><rect x="11" y="5" width="5" height="4" fill="#1a1a1a"/><rect x="16" y="5" width="5" height="4" fill="#66bb6a"/><rect x="21" y="5" width="5" height="4" fill="#1a1a1a"/><rect x="1" y="9" width="5" height="4" fill="#66bb6a"/><rect x="6" y="9" width="5" height="4" fill="#1a1a1a"/><rect x="11" y="9" width="5" height="4" fill="#66bb6a"/><rect x="16" y="9" width="5" height="4" fill="#1a1a1a"/><rect x="21" y="9" width="5" height="4" fill="#66bb6a"/><rect x="1" y="13" width="5" height="4" fill="#1a1a1a"/><rect x="6" y="13" width="5" height="4" fill="#66bb6a"/><rect x="11" y="13" width="5" height="4" fill="#1a1a1a"/><rect x="16" y="13" width="5" height="4" fill="#66bb6a"/><rect x="21" y="13" width="5" height="4" fill="#1a1a1a"/></svg>';
+  document.getElementById('gg-btn').innerHTML='📝';
   document.getElementById('pause-btn').classList.remove('show');
   closePause();
   // hide and stop timers
@@ -1028,41 +1032,6 @@ function adjXP(d){
 }
 function closeXP(){document.getElementById('xp-popup').classList.remove('show');document.getElementById('xp-popup-backdrop').classList.remove('show');}
 
-function openCombinedLog(){
-  // Populate GG overlay with current round data (read-only view)
-  var s1=state.scores[0],s2=state.scores[1];
-  var n1=state.names[0],n2=state.names[1];
-  var _rn=state.roundHistory.length+1;
-  document.getElementById('gg-winner').textContent='ROUND '+_rn+' LOG';
-  document.getElementById('gg-time').textContent='';
-  document.getElementById('gg-rounds').textContent='';
-  document.getElementById('gg-name1').textContent=n1;
-  document.getElementById('gg-name2').textContent=n2;
-  document.getElementById('gg-val1').textContent=s1;
-  document.getElementById('gg-val2').textContent=s2;
-  document.getElementById('gg-name1').style.color=s1>s2?'var(--gold)':'var(--muted)';
-  document.getElementById('gg-name1').style.fontWeight=s1>s2?'700':'400';
-  document.getElementById('gg-name2').style.color=s2>s1?'var(--gold)':'var(--muted)';
-  document.getElementById('gg-name2').style.fontWeight=s2>s1?'700':'400';
-  document.getElementById('gg-val1').style.color=s1>=s2?'var(--gold)':'var(--muted)';
-  document.getElementById('gg-val2').style.color=s2>=s1?'var(--gold)':'var(--muted)';
-  document.getElementById('gg-tabs').style.display='none';
-  var rNum=state.roundHistory.length+1;
-  var rLabel='ROUND '+rNum+' LOG';
-  ['1','2'].forEach(function(idx){
-    var p=parseInt(idx);
-    var entries=state.logs[p-1];
-    document.getElementById('gg-log-title'+p).textContent=rLabel;
-    var el=document.getElementById('gg-log-entries'+p);
-    el.innerHTML=entries.length===0?'<div class="gg-log-empty">no changes</div>':entries.map(function(e){return '<div class="gg-log-entry">'+e+'</div>';}).join('');
-  });
-  // Show close button only, no next/rematch
-  document.getElementById('next-game-btn').style.display='none';
-  document.getElementById('rematch-btn').style.display='none';
-  document.getElementById('gg-close-btn').style.display='';
-  document.getElementById('gg-close-btn').onclick=function(){closeGG();};
-  document.getElementById('gg-overlay').classList.add('show');
-}
 function openLog(p){
   document.getElementById('logTitle').textContent='LOG — '+state.names[p-1];
   const list=document.getElementById('logList');
@@ -1074,6 +1043,30 @@ function openLog(p){
   setTimeout(()=>{list.scrollTop=list.scrollHeight;},50);
   const panel=document.querySelector('#logOverlay .panel');
   if(p===2){panel.classList.add('rotated-panel');}else{panel.classList.remove('rotated-panel');}
+  document.getElementById('logOverlay').classList.add('show');
+}
+function openCombinedLog(){
+  var rNum=state.roundHistory.length+1;
+  var title=state.bo===1?'GAME LOG':'ROUND '+rNum+' LOG';
+  document.getElementById('logTitle').textContent=title;
+  var s1=state.scores[0],s2=state.scores[1];
+  function col(idx,mine,theirs){
+    var entries=state.logs[idx];
+    var body=entries.length
+      ? entries.map(function(e){return '<div class="gg-log-entry">'+e+'</div>';}).join('')
+      : '<div class="gg-log-empty">no changes</div>';
+    var lead=mine>theirs;
+    return '<div class="gg-col">'
+      +'<div class="gg-score-name" style="color:'+(lead?'var(--gold)':'var(--muted)')+';font-weight:'+(lead?'700':'400')+';">'+state.names[idx]+'</div>'
+      +'<div class="gg-score-val" style="color:'+(mine>=theirs?'var(--gold)':'var(--muted)')+';">'+mine+'</div>'
+      +'<div class="gg-log-title">'+title+'</div>'
+      +body
+      +'</div>';
+  }
+  document.getElementById('logList').innerHTML=
+    '<div style="display:flex;align-items:flex-start;">'+col(0,s1,s2)+col(1,s2,s1)+'</div>';
+  var panel=document.querySelector('#logOverlay .panel');
+  if(panel)panel.classList.remove('rotated-panel');
   document.getElementById('logOverlay').classList.add('show');
 }
 function closeLog(){document.getElementById('logOverlay').classList.remove('show');}
@@ -1161,7 +1154,6 @@ function showTimers(){
   }
   document.getElementById('gg-btn').classList.add('show');
   document.getElementById('pause-btn').classList.add('show');
-  var lb=document.getElementById('log-midbar-btn');if(lb)lb.style.display='';
   document.getElementById('concede-btn1').style.display='';
   document.getElementById('concede-btn2').style.display='';
   document.getElementById('timer-round-p1').style.display='';
@@ -1177,6 +1169,22 @@ function showTimers(){
 }
 
 /* ---- GG ---- */
+var _endRoundPlayer=null;
+function endRoundPrompt(p){
+  _endRoundPlayer=p;
+  var card=document.getElementById('confirm-card');
+  if(card)card.style.transform=p===2?'rotate(180deg)':'';
+  confirmGG();
+  var fb=document.getElementById('confirm-forfeit');
+  if(fb)fb.style.display='';
+}
+function forfeitRound(){
+  var loser=_endRoundPlayer;
+  _endRoundPlayer=null;
+  closeConfirm();
+  if(!loser)return;
+  openGG(loser);   // real scores stay intact, winner is forced
+}
 function confirmGG(){
   _confirmAction='gg';
   var rNum=state.roundHistory.length+1;
@@ -1187,18 +1195,18 @@ function confirmGG(){
   document.getElementById('confirm-yes').onclick=function(){
     var act=_confirmAction;
     closeConfirm();
-    if(act==='concede'){concedeConfirm();return;}
     if(act==='gg') openGG();
   };
   document.getElementById('confirm-overlay').classList.add('show');
 }
-function openGG(){
+function openGG(forfeitLoser){
   var s1=state.scores[0], s2=state.scores[1];
   var n1=state.names[0], n2=state.names[1];
   var roundNum=state.roundHistory.length+1;
   var roundWinner=null;
   if(!state.roundCounted){
-    if(s1>s2){roundWinner=1;state.roundWins[0]++;}
+    if(forfeitLoser){roundWinner=forfeitLoser===1?2:1;state.roundWins[roundWinner-1]++;}
+    else if(s1>s2){roundWinner=1;state.roundWins[0]++;}
     else if(s2>s1){roundWinner=2;state.roundWins[1]++;}
     state.roundLoser=roundWinner===1?2:roundWinner===2?1:null;
     state.roundCounted=true;
@@ -1209,7 +1217,8 @@ function openGG(){
   var winEl=document.getElementById('gg-winner');
   var w1=state.roundWins[0],w2=state.roundWins[1];
   var prefix=state.bo===1?'':'ROUND '+roundNum+': ';
-  if(s1>s2){winEl.textContent=prefix+n1+' WINS!';winEl.style.color='var(--gold)';}
+  if(forfeitLoser){var _fn=forfeitLoser===1?n2:n1;var _ln=forfeitLoser===1?n1:n2;winEl.textContent=prefix+_fn+' WINS — '+_ln+' FORFEIT';winEl.style.color='var(--gold)';}
+  else if(s1>s2){winEl.textContent=prefix+n1+' WINS!';winEl.style.color='var(--gold)';}
   else if(s2>s1){winEl.textContent=prefix+n2+' WINS!';winEl.style.color='var(--gold)';}
   else{winEl.textContent=prefix+'DRAW!';winEl.style.color='var(--accent)';}
   // Scores & names
@@ -1286,6 +1295,15 @@ function openGG(){
   var es=(elapsed%60).toString().padStart(2,'0');
   var boStr='BEST OF '+state.bo;
   document.getElementById('gg-time').textContent=boStr+' · GAME TIME '+em+':'+es;
+  if(forfeitLoser){
+    var _w=forfeitLoser===1?2:1,_l=forfeitLoser;
+    document.getElementById('gg-name'+_w).style.color='var(--gold)';
+    document.getElementById('gg-name'+_w).style.fontWeight='700';
+    document.getElementById('gg-val'+_w).style.color='var(--gold)';
+    document.getElementById('gg-name'+_l).style.color='var(--muted)';
+    document.getElementById('gg-name'+_l).style.fontWeight='400';
+    document.getElementById('gg-val'+_l).style.color='var(--muted)';
+  }
   document.getElementById('gg-overlay').classList.add('show');
 }
 function closeGG(){
@@ -1334,13 +1352,14 @@ function confirmAction(action){
   document.getElementById('confirm-yes').onclick=function(){
     var act=_confirmAction;
     closeConfirm();
-    if(act==='concede'){concedeConfirm();return;}
-    if(act==='reset'){document.getElementById('gg-overlay').classList.remove('show');startGame();return;}
+    if(act==='reset'){resetMatch();return;}
     else if(act==='menu')goSetup();
   };
   document.getElementById('confirm-overlay').classList.add('show');
 }
 function closeConfirm(){
+  var _fb=document.getElementById('confirm-forfeit');if(_fb)_fb.style.display='none';
+  _endRoundPlayer=null;
   document.getElementById('confirm-overlay').classList.remove('show');
   var card=document.getElementById('confirm-card');if(card)card.style.transform='';
   _confirmAction=null;
@@ -1474,7 +1493,6 @@ function setPreGameState(on){
   if(rollBtn)rollBtn.style.visibility=on?'hidden':'';
   logos.forEach(function(l){l.style.visibility=on?'hidden':'';});
   document.querySelectorAll('.xp-btn').forEach(function(b){b.style.visibility=on?'hidden':'';});
-  var lb=document.getElementById('log-midbar-btn');if(lb)lb.style.visibility=on?'hidden':'';
   document.querySelectorAll('.concede-btn').forEach(function(b){b.style.visibility=on?'hidden':'';});
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
   ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
@@ -1482,6 +1500,17 @@ function setPreGameState(on){
   ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
   ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
+}
+function resetMatch(){
+  // Scores only - round number, round wins, timer and XP all keep running
+  state.scores=[0,0];
+  ['1','2'].forEach(function(p){
+    var el=document.getElementById('score'+p);
+    el.textContent='0';
+    el.style.animation='none';
+    void el.offsetWidth;
+    el.style.animation='scorePop 0.3s ease-out';
+  });
 }
 function tapToStart(){
   setPreGameState(false);
@@ -1527,7 +1556,6 @@ function confirmDone(){
   document.getElementById('confirm-yes').onclick=function(){
     var act=_confirmAction;
     closeConfirm();
-    if(act==='concede'){concedeConfirm();return;}
     if(act==='menu_from_gg'){
       document.getElementById('gg-overlay').classList.remove('show');
       goSetup();
@@ -1723,25 +1751,6 @@ document.addEventListener('pointercancel',function(){
   document.getElementById('greg-overlay').classList.remove('show');
 });
 
-var _concedePlayer=null;
-function concedePrompt(p){
-  _concedePlayer=p;
-  var card=document.getElementById('confirm-card');
-  if(card)card.style.transform=p===2?'rotate(180deg)':'';
-  confirmAction('concede');
-}
-function concedeConfirm(){
-  if(_concedePlayer===null)return;
-  var loser=_concedePlayer;
-  var winner=loser===1?2:1;
-  _concedePlayer=null;
-  // Force loser score to 0 and winner to 1 so openGG always awards winner
-  state.scores[loser-1]=0;
-  state.scores[winner-1]=Math.max(1,state.scores[winner-1]);
-  document.getElementById('score'+loser).textContent=0;
-  document.getElementById('score'+winner).textContent=state.scores[winner-1];
-  openGG();
-}
 
 (function(){
   var EDGE_GUARD=28;   // px strip at screen bottom where the iOS home swipe starts
