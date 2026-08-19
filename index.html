@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="RiftKeeper">
@@ -324,6 +327,7 @@
     </div>
     <button id="start-btn" onclick="startGame()">START GAME</button>
     <button id="card-lookup-btn" onclick="openCardLookup()" style="background:rgba(255,213,79,0.08);border:1px solid rgba(255,213,79,0.25);color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;padding:0.6rem 1.2rem;border-radius:10px;cursor:pointer;text-transform:uppercase;margin-top:0.5rem;">🃏 CARD LOOKUP</button>
+    <div id="build-stamp" style="font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:2px;color:rgba(255,255,255,0.28);text-align:center;position:absolute;bottom:2.6rem;left:0;right:0;">v14 · 2026-08-19</div>
     <a id="donate-link" href="https://www.paypal.com/donate/?business=EUJMUQZQT8KS6&no_recurring=0&item_name=Thank+you+for+supporting+me+to+keep+this+going%21&currency_code=USD" target="_blank">💛 Support me with a donation!</a>
   </div>
 
@@ -787,19 +791,6 @@ function startGame(){
   if(z2){var r2=z2.getBoundingClientRect();var el2=document.getElementById('pregame-bo-p2');if(el2){el2.textContent=boTxt2;el2.style.top='';el2.style.bottom=(window.innerHeight-r2.top-40)+'px';el2.style.left=(r2.left+8)+'px';el2.style.display='';el2.style.transform='';}}
 }
 
-function undoAdj(p,d){
-  var s=state.scores[p-1]-d;
-  if(s<0)s=0;if(s>8)s=8;
-  state.scores[p-1]=s;
-  document.getElementById('score'+p).textContent=s;
-  if(state.logs[p-1].length)state.logs[p-1].pop();
-  var all=state.logs[p-1];
-  var lc=document.getElementById('logcount'+p);
-  if(lc)lc.textContent=all.slice(-2).join('\n');
-  var lb=document.getElementById('logbtn'+p);
-  if(lb){if(all.length>0)lb.classList.add('has-entries');else lb.classList.remove('has-entries');}
-  if(_confirmAction==='gg')closeConfirm();
-}
 function adj(p,d){
   let s=state.scores[p-1]+d;
   if(s<0)s=0;if(s>8)s=8;
@@ -1753,42 +1744,26 @@ function concedeConfirm(){
 }
 
 (function(){
-  var MOVE_LIMIT=12;   // px of travel before we treat it as a scroll/swipe and roll back
   var EDGE_GUARD=28;   // px strip at screen bottom where the iOS home swipe starts
   var isTouch=false;   // once true, click events are ignored entirely
-  function addTap(id,fn,undo){
+  function addTap(id,fn){
     var el=document.getElementById(id);if(!el)return;
-    var sx=0,sy=0,moved=false,applied=false;
     el.addEventListener('touchstart',function(e){
       isTouch=true;
       if(e.touches.length>1)return;                        // ignore multi-touch
       var t=e.touches[0];
-      sx=t.clientX;sy=t.clientY;
-      moved=false;applied=false;
       if(window.innerHeight-t.clientY<EDGE_GUARD)return;   // home-gesture zone
-      fn();          // instant - lands on touch down
-      applied=true;
-    },{passive:true});
-    el.addEventListener('touchmove',function(e){
-      if(moved||!applied)return;
-      var t=e.touches[0];
-      if(Math.abs(t.clientX-sx)>MOVE_LIMIT||Math.abs(t.clientY-sy)>MOVE_LIMIT){
-        moved=true;applied=false;
-        undo();      // scroll or swipe in any direction - take the point back
-      }
-    },{passive:true});
-    el.addEventListener('touchcancel',function(){
-      if(applied){undo();applied=false;}
+      fn();          // lands on touch down, then it's locked in
     },{passive:true});
     el.addEventListener('click',function(){
       if(isTouch)return;   // touch already handled it - never double up
       fn();
     });
   }
-  addTap('tap1p',function(){adj(1,1);},function(){undoAdj(1,1);});
-  addTap('tap1m',function(){adj(1,-1);},function(){undoAdj(1,-1);});
-  addTap('tap2p',function(){adj(2,1);},function(){undoAdj(2,1);});
-  addTap('tap2m',function(){adj(2,-1);},function(){undoAdj(2,-1);});
+  addTap('tap1p',function(){adj(1,1);});
+  addTap('tap1m',function(){adj(1,-1);});
+  addTap('tap2p',function(){adj(2,1);});
+  addTap('tap2m',function(){adj(2,-1);});
 })();
 
 
