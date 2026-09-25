@@ -20,54 +20,24 @@
   :root{
     --bg1:#0d1b2a;--gold:#ffd54f;--accent:#4fc3f7;--accent2:#e57373;
     --text:#e0f0ff;--muted:#7a9bb5;
+    --p1:#4fc3f7;--p2:#ff5f6d;--bg0:#02050c;--surface:#0a1828;--surface2:#0d2035;--bar:#000000;--danger:#ff6b6b;
   }
   html,body{height:100%;overflow:hidden;background:var(--bg1);}
   body{font-family:'Exo 2',sans-serif;color:var(--text);}
   #app{display:flex;flex-direction:column;height:100vh;width:100%;}
 
   /* SETUP */
-  #setup{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:1.5rem;gap:1.2rem;background:linear-gradient(160deg,#0d1b2a 0%,#0a1020 100%);text-align:center;}
-  #setup h1{font-family:'Rajdhani',sans-serif;font-size:3.5rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;}
+  #setup{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:1.5rem;gap:1.2rem;background:linear-gradient(160deg,var(--bg1) 0%,#0a1020 100%);text-align:center;}
+  #setup h1{font-family:'Rajdhani',sans-serif;font-size:clamp(3.8rem,15vw,5.6rem);font-weight:700;letter-spacing:8px;text-transform:uppercase;text-align:center;width:100%;line-height:1;margin-bottom:0.6rem;}
   #setup h1 span{color:var(--gold);}
-  .setup-player{background:rgba(255,255,255,0.04);border:1px solid rgba(79,195,247,0.2);border-radius:12px;padding:1rem;width:100%;max-width:360px;margin-left:auto;margin-right:auto;text-align:center;}
-  .setup-player h3{font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:0.6rem;}
-  .setup-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(79,195,247,0.25);border-radius:8px;padding:0.7rem 0.9rem;color:var(--text);font-family:'Exo 2',sans-serif;font-size:1rem;outline:none;text-align:center;}
-  .setup-input:focus{border-color:var(--accent);}
-  .legend-pick{display:flex;align-items:center;justify-content:center;gap:0.8rem;margin-top:0.9rem;cursor:pointer;background:rgba(79,195,247,0.06);border:1px solid rgba(79,195,247,0.2);border-radius:10px;padding:0.6rem 0.9rem;transition:background 0.2s;}
-  .legend-pick:active{background:rgba(79,195,247,0.12);}
 
-  .legend-label{font-size:0.8rem;color:var(--muted);text-align:center;width:100%;}
-  .legend-label b{display:block;font-size:0.95rem;color:var(--text);font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:1px;}
   /* LEGEND PICKER SCREEN */
-  #legend-screen{position:fixed;inset:0;background:#000000;z-index:300;display:none;flex-direction:column;align-items:center;justify-content:flex-start;padding:1rem;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
-  #legend-screen.show{display:flex;}
-  #legend-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(79,195,247,0.2);border-radius:16px;width:100%;max-width:420px;display:flex;flex-direction:column;overflow:hidden;max-height:92vh;}
-  #legend-search-bar{padding:0.5rem 0.8rem;background:rgba(5,14,24,0.6);border-bottom:1px solid rgba(79,195,247,0.1);display:flex;align-items:center;gap:0.6rem;flex-shrink:0;}
-  #legend-title{font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:0.7rem 1rem 0;}
-  #legend-search-input{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(79,195,247,0.25);border-radius:8px;padding:0.55rem 0.8rem;color:var(--text);font-family:'Exo 2',sans-serif;font-size:1rem;outline:none;text-align:center;}
-  #legend-search-input:focus{border-color:var(--accent);}
-  #legend-cancel{font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--muted);cursor:pointer;padding:0.4rem 0.5rem;flex-shrink:0;}
-  #legend-grid{flex:1;overflow-y:auto;padding:0.8rem;display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;scrollbar-width:none;-ms-overflow-style:none;}
-  #legend-grid::-webkit-scrollbar{display:none;}
-  #legend-detail{flex:1;overflow-y:auto;padding:0.8rem;display:none;flex-direction:column;gap:0.8rem;scrollbar-width:none;}
-  #legend-detail::-webkit-scrollbar{display:none;}
-  #legend-detail.show{display:flex;}
   #detail-back{display:flex;align-items:center;gap:0.5rem;cursor:pointer;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;padding:0.2rem 0;}
   #detail-back:active{color:var(--accent);}
-  #detail-name{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:3px;color:var(--text);text-align:center;margin-bottom:0.4rem;}
-  .detail-variants{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;}
-  .variant-card{cursor:pointer;background:rgba(255,255,255,0.04);border:1px solid rgba(79,195,247,0.12);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:background 0.15s;}
-  .variant-card:active{background:rgba(79,195,247,0.15);}
-  .variant-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;}
-  .variant-card span{font-family:'Rajdhani',sans-serif;font-size:0.72rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:center;padding:0.3rem;}
-  .legend-card{display:flex;flex-direction:column;align-items:center;gap:0.35rem;cursor:pointer;background:rgba(255,255,255,0.04);border:1px solid rgba(79,195,247,0.12);border-radius:10px;padding:0.5rem 0.3rem;transition:background 0.15s;}
-  .legend-card:active{background:rgba(79,195,247,0.15);}
-  .legend-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;border-radius:6px;}
-  .legend-card span{font-family:'Rajdhani',sans-serif;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--text);text-align:center;line-height:1.2;}
-  #start-btn{background:linear-gradient(135deg,#1a4a6e,#0d2d45);border:1px solid var(--accent);color:var(--accent);font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:0.9rem 2.5rem;border-radius:10px;cursor:pointer;width:100%;max-width:360px;transition:all 0.2s;text-align:center;}
+  #start-btn{background:linear-gradient(135deg,#1a4a6e,#0d2d45);border:1px solid var(--accent);color:var(--accent);font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:0.9rem 2.5rem;border-radius:10px;cursor:pointer;width:auto;max-width:none;transition:all 0.2s;text-align:center;}
   #start-btn:active{transform:scale(0.97);}
-  .bo-row{display:flex;gap:0.6rem;width:100%;max-width:360px;}
-  .bo-btn{flex:1;padding:0.6rem 0;border-radius:10px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:2px;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;}
+  .bo-row{display:flex;flex-direction:column;gap:0.6rem;width:fit-content;max-width:none;}
+  .bo-btn{flex:none;padding:0.55rem 1.5rem;border-radius:10px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:2px;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;}
   .bo-btn.active{background:rgba(255,213,79,0.15);border-color:var(--gold);color:var(--gold);}
 
   /* GAME */
@@ -77,29 +47,26 @@
   .player-zone.p1{background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.lit{background:rgba(255,213,79,0.13)!important;}
   .pzone-bg{position:absolute;inset:0;opacity:0.08;background-size:cover;background-position:center;pointer-events:none;}
-  .score-big{font-family:'Rajdhani',sans-serif;font-size:15rem;font-weight:700;line-height:0.9;color:#e0f0ff;text-shadow:0 0 40px rgba(79,195,247,0.25);flex:1;display:flex;align-items:center;justify-content:center;transition:transform 0.15s,color 0.15s;-webkit-user-select:none !important;user-select:none !important;pointer-events:none;}
+  .score-big{font-family:'Rajdhani',sans-serif;font-size:19rem;font-weight:700;line-height:0.86;color:#ffffff;flex:1;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;-webkit-user-select:none !important;user-select:none !important;pointer-events:none;}
+  .player-zone.p1 .score-big{text-shadow:0 0 18px rgba(79,195,247,0.55),0 0 64px rgba(79,195,247,0.30);}
+  .player-zone.p2 .score-big{text-shadow:0 0 18px rgba(255,95,109,0.55),0 0 64px rgba(255,95,109,0.30);}
   @keyframes scorePop{0%{transform:scale(1);}40%{transform:scale(1.15);}100%{transform:scale(1);}}
-  .player-name{font-family:'Rajdhani',sans-serif;font-size:1.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:2rem;margin-bottom:0.1rem;}
   .player-zone.p1 .player-name{margin-bottom:0.1rem;}
-  .legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:2px;color:rgba(79,195,247,0.55);text-transform:uppercase;text-align:center;margin-bottom:0.15rem;min-height:0.9em;}
 
   /* TAP ZONES */
   .tap-zones{position:absolute;inset:0;display:flex;pointer-events:none;}
   .tap-zone{flex:1;display:flex;align-items:center;justify-content:center;pointer-events:all;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-user-select:none !important;user-select:none !important;-webkit-touch-callout:none !important;touch-action:manipulation;}
   .tap-zone:first-child{justify-content:flex-start;padding-left:2.2rem;}
   .tap-zone:last-child{justify-content:flex-end;padding-right:2.2rem;}
-  .tap-zone:active{background:rgba(255,213,79,0.09);}
+  .tap-zone:active{background:rgba(255,255,255,0.05);}
+  .player-zone.p1 .tap-hint{color:var(--p1);}
+  .player-zone.p2 .tap-hint{color:var(--p2);}
   .tap-hint{font-family:'Rajdhani',sans-serif;font-size:2.8rem;font-weight:700;opacity:0.45;pointer-events:none;user-select:none;color:var(--gold);}
 
   /* CORNER BUTTONS */
   .log-btn{display:none !important;}
   .log-btn.has-entries{opacity:1;pointer-events:all;}
-  .concede-btn{position:absolute;top:16px;left:12px;background:rgba(255,107,107,0.12);border:1px solid rgba(255,107,107,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:#ff6b6b;letter-spacing:1px;touch-action:manipulation;min-width:70px;}
-  .player-zone.p2 .concede-btn{top:16px;left:12px;}
-  .xp-btn{position:absolute;top:16px;right:12px;background:rgba(255,213,79,0.12);border:1px solid rgba(255,213,79,0.3);border-radius:9px;padding:6px 11px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;min-width:70px;}
-  .xp-val{font-family:'Rajdhani',sans-serif;font-size:19px;font-weight:700;color:var(--gold);letter-spacing:1px;}
 
-  .player-zone.p2 .xp-btn{top:16px;bottom:auto;right:12px;left:auto;transform:none;}
 
   /* MIDBAR */
   #midbar{height:52px;background:#000000;display:flex;align-items:stretch;justify-content:space-between;padding:0;gap:0;border-top:1px solid rgba(79,195,247,0.1);border-bottom:1px solid rgba(79,195,247,0.1);flex-shrink:0;z-index:10;position:relative;}
@@ -136,7 +103,7 @@
   /* CONFIRM DIALOG */
   #confirm-overlay{position:absolute;inset:0;background:rgba(2,5,12,0.85);z-index:60;display:none;align-items:center;justify-content:center;}
   #confirm-overlay.show{display:flex;}
-  #confirm-card{background:#0a1828;border:1px solid rgba(79,195,247,0.25);border-radius:14px;padding:2rem;width:85%;max-width:340px;display:flex;flex-direction:column;gap:1.2rem;text-align:center;}
+  #confirm-card{background:var(--surface);border:1px solid rgba(79,195,247,0.25);border-radius:14px;padding:2rem;width:85%;max-width:340px;display:flex;flex-direction:column;gap:1.2rem;text-align:center;}
   #confirm-msg{font-family:'Rajdhani',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--text);text-transform:uppercase;}
   #confirm-btns{display:flex;gap:0.6rem;}
   .confirm-btn{flex:1;padding:1.5rem;border-radius:12px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:1.7rem;letter-spacing:2px;text-transform:uppercase;text-align:center;border:1px solid rgba(255,255,255,0.1);}
@@ -157,14 +124,14 @@
   /* OVERLAYS */
   .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:100;display:none;align-items:center;justify-content:center;padding:1.2rem;}
   .overlay.show{display:flex;}
-  .panel{background:#0d1b2a;border:1px solid rgba(79,195,247,0.25);border-radius:16px;padding:1.4rem;width:100%;max-width:340px;}
+  .panel{background:var(--bg1);border:1px solid rgba(79,195,247,0.25);border-radius:16px;padding:1.4rem;width:100%;max-width:340px;}
   .rotated-panel{transform:rotate(180deg);}
   .panel h2{font-family:'Rajdhani',sans-serif;letter-spacing:2px;text-transform:uppercase;font-size:1rem;color:var(--accent);margin-bottom:1rem;}
   .close-btn{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:0.7rem;color:var(--muted);font-family:'Rajdhani',sans-serif;letter-spacing:2px;font-size:0.9rem;cursor:pointer;text-transform:uppercase;margin-top:0.6rem;}
   .close-btn:active{transform:scale(0.98);}
   #gg-overlay{position:fixed;inset:0;background:rgba(2,5,12,0.9);z-index:50;display:none;align-items:center;justify-content:center;padding:1rem;}
   #gg-overlay.show{display:flex;}
-  #gg-card{background:#0a1828;border:1px solid rgba(79,195,247,0.25);border-radius:16px;width:100%;max-width:380px;display:flex;flex-direction:column;overflow:hidden;max-height:88vh;}
+  #gg-card{transition:none;background:var(--surface);border:1px solid rgba(79,195,247,0.25);border-radius:16px;width:100%;max-width:380px;display:flex;flex-direction:column;overflow:hidden;max-height:88vh;}
   #gg-winner{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;text-align:center;padding:1rem 1rem 0.2rem;color:var(--gold);}
   #gg-time{font-family:'Rajdhani',sans-serif;font-size:0.75rem;letter-spacing:2px;color:var(--muted);text-align:center;padding:0 1rem 0.8rem;text-transform:uppercase;}
   #gg-cols{display:flex;flex:1;overflow:hidden;border-top:1px solid rgba(79,195,247,0.12);}
@@ -172,7 +139,6 @@
   .gg-col::-webkit-scrollbar{display:none;}
   .gg-col:first-child{border-right:1px solid rgba(79,195,247,0.12);}
   .gg-score-name{font-family:'Rajdhani',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:0.15rem;text-align:center;}
-  .gg-legend-sub{font-family:'Rajdhani',sans-serif;font-size:0.6rem;letter-spacing:1px;color:rgba(79,195,247,0.5);text-transform:uppercase;text-align:center;margin-bottom:0.3rem;min-height:0.8em;}
   .gg-score-val{font-family:'Rajdhani',sans-serif;font-size:3.4rem;font-weight:700;line-height:1;margin-bottom:0.6rem;text-align:center;}
   .gg-log-title{font-family:'Rajdhani',sans-serif;font-size:0.95rem;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:0.3rem;padding-bottom:0.25rem;border-bottom:1px solid rgba(79,195,247,0.15);text-align:center;}
   .gg-log-entry{font-family:'Rajdhani',sans-serif;font-size:1.25rem;color:var(--gold);padding:0.3rem 0;border-bottom:1px solid rgba(255,255,255,0.04);text-align:center;}
@@ -184,15 +150,6 @@
   .gg-action-btn.next{color:var(--gold);background:rgba(255,213,79,0.12);}
   .gg-action-btn:active{background:rgba(255,213,79,0.2);}
   /* XP POPUP — small inline popup near button */
-  #xp-popup{position:fixed;z-index:150;display:none;flex-direction:column;align-items:center;gap:8px;background:#0d2035;border:1px solid rgba(255,213,79,0.4);border-radius:16px;padding:14px 6px;min-width:0;transition:none;}
-  #xp-popup.show{display:flex;}
-  #xp-popup.p2-popup{transform:rotate(180deg);}
-  .xp-popup-val{font-family:'Rajdhani',sans-serif;font-size:3rem;font-weight:700;color:var(--gold);line-height:1;text-align:center;}
-  .xp-popup-btns{display:flex;gap:10px;align-items:center;}
-  .xp-popup-btn{width:64px;height:64px;border-radius:50%;border:2px solid rgba(255,213,79,0.35);background:rgba(255,213,79,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1;transition:all 0.12s;}
-  .xp-popup-btn:active{transform:scale(0.88);background:rgba(255,213,79,0.22);}
-  #xp-popup-backdrop{position:fixed;inset:0;z-index:149;display:none;}
-  #xp-popup-backdrop.show{display:block;}
   .log-list{max-height:60vh;overflow-y:auto;}
   #logOverlay .panel{max-width:420px;}
   #logOverlay h2{font-size:1.1rem;}
@@ -227,27 +184,14 @@
   .blinking{animation:blinkZone 1.8s ease-in-out infinite;}
 
   /* EASTER EGG - AURORA */
-  #aurora-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;overflow:hidden;}
-  #aurora-overlay.show{display:block;}
-  @keyframes auroraWave1{0%{transform:translateX(-30%) skewX(-15deg);opacity:0.5;}50%{transform:translateX(10%) skewX(10deg);opacity:0.8;}100%{transform:translateX(-30%) skewX(-15deg);opacity:0.5;}}
-  @keyframes auroraWave2{0%{transform:translateX(20%) skewX(10deg);opacity:0.4;}50%{transform:translateX(-15%) skewX(-20deg);opacity:0.7;}100%{transform:translateX(20%) skewX(10deg);opacity:0.4;}}
-  @keyframes auroraWave3{0%{transform:translateX(-10%) skewX(5deg);opacity:0.3;}50%{transform:translateX(25%) skewX(-10deg);opacity:0.6;}100%{transform:translateX(-10%) skewX(5deg);opacity:0.3;}}
-  @keyframes auroraShift{0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}}
-  .aurora-band{position:absolute;left:-50%;width:200%;border-radius:50%;filter:blur(40px);}
-  .aurora-band:nth-child(1){height:35%;top:5%;background:linear-gradient(180deg,rgba(0,255,180,0.6),rgba(0,100,255,0.3),transparent);animation:auroraWave1 6s ease-in-out infinite, auroraShift 12s linear infinite;}
-  .aurora-band:nth-child(2){height:30%;top:20%;background:linear-gradient(180deg,rgba(100,0,255,0.5),rgba(0,200,255,0.4),transparent);animation:auroraWave2 8s ease-in-out infinite, auroraShift 15s linear infinite reverse;}
-  .aurora-band:nth-child(3){height:25%;top:35%;background:linear-gradient(180deg,rgba(0,255,100,0.4),rgba(200,0,255,0.3),transparent);animation:auroraWave3 7s ease-in-out infinite, auroraShift 10s linear infinite;}
-  .aurora-band:nth-child(4){height:40%;top:0%;background:linear-gradient(180deg,rgba(0,255,220,0.3),transparent);animation:auroraWave1 10s ease-in-out infinite reverse;}
-  @keyframes auroraStars{0%,100%{opacity:0.6;}50%{opacity:1;}}
-  .aurora-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%, white, transparent),radial-gradient(1px 1px at 60% 15%, white, transparent),radial-gradient(1px 1px at 80% 50%, white, transparent),radial-gradient(1px 1px at 40% 70%, white, transparent),radial-gradient(1px 1px at 10% 80%, white, transparent),radial-gradient(1px 1px at 90% 25%, white, transparent),radial-gradient(1px 1px at 50% 90%, white, transparent),radial-gradient(1px 1px at 70% 60%, white, transparent);animation:auroraStars 3s ease-in-out infinite;opacity:0.5;}
-  .aurora-msg{position:absolute;bottom:15%;left:0;right:0;text-align:center;font-family:'Rajdhani',sans-serif;font-size:1rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);animation:auroraStars 2s ease-in-out infinite;}
 
   @keyframes rotateFlash{0%,100%{opacity:1;}50%{opacity:0.15;}}
   #rotate-msg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;}
   #rotate-msg.show{display:flex;}
   #rotate-msg .rotate-icon{font-size:4rem;animation:rotateFlash 1s ease-in-out infinite;}
   #rotate-msg .rotate-text{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;padding:0 2rem;animation:rotateFlash 1s ease-in-out infinite;}
-  #donate-link{font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:1px;color:rgba(255,213,79,0.5);text-align:center;text-decoration:none;padding:0.3rem;transition:color 0.2s;position:absolute;bottom:1.2rem;left:0;right:0;}
+  #card-lookup-btn{position:absolute;bottom:3.1rem;left:50%;transform:translateX(-50%);}
+  #donate-link{cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:1px;color:rgba(255,213,79,0.5);text-align:center;text-decoration:none;padding:0.3rem;transition:color 0.2s;position:absolute;bottom:1.2rem;left:0;right:0;}
   #donate-link:active{color:var(--gold);}
   .midbar-logo{font-family:'Rajdhani',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:2px;line-height:1.1;text-align:center;pointer-events:none;user-select:none;flex-shrink:0;color:var(--gold);}
   .midbar-logo .r{color:var(--accent);}
@@ -282,12 +226,6 @@
   .overtime-sub{font-family:'Rajdhani',sans-serif;font-size:clamp(1.1rem,4.5vw,1.5rem);font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,213,79,0.75);text-align:center;line-height:1.8;}
   .overtime-tap{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-top:0.8rem;animation:fosFlash 1.2s ease-in-out infinite;}
   #bo1-rules-overlay.show{display:flex;}
-  #gabe-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
-  #gabe-overlay.show{display:block;}
-  #gabe-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:3px solid #ff6b9d;}
-  #greg-overlay{position:fixed;inset:0;z-index:500;display:none;pointer-events:none;background:rgba(0,0,0,0.7);}
-  #greg-overlay.show{display:block;}
-  #greg-overlay img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70%;max-width:300px;border-radius:12px;border:3px solid #8b0000;}
   @keyframes bloodDrip{0%{transform:translateY(-20px);opacity:0;}10%{opacity:1;}100%{transform:translateY(100vh);opacity:0.6;}}
   #fireworks-canvas{position:fixed;inset:0;z-index:149;pointer-events:none;display:none;}
   #fireworks-canvas.show{display:block;}
@@ -301,7 +239,7 @@
   #big-dice.shaking{animation:diceShake 0.5s ease-in-out;}
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
-  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;}
+  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--gold);letter-spacing:3px;line-height:1;position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;}
   .pregame-bo-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:auto;padding-bottom:0.8rem;display:none;}
 </style>
 </head>
@@ -310,42 +248,24 @@
 <div id="app">
   <div id="setup">
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
-    <div class="setup-player">
-      <h3>Player 1</h3>
-      <input class="setup-input" id="p1name" placeholder="Enter name..." maxlength="16">
-      <div class="legend-pick" onclick="openLegendPicker(1)">
-        <div class="legend-label"><b id="p1legname">Choose Legend</b>tap to select</div>
-      </div>
-    </div>
-    <div class="setup-player">
-      <h3>Player 2</h3>
-      <input class="setup-input" id="p2name" placeholder="Enter name..." maxlength="16">
-      <div class="legend-pick" onclick="openLegendPicker(2)">
-        <div class="legend-label"><b id="p2legname">Choose Legend</b>tap to select</div>
-      </div>
-    </div>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
       <div class="bo-btn active" id="bo3-btn" onclick="setBo(3)">BEST OF 3</div>
     </div>
     <button id="start-btn" onclick="startGame()">START GAME</button>
+    <div id="build-stamp" style="font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:2px;color:rgba(255,255,255,0.28);text-align:center;position:absolute;bottom:2.6rem;left:0;right:0;">v24 · 2026-09-25</div>
     <button id="card-lookup-btn" onclick="openCardLookup()" style="background:rgba(255,213,79,0.08);border:1px solid rgba(255,213,79,0.25);color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;padding:0.6rem 1.2rem;border-radius:10px;cursor:pointer;text-transform:uppercase;margin-top:0.5rem;">🃏 CARD LOOKUP</button>
-    <div id="build-stamp" style="font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:2px;color:rgba(255,255,255,0.28);text-align:center;position:absolute;bottom:2.6rem;left:0;right:0;">v14 · 2026-08-19</div>
-    <a id="donate-link" href="https://www.paypal.com/donate/?business=EUJMUQZQT8KS6&no_recurring=0&item_name=Thank+you+for+supporting+me+to+keep+this+going%21&currency_code=USD" target="_blank">💛 Support me with a donation!</a>
+    <div id="donate-link" onclick="donatePrompt()">Support me with a donation</div>
   </div>
 
   <div id="game">
     <div class="player-zone p2" id="zone2">
       <div class="pzone-bg" id="bg2"></div>
       <div class="log-btn" id="logbtn2" onclick="openLog(2)"><span id="logcount2"></span></div>
-      <div class="xp-btn" onclick="openXP(2)"><span class="xp-val" id="xpval2">0 XP</span></div>
-      <div class="concede-btn" id="concede-btn2" onclick="endRoundPrompt(2)" style="display:none;">END?</div>
       <div class="tap-zones">
         <div class="tap-zone" id="tap2m"><span class="tap-hint">−</span></div>
         <div class="tap-zone" id="tap2p"><span class="tap-hint">+</span></div>
       </div>
-      <div class="player-name" id="pname2">PLAYER 2</div>
-      <div class="legend-sub" id="legendsub2"></div>
       <div class="tap-start-msg" id="tapstart2" onclick="tapToStart()">
         <div class="tap-start-text">ROLL THE DICE<br>OR<br>TAP TO START</div>
       </div>
@@ -353,40 +273,36 @@
       <div class="timer-box p2-timer" id="timer-p2">
         <div class="timer-display" id="timer-display-p2">60:00</div>
         <div class="timer-round-sub" id="timer-round-p2"></div>
-        <div id="pregame-bo-p2" style="font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;display:none;text-align:center;width:100%;padding-bottom:0.5rem;"></div>
+        <div id="pregame-bo-p2" style="font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--gold);letter-spacing:3px;display:none;text-align:center;width:100%;padding-bottom:0.5rem;"></div>
       </div>
     </div>
 
     <div id="midbar">
-      <div class="mid-btn danger" onclick="resetMatch()" title="Reset"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="#ff6b6b"/></svg></div>
+      <div class="mid-btn danger" onclick="resetMatch()" title="Reset"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="var(--danger)"/></svg></div>
       <div class="mid-btn gg" id="gg-btn" onclick="openCombinedLog()" title="Log" style="font-size:1.4rem;">📝</div>
       <div id="big-dice-container">
         <svg id="big-dice" class="idle" onclick="rollDice()" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <rect x="5" y="5" width="90" height="90" rx="18" fill="#0d2035" stroke="#ffd54f" stroke-width="3"/>
+          <rect x="5" y="5" width="90" height="90" rx="18" fill="var(--surface2)" stroke="var(--gold)" stroke-width="3"/>
 
         </svg>
       </div>
-      <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">&nbsp; <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="#ffd54f" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#ffd54f"/><circle cx="10" cy="4" r="1" fill="#ffd54f"/><circle cx="7" cy="7" r="1" fill="#ffd54f"/><circle cx="4" cy="10" r="1" fill="#ffd54f"/><circle cx="10" cy="10" r="1" fill="#ffd54f"/></svg> &nbsp;&nbsp;ROLL DICE&nbsp;&nbsp; <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="#ffd54f" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="#ffd54f"/><circle cx="10" cy="4" r="1" fill="#ffd54f"/><circle cx="7" cy="7" r="1" fill="#ffd54f"/><circle cx="4" cy="10" r="1" fill="#ffd54f"/><circle cx="10" cy="10" r="1" fill="#ffd54f"/></svg></div>
+      <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">&nbsp; <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="var(--gold)" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="var(--gold)"/><circle cx="10" cy="4" r="1" fill="var(--gold)"/><circle cx="7" cy="7" r="1" fill="var(--gold)"/><circle cx="4" cy="10" r="1" fill="var(--gold)"/><circle cx="10" cy="10" r="1" fill="var(--gold)"/></svg> &nbsp;&nbsp;ROLL DICE&nbsp;&nbsp; <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="var(--gold)" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="var(--gold)"/><circle cx="10" cy="4" r="1" fill="var(--gold)"/><circle cx="7" cy="7" r="1" fill="var(--gold)"/><circle cx="4" cy="10" r="1" fill="var(--gold)"/><circle cx="10" cy="10" r="1" fill="var(--gold)"/></svg></div>
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;pointer-events:none;flex-shrink:0;">
         <div class="midbar-logo flip" id="midbar-logo-p2" style="position:relative;left:-1px;"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
         <div class="midbar-logo" id="midbar-round-p1" style="display:none;"></div>
         <div class="midbar-logo" id="midbar-logo-p1" style="position:relative;left:1px;"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
       </div>
-      <div class="mid-btn pause" id="pause-btn" onclick="togglePause()"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/></svg></div>
-      <div class="mid-btn menu-btn" onclick="openMenuPanel()" title="Menu"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="2" rx="1" fill="#4fc3f7"/><rect x="3" y="11" width="18" height="2" rx="1" fill="#4fc3f7"/><rect x="3" y="17" width="18" height="2" rx="1" fill="#4fc3f7"/></svg></div>
+      <div class="mid-btn pause" id="pause-btn" onclick="togglePause()"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="var(--gold)"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="var(--gold)"/></svg></div>
+      <div class="mid-btn menu-btn" onclick="openMenuPanel()" title="Menu"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="2" rx="1" fill="var(--accent)"/><rect x="3" y="11" width="18" height="2" rx="1" fill="var(--accent)"/><rect x="3" y="17" width="18" height="2" rx="1" fill="var(--accent)"/></svg></div>
     </div>
 
     <div class="player-zone p1" id="zone1">
       <div class="pzone-bg" id="bg1"></div>
       <div class="log-btn" id="logbtn1" onclick="openLog(1)"><span id="logcount1"></span></div>
-      <div class="xp-btn" onclick="openXP(1)"><span class="xp-val" id="xpval1">0 XP</span></div>
-      <div class="concede-btn" id="concede-btn1" onclick="endRoundPrompt(1)" style="display:none;">END?</div>
       <div class="tap-zones">
         <div class="tap-zone" id="tap1m"><span class="tap-hint">−</span></div>
         <div class="tap-zone" id="tap1p"><span class="tap-hint">+</span></div>
       </div>
-      <div class="player-name" id="pname1">PLAYER 1</div>
-      <div class="legend-sub" id="legendsub1"></div>
       <div class="tap-start-msg" id="tapstart1" onclick="tapToStart()">
         <div class="tap-start-text">ROLL THE DICE<br>OR<br>TAP TO START</div>
       </div>
@@ -394,43 +310,16 @@
       <div class="timer-box" id="timer-p1">
         <div class="timer-display" id="timer-display-p1">60:00</div>
         <div class="timer-round-sub" id="timer-round-p1"></div>
-        <div id="pregame-bo-p1" style="font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--accent);letter-spacing:3px;display:none;text-align:center;width:100%;padding-bottom:0.5rem;"></div>
+        <div id="pregame-bo-p1" style="font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--gold);letter-spacing:3px;display:none;text-align:center;width:100%;padding-bottom:0.5rem;"></div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- GABE EASTER EGG -->
-<div id="gabe-overlay">
-  <img src="https://raw.githubusercontent.com/edwardclifton4/RiftKeeper/main/gabe.png">
-</div>
 <!-- GREG EASTER EGG -->
-<div id="greg-overlay">
-  <img src="https://raw.githubusercontent.com/edwardclifton4/RiftKeeper/main/greg.jpg">
-</div>
 <!-- AURORA EASTER EGG -->
-<div id="aurora-overlay">
-  <img src="https://raw.githubusercontent.com/edwardclifton4/RiftKeeper/main/IMG_3540.png" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:65%;max-width:300px;border-radius:12px;border:3px solid rgba(79,195,247,0.9);box-shadow:0 0 20px rgba(79,195,247,0.5);">
-</div>
 <!-- LEGEND PICKER SCREEN -->
-<div id="legend-screen">
-  <div id="legend-panel">
-    <div style="padding:0.75rem 1rem 0.4rem;background:rgba(5,14,24,0.8);border-bottom:1px solid rgba(79,195,247,0.1);display:flex;align-items:center;justify-content:space-between;">
-      <div id="detail-back-btn" onclick="showLegendGrid()" style="display:none;align-items:center;gap:0.3rem;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--muted);">&#8592; BACK</div>
-      <span style="font-family:'Rajdhani',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:3px;color:var(--muted);">SELECT LEGEND</span>
-      <div id="legend-cancel" onclick="closeLegendPicker()" style="font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:1px;color:var(--muted);cursor:pointer;padding:0.2rem 0.4rem;">CANCEL</div>
-    </div>
-    <div id="legend-search-bar">
-      <input id="legend-search-input" placeholder="Search champions..." oninput="filterLegends()" autocomplete="off" autocorrect="off" spellcheck="false">
-    </div>
-    <div id="legend-grid"></div>
-    <div id="legend-detail">
-      <div id="detail-name"></div>
-      <div class="detail-variants" id="detail-variants"></div>
-    </div>
-  </div>
-</div>
-
 <!-- PAUSE OVERLAY -->
 <div id="pause-overlay" onclick="togglePause()">
   <div class="pause-vside left"><span class="pause-vtext">GAME PAUSED</span></div>
@@ -439,7 +328,7 @@
       <div class="pause-tap">TAP TO CONTINUE</div>
     </div>
     <div id="pause-divider">
-      <svg width="32" height="32" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="6" width="12" height="36" rx="3" fill="#ffd54f"/><rect x="29" y="6" width="12" height="36" rx="3" fill="#ffd54f"/></svg>
+      <svg width="32" height="32" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="6" width="12" height="36" rx="3" fill="var(--gold)"/><rect x="29" y="6" width="12" height="36" rx="3" fill="var(--gold)"/></svg>
     </div>
     <div class="pause-half">
       <div class="pause-tap">TAP TO CONTINUE</div>
@@ -489,7 +378,6 @@
       <div class="confirm-btn yes" id="confirm-yes">YES</div>
       <div class="confirm-btn no" onclick="closeConfirm()">NO</div>
     </div>
-    <div class="confirm-btn" id="confirm-forfeit" onclick="forfeitRound()" style="display:none;background:rgba(229,115,115,0.12);color:#ff6b6b;border-color:rgba(229,115,115,0.35);font-size:1.2rem;padding:1rem;">FORFEIT — I LOSE</div>
   </div>
 </div>
 <!-- GG OVERLAY -->
@@ -502,14 +390,12 @@
     <div id="gg-cols">
       <div class="gg-col">
         <div class="gg-score-name" id="gg-name1"></div>
-        <div class="gg-legend-sub" id="gg-leg1"></div>
         <div class="gg-score-val" id="gg-val1"></div>
         <div class="gg-log-title" id="gg-log-title1"></div>
         <div id="gg-log-entries1"></div>
       </div>
       <div class="gg-col">
         <div class="gg-score-name" id="gg-name2"></div>
-        <div class="gg-legend-sub" id="gg-leg2"></div>
         <div class="gg-score-val" id="gg-val2"></div>
         <div class="gg-log-title" id="gg-log-title2"></div>
         <div id="gg-log-entries2"></div>
@@ -524,14 +410,6 @@
 </div>
 
 <!-- XP OVERLAY -->
-<div id="xp-popup-backdrop" onclick="closeXP()"></div>
-<div id="xp-popup">
-  <div class="xp-popup-val" id="xpBig">0</div>
-  <div class="xp-popup-btns">
-    <div class="xp-popup-btn" onclick="adjXP(-1)">−</div>
-    <div class="xp-popup-btn" onclick="adjXP(1)">+</div>
-  </div>
-</div>
 
 <!-- LOG OVERLAY -->
 <div class="overlay" id="logOverlay">
@@ -549,7 +427,7 @@
     <span id="dice-star1">★</span>
     <div id="dice-wheel" class="spinning">
       <svg id="rolling-dice" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
-        <rect x="5" y="5" width="90" height="90" rx="18" fill="#0d2035" stroke="#ffd54f" stroke-width="3"/>
+        <rect x="5" y="5" width="90" height="90" rx="18" fill="var(--surface2)" stroke="var(--gold)" stroke-width="3"/>
       </svg>
     </div>
     <div id="dice-goes-first"></div>
@@ -575,7 +453,10 @@
 </div>
 
 <script>
-let state={scores:[0,0],xp:[0,0],names:['PLAYER 1','PLAYER 2'],logs:[[],[]],activeXP:null,bo:3,roundWins:[0,0],roundLoser:null,roundHistory:[],roundCounted:false,gameStartTime:null,gameEndTime:null,legends:['','']};
+let state={scores:[0,0],names:['PLAYER 1','PLAYER 2'],logs:[[],[]],bo:3,roundWins:[0,0],roundLoser:null,roundHistory:[],roundCounted:false,gameStartTime:null,gameEndTime:null};
+var AUTO_ADVANCE_MS=3000;   // how long the round screen lingers before moving on
+var _fosAutoTimer=null;
+var _diceAutoTimer=null;
 let diceWinner=null, diceSettled=false;
 
 function setBo(n){
@@ -616,164 +497,14 @@ function addLog(p,msg){
   if(btn){if(count>0)btn.classList.add('has-entries');else btn.classList.remove('has-entries');}
 }
 
-// All Riftbound champion legends (Origins + Spiritforged)
-const LEGENDS=[
-  {n:'Ahri',sub:'Nine-Tailed Fox',k:'Ahri'},
-  {n:'Annie',sub:'The Dark Child',k:'Annie'},
-  {n:'Azir',sub:'Emperor of the Sands',k:'Azir'},
-  {n:'Darius',sub:'Hand of Noxus',k:'Darius'},
-  {n:'Diana',sub:'Scorn of the Moon',k:'Diana'},
-  {n:'Draven',sub:'Glorious Executioner',k:'Draven'},
-  {n:'Ezreal',sub:'Prodigal Explorer',k:'Ezreal'},
-  {n:'Fiora',sub:'Grand Duelist',k:'Fiora'},
-  {n:'Garen',sub:'Might of Demacia',k:'Garen'},
-  {n:'Irelia',sub:'Blade Dancer',k:'Irelia'},
-  {n:'Ivern',sub:'The Green Father',k:'Ivern'},
-  {n:'Jax',sub:'Grandmaster at Arms',k:'Jax'},
-  {n:'Jhin',sub:'The Virtuoso',k:'Jhin'},
-  {n:'Jinx',sub:'The Loose Cannon',k:'Jinx'},
-  {n:'Kai\'Sa',sub:'Daughter of the Void',k:'Kaisa'},
-  {n:'Kha\'Zix',sub:'The Voidreaver',k:'Khazix'},
-  {n:'LeBlanc',sub:'The Deceiver',k:'Leblanc'},
-  {n:'Lee Sin',sub:'The Blind Monk',k:'LeeSin'},
-  {n:'Leona',sub:'The Radiant Dawn',k:'Leona'},
-  {n:'Lillia',sub:'The Bashful Bloom',k:'Lillia'},
-  {n:'Lucian',sub:'The Purifier',k:'Lucian'},
-  {n:'Lux',sub:'The Lady of Luminosity',k:'Lux'},
-  {n:'Master Yi',sub:'',k:'MasterYi',variants:[{label:'Wuju Bladesman'},{label:'Wuju Master'}]},
-  {n:'Miss Fortune',sub:'The Bounty Hunter',k:'MissFortune'},
-  {n:'Ornn',sub:'The Fire Below the Mountain',k:'Ornn'},
-  {n:'Poppy',sub:'Keeper of the Hammer',k:'Poppy'},
-  {n:'Pyke',sub:'The Bloodharbor Ripper',k:'Pyke'},
-  {n:'Rek\'Sai',sub:'The Void Burrower',k:'RekSai'},
-  {n:'Renata Glasc',sub:'The Chem-Baroness',k:'Renata'},
-  {n:'Rengar',sub:'The Pridestalker',k:'Rengar'},
-  {n:'Rumble',sub:'The Mechanized Menace',k:'Rumble'},
-  {n:'Sett',sub:'The Boss',k:'Sett'},
-  {n:'Sivir',sub:'The Battle Mistress',k:'Sivir'},
-  {n:'Teemo',sub:'The Swift Scout',k:'Teemo'},
-  {n:'Vex',sub:'The Gloomist',k:'Vex'},
-  {n:'Vi',sub:'The Piltover Enforcer',k:'Vi'},
-  {n:'Viktor',sub:'The Machine Herald',k:'Viktor'},
-  {n:'Volibear',sub:'The Relentless Storm',k:'Volibear'},
-  {n:'Yasuo',sub:'The Unforgiven',k:'Yasuo'},
-  // Vendetta (Set 4)
-  {n:'Akali',sub:'Rogue Assassin',k:'Akali'},
-  {n:'Ambessa',sub:'Matriarch of War',k:'Ambessa'},
-  {n:'Jayce',sub:'Defender of Tomorrow',k:'Jayce'},
-  {n:'Kennen',sub:'Heart of the Tempest',k:'Kennen'},
-  {n:'Mel',sub:'Soul\'s Reflection',k:'Mel'},
-  {n:'Nasus',sub:'Curator of the Sands',k:'Nasus'},
-  {n:'Renekton',sub:'Butcher of the Sands',k:'Renekton'},
-  {n:'Shen',sub:'Eye of Twilight',k:'Shen'},
-  {n:'Zed',sub:'Master of Shadows',k:'Zed'}
-].sort((a,b)=>a.n.localeCompare(b.n));
 
 let activeLegendPlayer=null;
 
-function openLegendPicker(p){
-  activeLegendPlayer=p;
-  document.getElementById('legend-search-input').value='';
-  showLegendGrid();
-  renderLegends(LEGENDS);
-  document.getElementById('legend-screen').classList.add('show');
-  setTimeout(()=>document.getElementById('legend-search-input').focus(),100);
-}
-
-function closeLegendPicker(){
-  document.getElementById('legend-screen').classList.remove('show');
-  activeLegendPlayer=null;
-}
-
-function filterLegends(){
-  const q=document.getElementById('legend-search-input').value.trim().toLowerCase();
-  const filtered=q?LEGENDS.filter(l=>l.n.toLowerCase().includes(q)):LEGENDS;
-  renderLegends(filtered);
-}
-
-function renderLegends(list){
-  window._legendFiltered=list;
-  var seen={}, unique=[];
-  for(var i=0;i<list.length;i++){
-    if(!seen[list[i].k]){seen[list[i].k]=true;unique.push(list[i]);}
-  }
-  window._legendUnique=unique;
-  var grid=document.getElementById('legend-grid');
-  var out='';
-  for(var j=0;j<unique.length;j++){
-    var l=unique[j];
-    out+='<div class="legend-card" data-idx="'+j+'"><span class="lc-name">'+l.n+'</span></div>';
-  }
-  grid.innerHTML=out;
-  attachEggListeners();
-  grid.querySelectorAll('.legend-card').forEach(function(el){
-    el.addEventListener('click',function(){
-      var idx=parseInt(this.getAttribute('data-idx'));
-      var legend=window._legendUnique[idx];
-      document.getElementById('legend-search-input').value=legend.n;
-      if(legend.variants && legend.variants.length>1){
-        openLegendDetail(legend);
-      } else {
-        confirmLegend(legend,null);
-      }
-    });
-  });
-}
-
-function openLegendDetail(legend){
-  document.getElementById('legend-grid').style.display='none';
-  document.getElementById('legend-search-bar').style.display='none';
-  document.getElementById('detail-back-btn').style.display='flex';
-  var detail=document.getElementById('legend-detail');
-  detail.classList.add('show');
-  document.getElementById('detail-name').textContent=legend.n.toUpperCase();
-  window._detailLegend=legend;
-  var out='';
-  legend.variants.forEach(function(v,i){
-    out+='<div class="variant-card text-variant" data-vi="'+i+'"><span class="tv-label">'+v.label+'</span></div>';
-  });
-  document.getElementById('detail-variants').innerHTML=out;
-  document.getElementById('detail-variants').querySelectorAll('.variant-card').forEach(function(el){
-    el.addEventListener('click',function(){
-      var vi=parseInt(this.getAttribute('data-vi'));
-      confirmLegend(window._detailLegend,window._detailLegend.variants[vi].label);
-    });
-  });
-}
-
-function confirmLegend(legend,variantLabel){
-  var p=activeLegendPlayer;
-  var displayName=legend.n;
-  if(variantLabel){displayName=legend.n+', '+variantLabel;}
-  else if(legend.sub){displayName=legend.n+', '+legend.sub;}
-  document.getElementById('p'+p+'legname').textContent=displayName;
-
-  closeLegendPicker();
-  showLegendGrid();
-}
-
-function showLegendGrid(){
-  document.getElementById('legend-grid').style.display='';
-  document.getElementById('legend-search-bar').style.display='';
-  document.getElementById('detail-back-btn').style.display='none';
-  document.getElementById('legend-detail').classList.remove('show');
-}
-
 function startGame(){
-  const n1=(document.getElementById('p1name').value.trim()||'PLAYER 1').substring(0,16);
-  const n2=(document.getElementById('p2name').value.trim()||'PLAYER 2').substring(0,16);
-  state.names=[n1.toUpperCase(),n2.toUpperCase()];
-  // Easter egg: ban aurora
-  state.names=state.names.map(function(n){return n==='BAN AURORA'?'I LOVE DAZZLING AURORA':n;});
-  state.scores=[0,0];state.xp=[0,0];state.logs=[[],[]];state.roundWins=[0,0];state.roundLoser=null;state.roundHistory=[];state.roundCounted=false;
-  state.legends=[document.getElementById('p1legname').textContent,document.getElementById('p2legname').textContent];
+  state.names=['PLAYER 1','PLAYER 2'];
+  state.scores=[0,0];state.logs=[[],[]];state.roundWins=[0,0];state.roundLoser=null;state.roundHistory=[];state.roundCounted=false;
   ['1','2'].forEach(p=>{
     document.getElementById('score'+p).textContent='0';
-    document.getElementById('pname'+p).textContent=state.names[p-1];
-    const leg=state.legends[p-1];
-    const subEl=document.getElementById('legendsub'+p);
-    if(subEl) subEl.textContent=(leg&&leg!=='Choose Legend')?leg:'';
-    document.getElementById('xpval'+p).textContent='0 XP';
     document.getElementById('logcount'+p).textContent='';
     const lb=document.getElementById('logbtn'+p);if(lb)lb.classList.remove('has-entries');
   });
@@ -835,12 +566,10 @@ function adj(p,d){
 
 function resetRound(){
   state.scores=[0,0];
-  state.xp=[0,0];
   state.logs=[[],[]];
   state.roundCounted=false;
   ['1','2'].forEach(p=>{
     document.getElementById('score'+p).textContent='0';
-    document.getElementById('xpval'+p).textContent='0 XP';
     document.getElementById('logcount'+p).textContent='';
     const btn=document.getElementById('logbtn'+p);
     if(btn)btn.classList.remove('has-entries');
@@ -952,6 +681,9 @@ function rollDice(){
       else h2.classList.add('blinking');
       diceWinner=winner;
       diceSettled=true;
+      // no input within AUTO_ADVANCE_MS - continue on its own
+      if(_diceAutoTimer)clearTimeout(_diceAutoTimer);
+      _diceAutoTimer=setTimeout(function(){_diceAutoTimer=null;confirmDice();},AUTO_ADVANCE_MS);
     }
   }
   setTimeout(tick,_steps[0]);
@@ -959,6 +691,7 @@ function rollDice(){
 
 function confirmDice(){
   if(!diceSettled||diceWinner===null)return;
+  if(_diceAutoTimer){clearTimeout(_diceAutoTimer);_diceAutoTimer=null;}
   var w=diceWinner;
   var loser=w===1?2:1;
   var loserName=state.names[loser-1];
@@ -983,54 +716,10 @@ function confirmDice(){
   document.getElementById('score1').style.visibility='';
   document.getElementById('score2').style.visibility='';
   diceWinner=null;diceSettled=false;
-  // Start game directly - dice overlay already showed FIRST OR SECOND
   setPreGameState(false);
   showTimers();
 }
 
-function openXP(p){
-  state.activeXP=p;
-  document.getElementById('xpBig').textContent=state.xp[p-1];
-  const popup=document.getElementById('xp-popup');
-  const backdrop=document.getElementById('xp-popup-backdrop');
-  const xpBtnEl=document.querySelector('#zone'+p+' .xp-btn');
-  if(p===2){popup.classList.add('p2-popup');}else{popup.classList.remove('p2-popup');}
-  if(xpBtnEl){
-    const r=xpBtnEl.getBoundingClientRect();
-    const pw=150,ph=120;
-    let top,left;
-    if(p===2){
-      top=r.top-ph-42;
-      left=r.left;
-    } else {
-      top=r.bottom+8;
-      left=r.right-pw;
-    }
-    top=Math.max(8,Math.min(top,window.innerHeight-ph-8));
-    if(p===2){left=Math.max(8,left);}else{left=r.right-pw;}
-    popup.style.top=top+'px';
-    popup.style.left=left+'px';
-  }
-  popup.classList.add('show');
-  backdrop.classList.add('show');
-  resetXPAutoClose();
-}
-var _xpAutoCloseTimer=null;
-function resetXPAutoClose(){
-  if(_xpAutoCloseTimer)clearTimeout(_xpAutoCloseTimer);
-  _xpAutoCloseTimer=setTimeout(function(){closeXP();},5000);
-}
-function adjXP(d){
-  resetXPAutoClose();
-  const p=state.activeXP;
-  let x=state.xp[p-1]+d;
-  if(x<0)x=0;if(x>21)x=21;
-  if(x===state.xp[p-1])return;
-  state.xp[p-1]=x;
-  document.getElementById('xpBig').textContent=x;
-  document.getElementById('xpval'+p).textContent=x+' XP';
-}
-function closeXP(){document.getElementById('xp-popup').classList.remove('show');document.getElementById('xp-popup-backdrop').classList.remove('show');}
 
 function openLog(p){
   document.getElementById('logTitle').textContent='LOG — '+state.names[p-1];
@@ -1154,8 +843,6 @@ function showTimers(){
   }
   document.getElementById('gg-btn').classList.add('show');
   document.getElementById('pause-btn').classList.add('show');
-  document.getElementById('concede-btn1').style.display='';
-  document.getElementById('concede-btn2').style.display='';
   document.getElementById('timer-round-p1').style.display='';
   document.getElementById('timer-round-p2').style.display='';
   ['p1','p2'].forEach(p=>{
@@ -1169,22 +856,6 @@ function showTimers(){
 }
 
 /* ---- GG ---- */
-var _endRoundPlayer=null;
-function endRoundPrompt(p){
-  _endRoundPlayer=p;
-  var card=document.getElementById('confirm-card');
-  if(card)card.style.transform=p===2?'rotate(180deg)':'';
-  confirmGG();
-  var fb=document.getElementById('confirm-forfeit');
-  if(fb)fb.style.display='';
-}
-function forfeitRound(){
-  var loser=_endRoundPlayer;
-  _endRoundPlayer=null;
-  closeConfirm();
-  if(!loser)return;
-  openGG(loser);   // real scores stay intact, winner is forced
-}
 function confirmGG(){
   _confirmAction='gg';
   var rNum=state.roundHistory.length+1;
@@ -1224,8 +895,6 @@ function openGG(forfeitLoser){
   // Scores & names
   document.getElementById('gg-name1').textContent=n1+(state.roundWins[0]>0?' - '+state.roundWins[0]+' WIN'+(state.roundWins[0]>1?'S':''):'');
   document.getElementById('gg-name2').textContent=n2+(state.roundWins[1]>0?' - '+state.roundWins[1]+' WIN'+(state.roundWins[1]>1?'S':''):'');
-  document.getElementById('gg-leg1').textContent=state.legends?state.legends[0]&&state.legends[0]!=='Choose Legend'?state.legends[0]:''  :'';
-  document.getElementById('gg-leg2').textContent=state.legends?state.legends[1]&&state.legends[1]!=='Choose Legend'?state.legends[1]:''  :'';
   document.getElementById('gg-val1').textContent=s1;
   document.getElementById('gg-val2').textContent=s2;
   document.getElementById('gg-val1').style.color=s1>=s2?'var(--gold)':'var(--muted)';
@@ -1265,7 +934,7 @@ function openGG(forfeitLoser){
     if(window._autoNextTimer)clearTimeout(window._autoNextTimer);
     window._autoNextTimer=setTimeout(function(){
       if(document.getElementById('gg-overlay').classList.contains('show'))nextGame();
-    },3000);
+    },AUTO_ADVANCE_MS);
   } else {
     nextBtn.style.display='none';cb.style.display='';
     if(state.bo===1){var rb=document.getElementById('rematch-btn');if(rb)rb.style.display='';}
@@ -1304,6 +973,11 @@ function openGG(forfeitLoser){
     document.getElementById('gg-name'+_l).style.fontWeight='400';
     document.getElementById('gg-val'+_l).style.color='var(--muted)';
   }
+  var _ggCard=document.getElementById('gg-card');
+  if(_ggCard){
+    var _face=roundWinner||(s1>s2?1:s2>s1?2:1);
+    _ggCard.style.transform=_face===2?'rotate(180deg)':'';
+  }
   document.getElementById('gg-overlay').classList.add('show');
 }
 function closeGG(){
@@ -1321,10 +995,10 @@ function togglePause(){
   if(_paused){
     ov.classList.add('show');
     // timer keeps running during pause
-    document.getElementById('pause-btn').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 21,12 5,21" fill="#ffd54f"/></svg>';
+    document.getElementById('pause-btn').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 21,12 5,21" fill="var(--gold)"/></svg>';
   } else {
     ov.classList.remove('show');
-    document.getElementById('pause-btn').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/></svg>';
+    document.getElementById('pause-btn').innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="var(--gold)"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="var(--gold)"/></svg>';
     // timer keeps running - no restart needed
   }
 }
@@ -1332,7 +1006,7 @@ function closePause(){
   _paused=false;
   document.getElementById('pause-overlay').classList.remove('show');
   const pb=document.getElementById('pause-btn');
-  if(pb)pb.innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="#ffd54f"/></svg>';
+  if(pb)pb.innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="4" height="18" rx="1.5" fill="var(--gold)"/><rect x="15" y="3" width="4" height="18" rx="1.5" fill="var(--gold)"/></svg>';
 }
 
 /* ---- CONFIRM DIALOG ---- */
@@ -1358,60 +1032,12 @@ function confirmAction(action){
   document.getElementById('confirm-overlay').classList.add('show');
 }
 function closeConfirm(){
-  var _fb=document.getElementById('confirm-forfeit');if(_fb)_fb.style.display='none';
-  _endRoundPlayer=null;
   document.getElementById('confirm-overlay').classList.remove('show');
   var card=document.getElementById('confirm-card');if(card)card.style.transform='';
   _confirmAction=null;
 }
 
 /* ---- EASTER EGG - AURORA ---- */
-var _eggTouches={sivir:false, misfortune:false};
-var _eggTimer=null;
-var _eggActive=false;
-
-function eggCheckHold(){
-  if(_eggTouches.sivir && _eggTouches.misfortune){
-    if(!_eggTimer){
-      _eggTimer=setTimeout(function(){
-        _eggActive=true;
-        document.getElementById('aurora-overlay').classList.add('show');
-      }, 5000);
-    }
-  } else {
-    if(_eggTimer){clearTimeout(_eggTimer);_eggTimer=null;}
-    if(_eggActive){
-      _eggActive=false;
-      document.getElementById('aurora-overlay').classList.remove('show');
-    }
-  }
-}
-
-function attachEggListeners(){
-  var cards=document.querySelectorAll('.legend-card');
-  cards.forEach(function(card){
-    var idx=parseInt(card.getAttribute('data-idx'));
-    if(idx===null||isNaN(idx))return;
-    var legend=window._legendUnique&&window._legendUnique[idx];
-    if(!legend)return;
-    var key=legend.k;
-    if(key==='Sivir'||key==='MissFortune'){
-      var field=key==='Sivir'?'sivir':'misfortune';
-      card.addEventListener('touchstart',function(e){
-        _eggTouches[field]=true;
-        eggCheckHold();
-      },{passive:true});
-      card.addEventListener('touchend',function(e){
-        _eggTouches[field]=false;
-        eggCheckHold();
-      },{passive:true});
-      card.addEventListener('touchcancel',function(e){
-        _eggTouches[field]=false;
-        eggCheckHold();
-      },{passive:true});
-    }
-  });
-}
 
 function checkOrientation(){
   var msg=document.getElementById('rotate-msg');
@@ -1436,7 +1062,7 @@ function setFosHalf(player,mode,top,question,sub){
   el.style.pointerEvents='all';
 }
 
-function showFirstOrSecond(loserPlayer){
+function showFirstOrSecond(loserPlayer,withSideboard){
   var winnerPlayer=loserPlayer===1?2:1;
   var loserName=state.names[loserPlayer-1];
   setFosHalf(loserPlayer,'active','INFORM YOUR OPPONENT','FIRST OR SECOND?','TAP TO START');
@@ -1444,9 +1070,19 @@ function showFirstOrSecond(loserPlayer){
 
   document.getElementById('zone'+loserPlayer).classList.add('blinking-zone');
   document.getElementById('zone'+winnerPlayer).classList.remove('blinking-zone');
+  ['1','2'].forEach(function(n){
+    var sb=document.getElementById('fos-side'+n);
+    if(sb)sb.style.display=withSideboard?'':'none';   // nothing to sideboard before game one
+  });
   var ov=document.getElementById('fos-overlay');
   ov.style.display='flex';
   ov.classList.add('show');
+  // no input within AUTO_ADVANCE_MS - move to the score screen on its own
+  if(_fosAutoTimer){clearTimeout(_fosAutoTimer);_fosAutoTimer=null;}
+  _fosAutoTimer=setTimeout(function(){
+    _fosAutoTimer=null;
+    if(ov.classList.contains('show'))fosConfirm();
+  },AUTO_ADVANCE_MS);
 }
 
 var _fosConfirming=false;
@@ -1454,6 +1090,7 @@ function fosConfirm(){
 
   if(_fosConfirming)return;
   _fosConfirming=true;
+  if(_fosAutoTimer){clearTimeout(_fosAutoTimer);_fosAutoTimer=null;}
   setTimeout(function(){_fosConfirming=false;},1000);
   var ov=document.getElementById('fos-overlay');
   ov.classList.remove('show');
@@ -1492,8 +1129,6 @@ function setPreGameState(on){
   if(pauseBtn)pauseBtn.style.visibility=on?'hidden':'';
   if(rollBtn)rollBtn.style.visibility=on?'hidden':'';
   logos.forEach(function(l){l.style.visibility=on?'hidden':'';});
-  document.querySelectorAll('.xp-btn').forEach(function(b){b.style.visibility=on?'hidden':'';});
-  document.querySelectorAll('.concede-btn').forEach(function(b){b.style.visibility=on?'hidden':'';});
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
   ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
@@ -1545,9 +1180,8 @@ function nextGame(){
     var wins=state.roundWins[p-1];
     var base=state.names[p-1];
     var isFinal=totalRounds>=2;
-    document.getElementById('pname'+p).textContent=isFinal?base:(wins>0?base+' - '+wins+' WIN'+(wins>1?'S':''):base);
   });
-  showFirstOrSecond(loser||1);
+  showFirstOrSecond(loser||1,true);
 }
 
 function confirmDone(){
@@ -1625,7 +1259,7 @@ function startDiceAnim(){
     _diceFaces[n].forEach(function(pos){
       var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
       c.setAttribute('cx',pos[0]);c.setAttribute('cy',pos[1]);c.setAttribute('r','8');
-      c.setAttribute('fill','#ffd54f');c.classList.add('bd-dot');
+      c.setAttribute('fill','var(--gold)');c.classList.add('bd-dot');
       dice.appendChild(c);
     });
   }
@@ -1684,72 +1318,10 @@ function showRollFace(){
   _rollFaces[n].forEach(function(pos){
     var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
     c.setAttribute('cx',pos[0]);c.setAttribute('cy',pos[1]);c.setAttribute('r','9');
-    c.setAttribute('fill','#ffd54f');c.classList.add('roll-dot');
+    c.setAttribute('fill','var(--gold)');c.classList.add('roll-dot');
     dice.appendChild(c);
   });
 }
-
-
-// Sivir easter egg - hold 5s shows card, release hides immediately
-var _sivirHoldTimer=null;
-document.addEventListener('pointerdown',function(e){
-  var card=e.target&&e.target.closest&&e.target.closest('.legend-card');
-  if(!card)return;
-  var idx=parseInt(card.getAttribute('data-idx'));
-  var legend=window._legendUnique&&!isNaN(idx)?window._legendUnique[idx]:null;
-  var key=legend?legend.k:'';
-  if(key==='Sivir'){
-    _sivirHoldTimer=setTimeout(function(){
-      _sivirHoldTimer=null;
-      document.getElementById('aurora-overlay').classList.add('show');
-    },5000);
-  }
-});
-document.addEventListener('pointerup',function(){
-  if(_sivirHoldTimer){clearTimeout(_sivirHoldTimer);_sivirHoldTimer=null;}
-  document.getElementById('aurora-overlay').classList.remove('show');
-});
-document.addEventListener('pointercancel',function(){
-  if(_sivirHoldTimer){clearTimeout(_sivirHoldTimer);_sivirHoldTimer=null;}
-  document.getElementById('aurora-overlay').classList.remove('show');
-});
-
-// Gabe easter egg - hold Ahri 5s
-var _ahriHoldTimer=null;
-// Greg easter egg - hold Darius 5s
-var _dariusHoldTimer=null;
-
-document.addEventListener('pointerdown',function(e){
-  var card=e.target&&e.target.closest&&e.target.closest('.legend-card');
-  if(!card)return;
-  var idx=parseInt(card.getAttribute('data-idx'));
-  var legend=window._legendUnique&&!isNaN(idx)?window._legendUnique[idx]:null;
-  var key=legend?legend.k:'';
-  if(key==='Ahri'){
-    _ahriHoldTimer=setTimeout(function(){
-      _ahriHoldTimer=null;
-      document.getElementById('gabe-overlay').classList.add('show');
-    },5000);
-  }
-  if(key==='Darius'){
-    _dariusHoldTimer=setTimeout(function(){
-      _dariusHoldTimer=null;
-      document.getElementById('greg-overlay').classList.add('show');
-    },5000);
-  }
-});
-document.addEventListener('pointerup',function(){
-  if(_ahriHoldTimer){clearTimeout(_ahriHoldTimer);_ahriHoldTimer=null;}
-  if(_dariusHoldTimer){clearTimeout(_dariusHoldTimer);_dariusHoldTimer=null;}
-  document.getElementById('gabe-overlay').classList.remove('show');
-  document.getElementById('greg-overlay').classList.remove('show');
-});
-document.addEventListener('pointercancel',function(){
-  if(_ahriHoldTimer){clearTimeout(_ahriHoldTimer);_ahriHoldTimer=null;}
-  if(_dariusHoldTimer){clearTimeout(_dariusHoldTimer);_dariusHoldTimer=null;}
-  document.getElementById('gabe-overlay').classList.remove('show');
-  document.getElementById('greg-overlay').classList.remove('show');
-});
 
 
 (function(){
@@ -1805,6 +1377,17 @@ document.addEventListener('visibilitychange', function() {
 
 
 // Menu panel
+function donatePrompt(){
+  _confirmAction='donate';
+  document.getElementById('confirm-msg').textContent='OPEN DONATION PAGE?';
+  var card=document.getElementById('confirm-card');
+  if(card)card.style.transform='';
+  document.getElementById('confirm-yes').onclick=function(){
+    closeConfirm();
+    window.open('https://www.paypal.com/donate/?business=EUJMUQZQT8KS6&no_recurring=0&item_name=Thank+you+for+supporting+me+to+keep+this+going%21&currency_code=USD','_blank');
+  };
+  document.getElementById('confirm-overlay').classList.add('show');
+}
 function openMenuPanel(){
   var mp=document.getElementById('menu-panel');
   if(mp){mp.style.display='flex';}
@@ -1841,27 +1424,35 @@ function showCardDetail(img){
 
 async function loadAllCards(){
   var el=document.getElementById('card-results');
-  el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING...</div>';
+  var API='https://api.riftcodex.com/cards?size=100&sort=name&page=';
+  el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING CARDS...</div>';
   try{
-    var all=[];
-    var page=1;var total=9999;
-    while(all.length<total){
-      var res=await fetch('https://api.riftcodex.com/cards?size=100&sort=name&page='+page);
-      if(!res.ok)break;
-      var data=await res.json();
-      total=data.total||0;
-      var items=data.items||[];
-      if(items.length===0)break;
-      all=all.concat(items);
-      page++;
-      if(all.length>=total)break;
+    var first=await fetch(API+'1');
+    if(!first.ok)throw new Error('HTTP '+first.status);
+    var data=await first.json();
+    var total=data.total||0;
+    var all=(data.items||[]).slice();
+    var pages=Math.ceil(total/100);
+    if(pages>1){
+      var reqs=[];
+      for(var p=2;p<=pages;p++){
+        reqs.push(fetch(API+p).then(function(r){return r.ok?r.json():{items:[]};}).catch(function(){return {items:[]};}));
+      }
+      var rest=await Promise.all(reqs);
+      rest.forEach(function(d){all=all.concat(d.items||[]);});
     }
-    all.sort(function(a,b){return (a.name||'').localeCompare(b.name||'');});
-    _allCards=all;
+    // de-dupe on card id in case pages overlap
+    var seen={},out=[];
+    all.forEach(function(c){
+      var k=c.id||c.name;
+      if(k&&!seen[k]){seen[k]=1;out.push(c);}
+    });
+    out.sort(function(a,b){return (a.name||'').localeCompare(b.name||'');});
+    _allCards=out;
     _cardsLoaded=true;
   }catch(e){
     console.error('Card load error:',e);
-    el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#ff6b6b;font-family:Rajdhani;letter-spacing:2px;padding:2rem;">FAILED TO LOAD — CHECK CONNECTION</div>';
+    el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--danger);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">COULD NOT REACH THE CARD DATABASE<br><span style="font-size:0.8rem;opacity:0.7;">check your connection and try again</span></div>';
     return;
   }
 }
@@ -1915,7 +1506,7 @@ function renderCardResults(cards){
 
 <!-- MENU PANEL -->
 <div id="menu-panel" style="display:none;position:fixed;inset:0;z-index:400;background:rgba(2,5,12,0.85);align-items:center;justify-content:center;">
-  <div style="background:#0a1828;border:1px solid rgba(79,195,247,0.25);border-radius:16px;padding:1.5rem;width:80%;max-width:300px;display:flex;flex-direction:column;gap:0.8rem;">
+  <div style="background:var(--surface);border:1px solid rgba(79,195,247,0.25);border-radius:16px;padding:1.5rem;width:80%;max-width:300px;display:flex;flex-direction:column;gap:0.8rem;">
     <div style="font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:3px;color:var(--muted);text-align:center;text-transform:uppercase;margin-bottom:0.2rem;">OPTIONS</div>
     <div onclick="openCardLookup();closeMenuPanel();" style="font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:rgba(255,213,79,0.08);border:1px solid rgba(255,213,79,0.25);border-radius:10px;padding:1rem;text-align:center;cursor:pointer;">🃏 CARD LOOKUP</div>
     <div onclick="closeMenuPanel();confirmAction('menu');" style="font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.25);border-radius:10px;padding:1rem;text-align:center;cursor:pointer;">↩ RETURN TO MENU</div>
@@ -1924,10 +1515,10 @@ function renderCardResults(cards){
 </div>
 
 <!-- CARD LOOKUP OVERLAY -->
-<div id="card-lookup-overlay" style="display:none;position:fixed;inset:0;z-index:500;background:#02050c;flex-direction:column;">
+<div id="card-lookup-overlay" style="display:none;position:fixed;inset:0;z-index:500;background:var(--bg0);flex-direction:column;">
   <div style="display:flex;align-items:center;padding:0.6rem 1rem;border-bottom:1px solid rgba(79,195,247,0.15);flex-shrink:0;">
     <div onclick="closeCardLookup()" style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;color:var(--accent);cursor:pointer;letter-spacing:1px;min-width:90px;padding-right:0.5rem;">← BACK</div>
-    <input id="card-search-input" type="text" placeholder="Search card name..." style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(79,195,247,0.2);border-radius:10px;padding:0.7rem 1rem;font-family:'Rajdhani',sans-serif;font-size:1.1rem;color:#e0f0ff;letter-spacing:1px;outline:none;text-align:center;" oninput="searchCards(this.value)">
+    <input id="card-search-input" type="text" placeholder="Search card name..." style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(79,195,247,0.2);border-radius:10px;padding:0.7rem 1rem;font-family:'Rajdhani',sans-serif;font-size:1.1rem;color:var(--text);letter-spacing:1px;outline:none;text-align:center;" oninput="searchCards(this.value)">
     <div style="min-width:90px;"></div>
   </div>
   <div id="card-results" style="flex:1;overflow-y:auto;padding:0.8rem;display:grid;grid-template-columns:repeat(4,1fr);gap:0.3rem;scrollbar-width:none;align-content:start;"><div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:3rem 1rem;font-size:0.9rem;">TYPE A CARD NAME TO SEARCH</div></div>
@@ -1937,7 +1528,7 @@ function renderCardResults(cards){
 <div id="card-detail-modal" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(2,5,12,0.95);align-items:center;justify-content:center;" onclick="closeCardDetail()">
   <div id="card-detail-inner" style="max-width:380px;width:90%;position:relative;" onclick="event.stopPropagation()">
     <img id="card-detail-img" src="" style="width:100%;display:block;border-radius:12px;box-shadow:0 0 30px rgba(79,195,247,0.3);">
-    <div onclick="closeCardDetail()" style="position:absolute;top:-12px;right:-12px;width:28px;height:28px;border-radius:50%;background:#0a1828;border:1px solid rgba(79,195,247,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--muted);">✕</div>
+    <div onclick="closeCardDetail()" style="position:absolute;top:-12px;right:-12px;width:28px;height:28px;border-radius:50%;background:var(--surface);border:1px solid rgba(79,195,247,0.3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--muted);">✕</div>
   </div>
 </div>
 
