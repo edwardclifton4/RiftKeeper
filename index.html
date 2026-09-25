@@ -520,6 +520,7 @@ function startGame(){
   timerInterval=setInterval(timerTick,1000);
   document.getElementById('setup').style.display='none';
   document.getElementById('game').style.display='flex';
+  snapZoneHeights();
   document.getElementById('roll-dice-btn').style.display='';
   document.getElementById('midbar-round-p1').style.display='none';
   setPreGameState(true);
@@ -1506,6 +1507,26 @@ function renderCardResults(cards){
       +'</div>';
   }).join('');
 }
+
+
+// Keep each half an integer number of pixels tall. The P2 half is rotated 180deg,
+// and a fractional height puts its rotation centre on a half-pixel, which blurs
+// small text on that side only.
+function snapZoneHeights(){
+  var game=document.getElementById('game');
+  if(!game||game.style.display==='none')return;
+  var bar=document.getElementById('midbar');
+  var barH=bar?Math.round(bar.getBoundingClientRect().height):0;
+  var avail=Math.floor(game.getBoundingClientRect().height)-barH;
+  if(avail<=0)return;
+  var half=Math.floor(avail/2);
+  ['zone1','zone2'].forEach(function(id){
+    var z=document.getElementById(id);
+    if(z){z.style.flex='none';z.style.height=half+'px';}
+  });
+}
+window.addEventListener('resize',snapZoneHeights);
+window.addEventListener('orientationchange',function(){setTimeout(snapZoneHeights,120);});
 
 </script>
 
