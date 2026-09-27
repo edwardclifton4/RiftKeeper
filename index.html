@@ -43,7 +43,7 @@
   /* GAME */
   #game{display:none;flex-direction:column;height:100%;position:relative;}
   .player-zone{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;overflow:visible;transition:background 0.15s;padding-top:1.2rem;}
-  .player-zone.p2{transform:rotate(180deg);-webkit-backface-visibility:hidden;backface-visibility:hidden;background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
+  .player-zone.p2{transform:rotate(180deg);background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.p1{background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.lit{background:rgba(255,213,79,0.13)!important;}
   .pzone-bg{position:absolute;inset:0;opacity:0.08;background-size:cover;background-position:center;pointer-events:none;}
@@ -76,7 +76,7 @@
   .mid-btn:last-child{border-right:none;}
   .mid-btn:active{background:rgba(255,255,255,0.08);}
   .mid-btn:active{transform:scale(0.95);}
-  .mid-btn.danger{color:var(--accent2);border-right:1px solid rgba(229,115,115,0.4);}
+  .mid-btn.danger{visibility:hidden;color:var(--accent2);border-right:1px solid rgba(229,115,115,0.4);}
   .mid-btn.gold{color:var(--gold);border-color:rgba(255,213,79,0.25);font-size:1rem;font-weight:700;letter-spacing:3px;}
   @keyframes diceFlash{0%,100%{border-color:rgba(255,213,79,0.8);background:rgba(255,213,79,0.05);}50%{border-color:rgba(255,213,79,0.3);background:transparent;}}
   #roll-dice-btn{display:none;}
@@ -234,7 +234,7 @@
   #fireworks-canvas.show{display:block;}
   #big-dice-container{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:20;pointer-events:none;gap:0;}
   #big-dice-container.show{display:flex;}
-  #big-dice{width:25vw;height:25vw;max-height:25vw;cursor:pointer;transition:transform 0.1s;animation:diceGlow 1.8s ease-in-out infinite;pointer-events:all;}
+  #big-dice{width:44vw;height:44vw;max-height:44vw;cursor:pointer;transition:transform 0.1s;animation:diceGlow 1.8s ease-in-out infinite;pointer-events:all;}
   #big-dice:active{transform:scale(0.92);}
   @keyframes diceShake{0%,100%{transform:rotate(0deg);}20%{transform:rotate(-15deg);}40%{transform:rotate(15deg);}60%{transform:rotate(-10deg);}80%{transform:rotate(10deg);}}
   @keyframes diceGlow{0%,100%{filter:drop-shadow(0 0 5px rgba(255,213,79,0.2));}50%{filter:drop-shadow(0 0 60px rgba(255,213,79,1)) drop-shadow(0 0 30px rgba(255,213,79,0.8));}}
@@ -242,7 +242,9 @@
   #big-dice.shaking{animation:diceShake 0.5s ease-in-out;}
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
-  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:14px;line-height:18px;height:18px;font-weight:700;color:var(--gold);letter-spacing:3px;position:absolute;bottom:8px;left:0;right:0;text-align:center;-webkit-font-smoothing:antialiased;}
+  #p2-labels{position:absolute;top:0;left:0;right:0;z-index:4;pointer-events:none;}
+  #p2-labels .timer-round-sub{top:8px;bottom:auto;transform:rotate(180deg);}
+  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:15px;line-height:18px;height:18px;font-weight:700;color:var(--gold);letter-spacing:2px;position:absolute;bottom:8px;left:0;right:0;text-align:center;}
   .pregame-bo-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:auto;padding-bottom:0.8rem;display:none;}
 </style>
 </head>
@@ -250,7 +252,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v29.4 - 9.25.26</div>
+    <div id="build-stamp">v29.4 - 9.27.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
@@ -277,20 +279,22 @@
       <div class="score-big" id="score2">0</div>
       <div class="timer-box p2-timer" id="timer-p2">
         <div class="timer-display" id="timer-display-p2">60:00</div>
-        <div class="timer-round-sub" id="timer-round-p2"></div>
-        <div id="pregame-bo-p2" style="font-family:'Rajdhani',sans-serif;font-size:14px;line-height:18px;height:18px;font-weight:700;color:var(--gold);letter-spacing:3px;display:none;text-align:center;width:100%;-webkit-font-smoothing:antialiased;"></div>
       </div>
     </div>
 
-    <div id="midbar">
-      <div class="mid-btn danger" onclick="resetMatch()" title="Reset"><svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="var(--danger)"/></svg></div>
-      <div class="mid-btn gg" id="gg-btn" onclick="openCombinedLog()" title="Log"><svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="#4ade80" stroke-width="1.8"/><rect x="8" y="8"  width="8" height="1.7" rx="0.85" fill="#4ade80"/><rect x="8" y="11.5" width="8" height="1.7" rx="0.85" fill="#4ade80"/><rect x="8" y="15" width="5" height="1.7" rx="0.85" fill="#4ade80"/></svg></div>
+    <div id="p2-labels">
+      <div class="timer-round-sub" id="timer-round-p2"></div>
+      <div id="pregame-bo-p2" class="timer-round-sub" style="display:none;"></div>
+    </div>
       <div id="big-dice-container">
         <svg id="big-dice" class="idle" onclick="rollDice()" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <rect x="5" y="5" width="90" height="90" rx="18" fill="var(--surface2)" stroke="var(--gold)" stroke-width="3"/>
 
         </svg>
       </div>
+    <div id="midbar">
+      <div class="mid-btn danger" onclick="resetMatch()" title="Reset"><svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="var(--danger)"/></svg></div>
+      <div class="mid-btn gg" id="gg-btn" onclick="openCombinedLog()" title="Log"><svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="#4ade80" stroke-width="1.8"/><rect x="8" y="8"  width="8" height="1.7" rx="0.85" fill="#4ade80"/><rect x="8" y="11.5" width="8" height="1.7" rx="0.85" fill="#4ade80"/><rect x="8" y="15" width="5" height="1.7" rx="0.85" fill="#4ade80"/></svg></div>
       <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">&nbsp; <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="var(--gold)" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="var(--gold)"/><circle cx="10" cy="4" r="1" fill="var(--gold)"/><circle cx="7" cy="7" r="1" fill="var(--gold)"/><circle cx="4" cy="10" r="1" fill="var(--gold)"/><circle cx="10" cy="10" r="1" fill="var(--gold)"/></svg> &nbsp;&nbsp;ROLL DICE&nbsp;&nbsp; <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="var(--gold)" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="var(--gold)"/><circle cx="10" cy="4" r="1" fill="var(--gold)"/><circle cx="7" cy="7" r="1" fill="var(--gold)"/><circle cx="4" cy="10" r="1" fill="var(--gold)"/><circle cx="10" cy="10" r="1" fill="var(--gold)"/></svg></div>
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;pointer-events:none;flex-shrink:0;">
         <div class="midbar-logo flip" id="midbar-logo-p2" style="position:relative;left:-1px;"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
@@ -315,7 +319,7 @@
       <div class="timer-box" id="timer-p1">
         <div class="timer-display" id="timer-display-p1">60:00</div>
         <div class="timer-round-sub" id="timer-round-p1"></div>
-        <div id="pregame-bo-p1" style="font-family:'Rajdhani',sans-serif;font-size:14px;line-height:18px;height:18px;font-weight:700;color:var(--gold);letter-spacing:3px;display:none;text-align:center;width:100%;-webkit-font-smoothing:antialiased;"></div>
+        <div id="pregame-bo-p1" style="font-family:'Rajdhani',sans-serif;font-size:15px;line-height:18px;height:18px;font-weight:700;color:var(--gold);letter-spacing:2px;display:none;text-align:center;width:100%;"></div>
       </div>
     </div>
   </div>
@@ -1124,23 +1128,20 @@ function setPreGameState(on){
   var l2=document.getElementById('pregame-bo-p2');if(l2){l2.textContent=boTxt;l2.style.display=on?'block':'none';}
   var bdc=document.getElementById('big-dice-container');if(bdc)bdc.classList.toggle('show',on);
   if(on){if(document.getElementById('big-dice'))document.getElementById('big-dice').classList.add('idle');startDiceAnim();}else{stopDiceAnim();}
-  // On dice screen: hide reset, gg, pause — show only menu
+  // Dice screen: hide reset, gg and pause. Menu stays - it's the only way out.
+  var bar=document.getElementById('midbar');
+  if(bar)bar.style.display=on?'none':'';
   var resetBtn=document.querySelector('.mid-btn.danger');
   var ggBtn=document.getElementById('gg-btn');
   var pauseBtn=document.getElementById('pause-btn');
   var rollBtn=document.getElementById('roll-dice-btn');
   var logos=document.querySelectorAll('.midbar-logo');
-  if(resetBtn)resetBtn.style.visibility=on?'hidden':'';
+  if(resetBtn)resetBtn.style.visibility=on?'hidden':'visible';
   if(ggBtn)ggBtn.style.visibility=on?'hidden':'';
   if(pauseBtn)pauseBtn.style.visibility=on?'hidden':'';
   if(rollBtn)rollBtn.style.visibility=on?'hidden':'';
   logos.forEach(function(l){l.style.visibility=on?'hidden':'';});
-  var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
-  ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
-  var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
-  ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
-  var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
-  ['p1','p2'].forEach(function(p){var el=document.getElementById('pregame-bo-'+p);if(el){el.textContent=boTxt;el.style.display=on?'':'none';}});
+  snapZoneHeights();   // bar height changed, re-measure the halves
 }
 function resetMatch(){
   // Scores only - round number, round wins, timer and XP all keep running
@@ -1428,39 +1429,64 @@ function showCardDetail(img){
   document.getElementById('card-detail-modal').style.display='flex';
 }
 
-async function loadAllCards(){
-  var el=document.getElementById('card-results');
-  var API='https://api.riftcodex.com/cards?size=100&sort=name&page=';
-  el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING CARDS...</div>';
+var CARD_CACHE_KEY='rk_cards_v1';
+var CARD_CACHE_TTL=7*24*60*60*1000;   // refresh weekly; sets release far less often
+function loadCardCache(){
   try{
-    var first=await fetch(API+'1');
-    if(!first.ok)throw new Error('HTTP '+first.status);
-    var data=await first.json();
-    var total=data.total||0;
-    var all=(data.items||[]).slice();
-    var pages=Math.ceil(total/100);
-    if(pages>1){
-      var reqs=[];
-      for(var p=2;p<=pages;p++){
-        reqs.push(fetch(API+p).then(function(r){return r.ok?r.json():{items:[]};}).catch(function(){return {items:[]};}));
+    var raw=localStorage.getItem(CARD_CACHE_KEY);
+    if(!raw)return false;
+    var o=JSON.parse(raw);
+    if(!o||!o.c||!o.c.length)return false;
+    if(Date.now()-(o.t||0)>CARD_CACHE_TTL)return false;
+    _allCards=o.c;_cardsLoaded=true;
+    return true;
+  }catch(e){return false;}
+}
+function saveCardCache(list){
+  try{localStorage.setItem(CARD_CACHE_KEY,JSON.stringify({t:Date.now(),c:list}));}
+  catch(e){ /* quota or private mode - the cache is optional */ }
+}
+var _cardsLoading=null;
+async function loadAllCards(quiet){
+  if(_cardsLoaded)return;
+  if(_cardsLoading)return _cardsLoading;          // a prefetch is already in flight
+  _cardsLoading=(async function(){
+    var el=document.getElementById('card-results');
+    var API='https://api.riftcodex.com/cards?size=100&sort=name&page=';
+    if(loadCardCache())return;                     // instant after the first run
+    if(!quiet&&el)el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING CARDS...</div>';
+    try{
+      var first=await fetch(API+'1');
+      if(!first.ok)throw new Error('HTTP '+first.status);
+      var data=await first.json();
+      var total=data.total||0;
+      var all=(data.items||[]).slice();
+      var pages=Math.ceil(total/100);
+      if(pages>1){
+        var reqs=[];
+        for(var p=2;p<=pages;p++){
+          reqs.push(fetch(API+p).then(function(r){return r.ok?r.json():{items:[]};}).catch(function(){return {items:[]};}));
+        }
+        var rest=await Promise.all(reqs);
+        rest.forEach(function(d){all=all.concat(d.items||[]);});
       }
-      var rest=await Promise.all(reqs);
-      rest.forEach(function(d){all=all.concat(d.items||[]);});
+      var seen={},out=[];
+      all.forEach(function(c){
+        var k=c.id||c.name;
+        if(!k||seen[k])return;
+        seen[k]=1;
+        out.push({n:c.name||'',i:(c.media&&c.media.image_url)||''});
+      });
+      out.sort(function(a,b){return a.n.localeCompare(b.n);});
+      _allCards=out;_cardsLoaded=true;
+      saveCardCache(out);
+    }catch(e){
+      console.error('Card load error:',e);
+      // a failed prefetch stays silent - it retries when the user actually searches
+      if(!quiet&&el)el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--danger);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">COULD NOT REACH THE CARD DATABASE<br><span style="font-size:0.8rem;opacity:0.7;">check your connection and try again</span></div>';
     }
-    // de-dupe on card id in case pages overlap
-    var seen={},out=[];
-    all.forEach(function(c){
-      var k=c.id||c.name;
-      if(k&&!seen[k]){seen[k]=1;out.push(c);}
-    });
-    out.sort(function(a,b){return (a.name||'').localeCompare(b.name||'');});
-    _allCards=out;
-    _cardsLoaded=true;
-  }catch(e){
-    console.error('Card load error:',e);
-    el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--danger);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">COULD NOT REACH THE CARD DATABASE<br><span style="font-size:0.8rem;opacity:0.7;">check your connection and try again</span></div>';
-    return;
-  }
+  })();
+  try{await _cardsLoading;}finally{_cardsLoading=null;}
 }
 
 function searchCards(q){
@@ -1479,12 +1505,12 @@ function searchCards(q){
     var lq=trimmed.toLowerCase();
     // Filter: name must START with search term
     var filtered=_allCards.filter(function(c){
-      return c.name&&c.name.toLowerCase().startsWith(lq);
+      return c.n&&c.n.toLowerCase().startsWith(lq);
     });
     // If no startsWith matches, fall back to contains
     if(filtered.length===0){
       filtered=_allCards.filter(function(c){
-        return c.name&&c.name.toLowerCase().indexOf(lq)>-1;
+        return c.n&&c.n.toLowerCase().indexOf(lq)>-1;
       });
     }
     renderCardResults(filtered);
@@ -1498,9 +1524,7 @@ function renderCardResults(cards){
     return;
   }
   el.innerHTML=cards.map(function(c){
-    var img=(c.media&&c.media.image_url)||'';
-    var name=c.name||'';
-    var rarity=(c.classification&&c.classification.rarity)||'';
+    var img=c.i||'';
     var escapedImg=img.replace(/'/g,"%27");
     return '<div onclick="showCardDetail(this.getAttribute(\'data-img\'))" data-img="'+escapedImg+'" style="cursor:pointer;">'
       +(img?'<img src="'+img+'" style="width:100%;display:block;border-radius:6px;" loading="lazy">':'<div style="aspect-ratio:3/4;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.7rem;font-family:Rajdhani;border-radius:6px;">NO IMG</div>')
@@ -1528,6 +1552,12 @@ function snapZoneHeights(){
 window.addEventListener('resize',snapZoneHeights);
 window.addEventListener('orientationchange',function(){setTimeout(snapZoneHeights,120);});
 
+
+// Warm the card list at launch so Card Lookup is ready when it's opened.
+// Cached runs cost nothing; a first run fetches quietly and fails silently.
+window.addEventListener('load',function(){
+  setTimeout(function(){ loadAllCards(true); },1200);
+});
 </script>
 
 <!-- MENU PANEL -->
