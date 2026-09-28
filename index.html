@@ -22,7 +22,7 @@
     --text:#e0f0ff;--muted:#7a9bb5;
     --p1:#4fc3f7;--p2:#ff5f6d;--bg0:#02050c;--surface:#0a1828;--surface2:#0d2035;--bar:#000000;--danger:#ff6b6b;
   }
-  html,body{height:100%;overflow:hidden;background:var(--bg1);}
+  html,body{height:100%;overflow:hidden;background:var(--bg1);position:fixed;top:0;left:0;right:0;bottom:0;}
   body{font-family:'Exo 2',sans-serif;color:var(--text);}
   #app{display:flex;flex-direction:column;height:100vh;width:100%;}
 
@@ -252,7 +252,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v31.4 - 9.27.26</div>
+    <div id="build-stamp">v31.5 - 9.27.26</div>
     <div id="build-stamp-b">v31.4 - 9.27.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
@@ -1586,6 +1586,20 @@ function drawP2Label(text){
 }
 if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){drawP2Label(_p2Text);});}
 window.addEventListener('resize',function(){drawP2Label(_p2Text);});
+
+// iOS web-app viewport settles a moment after first paint. Pin the root to a
+// measured integer height so the layout can't reflow and leave a stale copy
+// painted in the top strip.
+function pinViewport(){
+  var hpx=Math.round(window.innerHeight);
+  document.documentElement.style.height=hpx+'px';
+  document.body.style.height=hpx+'px';
+  if(typeof snapZoneHeights==='function')snapZoneHeights();
+}
+pinViewport();
+window.addEventListener('resize',pinViewport);
+window.addEventListener('orientationchange',function(){setTimeout(pinViewport,150);});
+window.addEventListener('load',function(){pinViewport();setTimeout(pinViewport,300);});
 </script>
 
 <!-- MENU PANEL -->
