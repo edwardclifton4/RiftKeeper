@@ -47,7 +47,7 @@
   .player-zone.p1{background:linear-gradient(180deg,#0a1a2e 0%,#0d1525 100%);}
   .player-zone.lit{background:rgba(255,213,79,0.13)!important;}
   .pzone-bg{position:absolute;inset:0;opacity:0.08;background-size:cover;background-position:center;pointer-events:none;}
-  .score-big{font-family:'Rajdhani',sans-serif;font-size:20.5rem;font-weight:700;line-height:0.86;color:#ffffff;flex:1;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;-webkit-user-select:none !important;user-select:none !important;pointer-events:none;}
+  .score-big{font-family:'Rajdhani',sans-serif;font-size:22.5rem;font-weight:700;line-height:0.86;color:#ffffff;flex:1;display:flex;align-items:center;justify-content:center;padding-bottom:28px;box-sizing:border-box;transition:transform 0.15s;-webkit-user-select:none !important;user-select:none !important;pointer-events:none;}
   .player-zone.p1 .score-big{color:#eaf6ff;text-shadow:0 0 12px rgba(79,195,247,0.45),0 0 34px rgba(79,195,247,0.30);}
   .player-zone.p2 .score-big{color:#ffeff1;text-shadow:0 0 12px rgba(255,95,109,0.45),0 0 34px rgba(255,95,109,0.30);}
   @keyframes scorePop{0%{transform:scale(1);}40%{transform:scale(1.15);}100%{transform:scale(1);}}
@@ -251,7 +251,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v31.9 - 9.27.26</div>
+    <div id="build-stamp">v32.1 - 9.27.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
@@ -814,15 +814,17 @@ function getRoundLabel(){
 }
 function updateTimerDisplay(){
   const str=timerOver?formatTimer(timerOverSeconds):formatTimer(timerSeconds);
+  // dice screen shows the match format; once play starts it becomes round + clock
+  const full=_inPreGame
+    ? (state.bo===1?'BEST OF 1':'BEST OF 3')
+    : (function(){var lbl=timerOver?'OVERTIME':getRoundLabel();return lbl?lbl+' — '+str:str;})();
   ['p1','p2'].forEach(p=>{
     const el=document.getElementById('timer-display-'+p);
-    el.textContent=str;
+    if(el)el.textContent=str;
     const sub=document.getElementById('timer-round-'+p);
-    var lbl=timerOver?'OVERTIME':getRoundLabel();
-    var full=lbl?lbl+' — '+str:str;
     if(sub)sub.textContent=full;
-    if(p==='p2')drawP2Label(full);
   });
+  drawP2Label(full);
 }
 
 function timerTick(){
@@ -1104,7 +1106,9 @@ function fosConfirm(){
   showTimers();
 }
 
+var _inPreGame=false;
 function setPreGameState(on){
+  _inPreGame=on;
   document.getElementById('score1').style.visibility=on?'hidden':'';
   document.getElementById('score2').style.visibility=on?'hidden':'';
   document.querySelectorAll('.tap-hint').forEach(function(el){el.style.visibility=on?'hidden':'';});
