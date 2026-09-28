@@ -251,7 +251,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v31.8 - 9.27.26</div>
+    <div id="build-stamp">v31.9 - 9.27.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
@@ -707,6 +707,7 @@ function confirmDice(){
   ['1','2'].forEach(function(p){var el=document.getElementById('dice-loser-p'+p);if(el)el.style.opacity='0';});
   document.getElementById('dice-overlay').classList.remove('show');
   // Hide big dice
+  updateTimerDisplay();
   var bdc=document.getElementById('big-dice-container');if(bdc)bdc.classList.remove('show');
   stopDiceAnim();
   // Hide tap-to-start, show scores
@@ -1109,12 +1110,10 @@ function setPreGameState(on){
   document.querySelectorAll('.tap-hint').forEach(function(el){el.style.visibility=on?'hidden':'';});
   document.getElementById('tapstart1').style.display=on?'':'none';
   document.getElementById('tapstart2').style.display=on?'':'none';
-  // Show timer-box during pre-game so bo label is visible
+  // round/timer line stays visible on the dice screen, both sides
   document.getElementById('timer-p1').style.opacity=on?'1':'';
   document.getElementById('timer-p2').style.opacity=on?'1':'';
-  // Hide timer-display and timer-round-sub, only show bo label
-  document.getElementById('timer-round-p1').style.display=on?'none':'';
-  drawP2Label('');   // nothing to show before the game starts
+  updateTimerDisplay();
   var bdc=document.getElementById('big-dice-container');if(bdc)bdc.classList.toggle('show',on);
   if(on){if(document.getElementById('big-dice'))document.getElementById('big-dice').classList.add('idle');startDiceAnim();}else{stopDiceAnim();}
   // Dice screen: hide reset, gg and pause. Menu stays - it's the only way out.
