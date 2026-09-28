@@ -190,7 +190,7 @@
   #rotate-msg.show{display:flex;}
   #rotate-msg .rotate-icon{font-size:4rem;animation:rotateFlash 1s ease-in-out infinite;}
   #rotate-msg .rotate-text{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;padding:0 2rem;animation:rotateFlash 1s ease-in-out infinite;}
-  #build-stamp{position:absolute;top:0.8rem;right:1rem;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.75);}
+  #build-stamp{position:absolute;top:12px;right:16px;font-family:'Rajdhani',sans-serif;font-size:16px;line-height:20px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.75);}
   #setup{position:relative;}
   #setup-footer{position:absolute;bottom:1.1rem;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:0.55rem;}
   #card-lookup-btn{position:static;transform:none;}
@@ -243,8 +243,8 @@
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
   #p2-labels{position:absolute;top:0;left:0;right:0;z-index:4;pointer-events:none;}
-  #p2-labels .timer-round-sub{top:0.45rem;bottom:auto;transform:rotate(180deg);}
-  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:700;color:var(--gold);letter-spacing:2px;line-height:1.2;position:absolute;bottom:0.45rem;left:0;right:0;text-align:center;}
+  #p2-labels .timer-round-sub{top:8px;bottom:auto;transform:rotate(180deg);}
+  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:16px;line-height:20px;height:20px;font-weight:700;color:var(--gold);letter-spacing:2px;position:absolute;bottom:8px;left:0;right:0;text-align:center;}
   .pregame-bo-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:auto;padding-bottom:0.8rem;display:none;}
 </style>
 </head>
@@ -252,7 +252,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v30.2 - 9.27.26</div>
+    <div id="build-stamp">v30.3 - 9.27.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
@@ -319,7 +319,7 @@
       <div class="timer-box" id="timer-p1">
         <div class="timer-display" id="timer-display-p1">60:00</div>
         <div class="timer-round-sub" id="timer-round-p1"></div>
-        <div id="pregame-bo-p1" style="font-family:'Rajdhani',sans-serif;font-size:15px;line-height:18px;height:18px;font-weight:700;color:var(--gold);letter-spacing:2px;display:none;text-align:center;width:100%;"></div>
+        <div id="pregame-bo-p1" style="font-family:'Rajdhani',sans-serif;font-size:16px;line-height:20px;height:20px;font-weight:700;color:var(--gold);letter-spacing:2px;display:none;text-align:center;width:100%;"></div>
       </div>
     </div>
   </div>
