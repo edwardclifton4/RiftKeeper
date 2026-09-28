@@ -242,6 +242,7 @@
   #big-dice.shaking{animation:diceShake 0.5s ease-in-out;}
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
+  #p2-label{position:absolute;top:8px;left:0;width:100%;height:22px;z-index:4;pointer-events:none;}
   .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--gold);letter-spacing:3px;line-height:1;position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;}
   .pregame-bo-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:auto;padding-bottom:0.8rem;display:none;}
 </style>
@@ -250,7 +251,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v31 - 9.27.26</div>
+    <div id="build-stamp">v31.4 - 9.27.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
@@ -277,8 +278,6 @@
       <div class="score-big" id="score2">0</div>
       <div class="timer-box p2-timer" id="timer-p2">
         <div class="timer-display" id="timer-display-p2">60:00</div>
-        <div class="timer-round-sub" id="timer-round-p2"></div>
-        <div id="pregame-bo-p2" class="timer-round-sub" style="display:none;"></div>
       </div>
     </div>
 
@@ -288,6 +287,7 @@
 
         </svg>
       </div>
+    <canvas id="p2-label" width="0" height="0"></canvas>
     <div id="midbar">
       <div class="mid-btn danger" onclick="resetMatch()" title="Reset"><svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="var(--danger)"/></svg></div>
       <div class="mid-btn gg" id="gg-btn" onclick="openCombinedLog()" title="Log"><svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="#4ade80" stroke-width="1.8"/><rect x="8" y="8"  width="8" height="1.7" rx="0.85" fill="#4ade80"/><rect x="8" y="11.5" width="8" height="1.7" rx="0.85" fill="#4ade80"/><rect x="8" y="15" width="5" height="1.7" rx="0.85" fill="#4ade80"/></svg></div>
@@ -529,7 +529,6 @@ function startGame(){
   var z1=document.getElementById('zone1');
   var z2=document.getElementById('zone2');
   if(z1){var r1=z1.getBoundingClientRect();var el1=document.getElementById('pregame-bo-p1');if(el1){el1.textContent=boTxt2;el1.style.bottom='';el1.style.top=(r1.bottom-40)+'px';el1.style.left=(r1.left+8)+'px';el1.style.display='';}}
-  if(z2){var r2=z2.getBoundingClientRect();var el2=document.getElementById('pregame-bo-p2');if(el2){el2.textContent=boTxt2;el2.style.top='';el2.style.bottom=(window.innerHeight-r2.top-40)+'px';el2.style.left=(r2.left+8)+'px';el2.style.display='';el2.style.transform='';}}
 }
 
 function adj(p,d){
@@ -823,7 +822,10 @@ function updateTimerDisplay(){
     const el=document.getElementById('timer-display-'+p);
     el.textContent=str;
     const sub=document.getElementById('timer-round-'+p);
-    if(sub){var lbl=timerOver?'OVERTIME':getRoundLabel();sub.textContent=lbl?lbl+' — '+str:str;}
+    var lbl=timerOver?'OVERTIME':getRoundLabel();
+    var full=lbl?lbl+' — '+str:str;
+    if(sub)sub.textContent=full;
+    if(p==='p2')drawP2Label(full);
   });
 }
 
@@ -850,7 +852,6 @@ function showTimers(){
   document.getElementById('gg-btn').classList.add('show');
   document.getElementById('pause-btn').classList.add('show');
   document.getElementById('timer-round-p1').style.display='';
-  document.getElementById('timer-round-p2').style.display='';
   ['p1','p2'].forEach(p=>{
     const el=document.getElementById('timer-display-'+p);
     el.classList.remove('urgent','flashing');
@@ -1118,10 +1119,9 @@ function setPreGameState(on){
   document.getElementById('timer-p2').style.opacity=on?'1':'';
   // Hide timer-display and timer-round-sub, only show bo label
   document.getElementById('timer-round-p1').style.display=on?'none':'';
-  document.getElementById('timer-round-p2').style.display=on?'none':'';
   var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
   var l1=document.getElementById('pregame-bo-p1');if(l1){l1.textContent=boTxt;l1.style.display=on?'block':'none';}
-  var l2=document.getElementById('pregame-bo-p2');if(l2){l2.textContent=boTxt;l2.style.display=on?'block':'none';}
+  drawP2Label(on?boTxt:'');
   var bdc=document.getElementById('big-dice-container');if(bdc)bdc.classList.toggle('show',on);
   if(on){if(document.getElementById('big-dice'))document.getElementById('big-dice').classList.add('idle');startDiceAnim();}else{stopDiceAnim();}
   // Dice screen: hide reset, gg and pause. Menu stays - it's the only way out.
@@ -1554,6 +1554,36 @@ window.addEventListener('orientationchange',function(){setTimeout(snapZoneHeight
 window.addEventListener('load',function(){
   setTimeout(function(){ loadAllCards(true); },1200);
 });
+
+// P2's round/timer line. iOS rasterises CSS-rotated text below device resolution,
+// so we draw it on a canvas at devicePixelRatio and rotate the context instead.
+var _p2Text='';
+function drawP2Label(text){
+  var c=document.getElementById('p2-label');
+  if(!c)return;
+  _p2Text=text||'';
+  var dpr=window.devicePixelRatio||1;
+  var w=c.clientWidth||window.innerWidth, hh=22;
+  if(c.width!==Math.round(w*dpr)||c.height!==Math.round(hh*dpr)){
+    c.width=Math.round(w*dpr); c.height=Math.round(hh*dpr);
+  }
+  var ctx=c.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,w,hh);
+  if(!_p2Text)return;
+  ctx.save();
+  ctx.translate(w/2,hh/2);
+  ctx.rotate(Math.PI);
+  ctx.font="700 16px 'Rajdhani', sans-serif";
+  ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--gold').trim()||'#ffd54f';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  if('letterSpacing' in ctx)ctx.letterSpacing='3px';
+  ctx.fillText(_p2Text,0,0);
+  ctx.restore();
+}
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){drawP2Label(_p2Text);});}
+window.addEventListener('resize',function(){drawP2Label(_p2Text);});
 </script>
 
 <!-- MENU PANEL -->
