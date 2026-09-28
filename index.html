@@ -48,8 +48,8 @@
   .player-zone.lit{background:rgba(255,213,79,0.13)!important;}
   .pzone-bg{position:absolute;inset:0;opacity:0.08;background-size:cover;background-position:center;pointer-events:none;}
   .score-big{font-family:'Rajdhani',sans-serif;font-size:20.5rem;font-weight:700;line-height:0.86;color:#ffffff;flex:1;display:flex;align-items:center;justify-content:center;transition:transform 0.15s;-webkit-user-select:none !important;user-select:none !important;pointer-events:none;}
-  .player-zone.p1 .score-big{text-shadow:0 0 30px rgba(79,195,247,0.28);}
-  .player-zone.p2 .score-big{text-shadow:0 0 30px rgba(255,95,109,0.28);}
+  .player-zone.p1 .score-big{color:#eaf6ff;text-shadow:0 0 12px rgba(79,195,247,0.45),0 0 34px rgba(79,195,247,0.30);}
+  .player-zone.p2 .score-big{color:#ffeff1;text-shadow:0 0 12px rgba(255,95,109,0.45),0 0 34px rgba(255,95,109,0.30);}
   @keyframes scorePop{0%{transform:scale(1);}40%{transform:scale(1.15);}100%{transform:scale(1);}}
   .player-zone.p1 .player-name{margin-bottom:0.1rem;}
 
@@ -190,9 +190,8 @@
   #rotate-msg.show{display:flex;}
   #rotate-msg .rotate-icon{font-size:4rem;animation:rotateFlash 1s ease-in-out infinite;}
   #rotate-msg .rotate-text{font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;padding:0 2rem;animation:rotateFlash 1s ease-in-out infinite;}
-  #build-stamp{position:absolute;top:12px;right:16px;font-family:'Rajdhani',sans-serif;font-size:16px;line-height:20px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.75);}
+  #build-stamp{position:absolute;top:12px;right:16px;font-family:'Rajdhani',sans-serif;font-size:11px;line-height:14px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,0.22);}
   #setup{position:relative;}
-  #build-stamp-b{position:absolute;bottom:12px;left:16px;font-family:'Rajdhani',sans-serif;font-size:16px;line-height:20px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.75);}
   #setup-footer{position:absolute;bottom:1.1rem;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:0.55rem;}
   #card-lookup-btn{position:static;transform:none;}
   #donate-link{cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:0.8rem;letter-spacing:1px;color:rgba(255,213,79,0.5);text-align:center;text-decoration:none;padding:0.3rem;transition:color 0.2s;}
@@ -244,7 +243,7 @@
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
   #p2-label{position:absolute;top:8px;left:0;width:100%;height:22px;z-index:4;pointer-events:none;}
-  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;color:var(--gold);letter-spacing:3px;line-height:1;position:absolute;bottom:0.5rem;left:0;right:0;text-align:center;}
+  .timer-round-sub{font-family:'Rajdhani',sans-serif;font-size:16px;line-height:20px;font-weight:700;color:var(--gold);letter-spacing:3px;position:absolute;bottom:8px;left:0;right:0;text-align:center;}
   .pregame-bo-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--accent);letter-spacing:3px;line-height:1;margin-top:auto;padding-bottom:0.8rem;display:none;}
 </style>
 </head>
@@ -252,8 +251,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v31.5 - 9.27.26</div>
-    <div id="build-stamp-b">v31.4 - 9.27.26</div>
+    <div id="build-stamp">v31.8 - 9.27.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
@@ -317,7 +315,6 @@
       <div class="timer-box" id="timer-p1">
         <div class="timer-display" id="timer-display-p1">60:00</div>
         <div class="timer-round-sub" id="timer-round-p1"></div>
-        <div id="pregame-bo-p1" style="display:none;\"></div>
       </div>
     </div>
   </div>
@@ -527,10 +524,6 @@ function startGame(){
   document.getElementById('midbar-round-p1').style.display='none';
   setPreGameState(true);
   // Explicitly set bo label after state.bo is confirmed
-  var boTxt2=state.bo===1?'BEST OF 1':'BEST OF 3';
-  var z1=document.getElementById('zone1');
-  var z2=document.getElementById('zone2');
-  if(z1){var r1=z1.getBoundingClientRect();var el1=document.getElementById('pregame-bo-p1');if(el1){el1.textContent=boTxt2;el1.style.bottom='';el1.style.top=(r1.bottom-40)+'px';el1.style.left=(r1.left+8)+'px';el1.style.display='';}}
 }
 
 function adj(p,d){
@@ -1121,9 +1114,7 @@ function setPreGameState(on){
   document.getElementById('timer-p2').style.opacity=on?'1':'';
   // Hide timer-display and timer-round-sub, only show bo label
   document.getElementById('timer-round-p1').style.display=on?'none':'';
-  var boTxt=state.bo===1?'BEST OF 1':'BEST OF 3';
-  var l1=document.getElementById('pregame-bo-p1');if(l1){l1.textContent=boTxt;l1.style.display=on?'block':'none';}
-  drawP2Label(on?boTxt:'');
+  drawP2Label('');   // nothing to show before the game starts
   var bdc=document.getElementById('big-dice-container');if(bdc)bdc.classList.toggle('show',on);
   if(on){if(document.getElementById('big-dice'))document.getElementById('big-dice').classList.add('idle');startDiceAnim();}else{stopDiceAnim();}
   // Dice screen: hide reset, gg and pause. Menu stays - it's the only way out.
