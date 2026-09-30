@@ -254,7 +254,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v33.1 - 9.27.26</div>
+    <div id="build-stamp">v33.3 - 9.27.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
@@ -1350,33 +1350,88 @@ function showRollFace(){
 })();
 
 
-// Wake Lock - prevent screen from sleeping during game
+// Keep the screen awake. iOS often rejects the first request, and the system
+// drops the lock whenever the app loses focus, so this retries on every user
+// interaction until it actually holds one and re-acquires when dropped.
 var _wakeLock = null;
-async function requestWakeLock() {
-  try {
-    if ('wakeLock' in navigator) {
-      _wakeLock = await navigator.wakeLock.request('screen');
-    }
-  } catch(e) {}
-}
-function releaseWakeLock() {
-  if (_wakeLock) { _wakeLock.release(); _wakeLock = null; }
-}
-// Re-acquire when the app comes back to the foreground
-document.addEventListener('visibilitychange', function() {
-  if (document.visibilityState === 'visible') requestWakeLock();
-});
-// iOS only grants the lock after a real user gesture, so arm it on first touch
-(function(){
-  function arm(){
-    requestWakeLock();
-    document.removeEventListener('touchend', arm);
-    document.removeEventListener('click', arm);
-  }
-  document.addEventListener('touchend', arm, {passive:true});
-  document.addEventListener('click', arm);
-})();
+var _wakeWanted = true;
 
+async function requestWakeLock(){
+  if(!('wakeLock' in navigator) || !_wakeWanted) return false;
+  if(_wakeLock) return true;                       // already held
+  if(document.visibilityState !== 'visible') return false;
+  try{
+    _wakeLock = await navigator.wakeLock.request('screen');
+    // the system can revoke it at any time - notice and try again later
+    _wakeLock.addEventListener('release', function(){ _wakeLock = null; });
+    return true;
+  }catch(e){
+    _wakeLock = null;
+    return false;                                  // caller will retry
+  }
+}
+
+function releaseWakeLock(){
+  _wakeWanted = false;
+  if(_wakeLock){ _wakeLock.release().catch(function(){}); _wakeLock = null; }
+}
+
+// re-acquire when the app returns to the foreground
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState === 'visible') requestWakeLock();
+});
+
+// retry on every interaction until held, rather than giving up after one go
+['touchend','click'].forEach(function(evt){
+  document.addEventListener(evt, function(){
+    if(!_wakeLock) requestWakeLock();
+  }, {passive:true});
+});
+
+// last resort: a slow poll catches cases where no interaction happens for a while
+setInterval(function(){ if(!_wakeLock) requestWakeLock(); }, 15000);
+
+// Fallback for when Wake Lock is unsupported or keeps being refused: a tiny
+// muted inline video. A playing video keeps the display alive on iOS even
+// where the Wake Lock API won't cooperate.
+var _keepVideo = null;
+function startVideoFallback(){
+  if(_keepVideo || !_wakeWanted) return;
+  try{
+    var c = document.createElement('canvas');
+    c.width = c.height = 2;
+    var ctx = c.getContext('2d');
+    var flip = false;
+    setInterval(function(){                 // stream needs fresh frames
+      flip = !flip;
+      ctx.fillStyle = flip ? '#000001' : '#000000';
+      ctx.fillRect(0,0,2,2);
+    }, 1000);
+    if(!c.captureStream) return;
+    var v = document.createElement('video');
+    v.srcObject = c.captureStream(1);
+    v.muted = true; v.loop = true; v.playsInline = true;
+    v.setAttribute('muted',''); v.setAttribute('playsinline','');
+    v.style.cssText = 'position:fixed;bottom:0;left:0;width:1px;height:1px;opacity:0.01;pointer-events:none;z-index:-1;';
+    document.body.appendChild(v);
+    v.play().catch(function(){});
+    _keepVideo = v;
+  }catch(e){}
+}
+
+// If the lock still isn't held shortly after launch, assume it won't be.
+setTimeout(function(){ if(!_wakeLock) startVideoFallback(); }, 4000);
+document.addEventListener('touchend', function(){
+  if(_keepVideo && _keepVideo.paused) _keepVideo.play().catch(function(){});
+}, {passive:true});
+
+// Show which mechanism is active, so a failure is visible rather than silent.
+setInterval(function(){
+  var el = document.getElementById('build-stamp');
+  if(!el) return;
+  var base = el.textContent.replace(/ [·•]$/,'');
+  el.textContent = base + (_wakeLock ? ' ·' : (_keepVideo ? ' •' : ''));
+}, 3000);
 
 // Menu panel
 function donatePrompt(){
