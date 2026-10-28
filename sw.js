@@ -6,8 +6,9 @@
 // cache-first service workers cause.
 //
 // Fonts and other assets are cache-first, since they rarely change.
-// The card API is never cached here - the app already stores that in
-// localStorage with its own weekly refresh.
+// The card feed is never cached here - the app already stores that in
+// localStorage with its own weekly refresh. Card art from Riot's CDN is
+// cache-first like any other asset, so viewed cards work offline.
 
 const CACHE = 'riftkeeper-v1';
 const SHELL = ['./', './index.html'];
@@ -37,7 +38,7 @@ self.addEventListener('fetch', e => {
   try { url = new URL(req.url); } catch (err) { return; }
 
   // card data is handled by the app's own localStorage cache
-  if (url.hostname === 'api.riftcodex.com') return;
+  if (url.hostname === 'content.publishing.riotgames.com') return;
 
   // the page: network first, cache as the offline fallback
   if (req.mode === 'navigate' || req.destination === 'document') {

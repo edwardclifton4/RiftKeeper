@@ -254,7 +254,7 @@
 <div id="rotate-msg"><div class="rotate-icon">🔄</div><div class="rotate-text">ROTATE TO PORTRAIT MODE TO CONTINUE</div></div>
 <div id="app">
   <div id="setup">
-    <div id="build-stamp">v34.6 - 10.26.26</div>
+    <div id="build-stamp">v35.5 - 10.28.26</div>
     <h1><span style="color:var(--accent);">RIFT</span><span style="color:var(--gold);">KEEPER</span></h1>
     <div class="bo-row">
       <div class="bo-btn" id="bo1-btn" onclick="setBo(1)">BEST OF 1</div>
@@ -1479,7 +1479,7 @@ function showCardDetail(img){
   document.getElementById('card-detail-modal').style.display='flex';
 }
 
-var CARD_CACHE_KEY='rk_cards_v2';
+var CARD_CACHE_KEY='rk_cards_v3';
 var CARD_CACHE_TTL=7*24*60*60*1000;   // refresh weekly; sets release far less often
 function loadCardCache(){
   try{
@@ -1499,40 +1499,44 @@ function saveCardCache(list){
 var _cardsLoading=null;
 async function loadAllCards(quiet){
   if(_cardsLoaded)return;
-  if(_cardsLoading)return _cardsLoading;          // a prefetch is already in flight
+  if(_cardsLoading)return _cardsLoading;
   _cardsLoading=(async function(){
     var el=document.getElementById('card-results');
-    var API='https://api.riftcodex.com/cards?size=100&sort=name&page=';
-    if(loadCardCache())return;                     // instant after the first run
+    // Riot's own public gallery feed - first-party, so new sets appear on release day
+    var API='https://content.publishing.riotgames.com/publishing-content/v2.0/public/channel/riftbound_website/list/riftbound_gallery_cards?locale=en_US&limit=200&from=';
+    if(loadCardCache())return;
     if(!quiet&&el)el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;">LOADING CARDS...</div>';
     try{
-      var first=await fetch(API+'1');
+      var first=await fetch(API+'0');
       if(!first.ok)throw new Error('HTTP '+first.status);
       var data=await first.json();
-      var total=data.total||0;
-      var all=(data.items||[]).slice();
-      var pages=Math.ceil(total/100);
-      if(pages>1){
-        var reqs=[];
-        for(var p=2;p<=pages;p++){
-          reqs.push(fetch(API+p).then(function(r){return r.ok?r.json():{items:[]};}).catch(function(){return {items:[]};}));
-        }
+      var total=(data.metadata&&data.metadata.totalItems)||0;
+      var all=(data.data||[]).slice();
+      var reqs=[];
+      for(var from=200;from<total;from+=200){
+        reqs.push(fetch(API+from).then(function(r){return r.ok?r.json():{data:[]};}).catch(function(){return {data:[]};}));
+      }
+      if(reqs.length){
         var rest=await Promise.all(reqs);
-        rest.forEach(function(d){all=all.concat(d.items||[]);});
+        rest.forEach(function(d){all=all.concat(d.data||[]);});
       }
       var seen={},out=[];
       all.forEach(function(c){
-        var k=c.id||c.name;
+        var k=c.id;
         if(!k||seen[k])return;
         seen[k]=1;
-        out.push({n:c.name||'',i:(c.media&&c.media.image_url)||''});
+        out.push({
+          n:c.name||'',
+          i:(c.cardImage&&c.cardImage.url)||'',
+          s:(c.set&&c.set.value&&c.set.value.id)||'',
+          c:c.publicCode||''
+        });
       });
       out.sort(function(a,b){return a.n.localeCompare(b.n);});
       _allCards=out;_cardsLoaded=true;
       saveCardCache(out);
     }catch(e){
       console.error('Card load error:',e);
-      // a failed prefetch stays silent - it retries when the user actually searches
       if(!quiet&&el)el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--muted);font-family:Rajdhani;letter-spacing:2px;padding:2rem;line-height:1.7;">'+(navigator.onLine?'COULD NOT REACH THE CARD DATABASE':'NO NETWORK, SO NO RESULTS. SORRY :(')+'<br><span style="font-size:0.8rem;opacity:0.7;">cards you have already loaded still work</span></div>';
     }
   })();
@@ -1575,9 +1579,10 @@ function renderCardResults(cards){
   }
   el.innerHTML=cards.map(function(c){
     var img=c.i||'';
+    var thumb=img?img+'&w=320&fm=webp':'';   // full art only on tap
     var escapedImg=img.replace(/'/g,"%27");
     return '<div onclick="showCardDetail(this.getAttribute(\'data-img\'))" data-img="'+escapedImg+'" style="cursor:pointer;">'
-      +(img?'<img src="'+img+'" style="width:100%;display:block;border-radius:6px;" loading="lazy">':'<div style="aspect-ratio:3/4;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.7rem;font-family:Rajdhani;border-radius:6px;">NO IMG</div>')
+      +(img?'<img src="'+thumb+'" style="width:100%;display:block;border-radius:6px;" loading="lazy">':'<div style="aspect-ratio:3/4;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:0.7rem;font-family:Rajdhani;border-radius:6px;">NO IMG</div>')
       +'</div>';
   }).join('');
 }
