@@ -186,6 +186,26 @@
   @keyframes blinkZone{0%,100%{background:rgba(255,213,79,0.3);}50%{background:transparent;}}
   .blinking{animation:blinkZone 1.8s ease-in-out infinite;}
 
+  /* D20 ROLL */
+  .d20-wrap{display:flex;flex-direction:column;align-items:center;gap:0.4rem;transition:transform 0.45s cubic-bezier(.2,.8,.2,1),opacity 0.4s;}
+  .d20-wrap.settled{transform:translateY(-15vh) scale(0.55);}
+  .d20-wrap.lost{opacity:0.45;}
+  .d20{width:min(38vw,22vh);height:min(38vw,22vh);overflow:visible;}
+  .d20 .d20-body{fill:var(--surface2);stroke-width:3;stroke-linejoin:round;}
+  .d20 .d20-edge{fill:none;stroke-width:1.6;opacity:0.55;}
+  .d20 .d20-num{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:26px;fill:#fff;text-anchor:middle;dominant-baseline:central;}
+  .d20-wrap.p1 .d20-body,.d20-wrap.p1 .d20-edge{stroke:var(--p1);}
+  .d20-wrap.p2 .d20-body,.d20-wrap.p2 .d20-edge{stroke:var(--p2);}
+  .d20-wrap.won .d20-body,.d20-wrap.won .d20-edge{stroke:var(--gold);}
+  .d20-wrap.won .d20-num{fill:var(--gold);}
+  .d20-wrap.won .d20{filter:drop-shadow(0 0 18px rgba(255,213,79,0.8));}
+  .d20-wrap.rolling .d20{animation:d20Tumble 0.42s linear infinite;}
+  .d20-wrap.landed .d20{animation:d20Land 0.35s ease-out;}
+  @keyframes d20Tumble{0%{transform:rotate(0deg) scale(1);}25%{transform:rotate(95deg) scale(0.9);}50%{transform:rotate(180deg) scale(1.05);}75%{transform:rotate(270deg) scale(0.92);}100%{transform:rotate(360deg) scale(1);}}
+  @keyframes d20Land{0%{transform:scale(1.3);}60%{transform:scale(0.93);}100%{transform:scale(1);}}
+  .d20-name{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
+  @media (prefers-reduced-motion: reduce){.d20-wrap.rolling .d20,.d20-wrap.landed .d20{animation:none;}}
+
   /* EASTER EGG - AURORA */
 
   @keyframes rotateFlash{0%,100%{opacity:1;}50%{opacity:0.15;}}
@@ -604,7 +624,6 @@ function resetScores(){
 /* ---- DICE ---- */
 function rollDice(){
   diceWinner=null; diceSettled=false;
-  const winner=Math.random()<0.5?1:2;
   const h1=document.getElementById('dice-half1');
   const h2=document.getElementById('dice-half2');
   h1.style.background=''; h2.style.background='';
@@ -631,65 +650,86 @@ function rollDice(){
   stopDiceAnim();
   document.getElementById('dice-overlay').classList.add('show');
 
-  // Build steps: linear slowdown 120ms->500ms over ~3 seconds
-  // Winner is pre-determined randomly - animation just builds toward it
-  var _steps=[];
-  var _elapsed=0;
-  while(_elapsed<3000){
-    var _p=_elapsed/3000;
-    var _d=Math.round(120+(_p*380));
-    _steps.push(_d);
-    _elapsed+=_d;
-  }
-  var _si=0;
-  var _cur=Math.random()<0.5?1:2;
+  ['1','2'].forEach(function(p){var el=document.getElementById('dice-loser-p'+p);if(el)el.style.opacity='0';});
+  if(_diceAutoTimer){clearTimeout(_diceAutoTimer);_diceAutoTimer=null;}
+  rollD20Pair(++_d20Token);
+}
 
-  function tick(){
-    var _progress=_si/_steps.length;
-    // Early phase: purely alternate
-    // Late phase (last 30%): bias strongly toward winner so it lands correctly
-    if(_progress<0.7){
-      _cur=_cur===1?2:1;
-    } else {
-      // Need to land on winner at end - calculate if we should switch or stay
-      var _stepsLeft=_steps.length-_si;
-      if(_stepsLeft===1){
-        // Last step - force winner
-        _cur=winner;
-      } else if(_stepsLeft%2===0){
-        // Even steps left: stay to land on winner
-        if(_cur===winner) _cur=_cur; // stay
-        else _cur=_cur===1?2:1; // switch to get closer
-      } else {
-        // Odd steps left: switch to land on winner
-        if(_cur!==winner) _cur=_cur; // stay
-        else _cur=_cur===1?2:1;
+/* True d20: cryptographically secure, uniform 1-20 (rejection sampling avoids modulo bias). */
+function rollD20(){
+  var buf=new Uint32Array(1), limit=Math.floor(4294967296/20)*20, x;
+  do{crypto.getRandomValues(buf);x=buf[0];}while(x>=limit);
+  return (x%20)+1;
+}
+
+var _d20Token=0;
+function d20Markup(p){
+  return '<div class="d20-wrap p'+p+' rolling" id="d20wrap'+p+'">'+
+    '<svg class="d20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'+
+      '<polygon class="d20-body" points="50,4 90,27 90,73 50,96 10,73 10,27"/>'+
+      '<path class="d20-edge" d="M50,24 L80,70 L20,70 Z M50,24 L50,4 M50,24 L10,27 M50,24 L90,27 M80,70 L90,27 M80,70 L90,73 M80,70 L50,96 M20,70 L10,27 M20,70 L10,73 M20,70 L50,96"/>'+
+      '<text class="d20-num" x="50" y="54" id="d20num'+p+'">?</text>'+
+    '</svg>'+
+    '<div class="d20-name">'+state.names[p-1]+'</div>'+
+  '</div>';
+}
+
+// Roll both dice with a tumbling animation; reroll automatically on a tie.
+function rollD20Pair(token){
+  var h1=document.getElementById('dice-half1'), h2=document.getElementById('dice-half2');
+  var mid=document.getElementById('dice-goes-first');
+  h1.innerHTML=d20Markup(1); h2.innerHTML=d20Markup(2);
+  mid.classList.remove('show');
+  var results=[rollD20(),rollD20()];   // the real rolls - decided up front, animation just reveals them
+  var landed=0;
+
+  function spin(p,durationMs){
+    var numEl=document.getElementById('d20num'+p), wrap=document.getElementById('d20wrap'+p);
+    var start=performance.now();
+    (function step(){
+      if(token!==_d20Token)return;
+      var t=(performance.now()-start)/durationMs;
+      if(t>=1){
+        numEl.textContent=results[p-1];
+        wrap.classList.remove('rolling'); wrap.classList.add('landed');
+        if(++landed===2)setTimeout(function(){if(token===_d20Token)finish();},450);
+        return;
       }
-    }
-
-    h1.style.background=_cur===1?'rgba(255,213,79,0.5)':'';
-    h2.style.background=_cur===2?'rgba(255,213,79,0.5)':'';
-
-    _si++;
-    if(_si<_steps.length){
-      setTimeout(tick,_steps[_si]);
-    } else {
-      h1.style.background='';
-      h2.style.background='';
-      document.getElementById('dice-winner-p'+winner).classList.add('show');
-      var loser=winner===1?2:1;
-      var loserEl=document.getElementById('dice-loser-p'+loser);
-      if(loserEl){document.getElementById('dice-loser-name'+loser).textContent='WAITING FOR '+state.names[winner-1]+'...';loserEl.style.opacity='1';}
-      if(winner===1) h1.classList.add('blinking');
-      else h2.classList.add('blinking');
-      diceWinner=winner;
-      diceSettled=true;
-      // no input within AUTO_ADVANCE_MS - continue on its own
-      if(_diceAutoTimer)clearTimeout(_diceAutoTimer);
-      _diceAutoTimer=setTimeout(function(){_diceAutoTimer=null;confirmDice();},AUTO_ADVANCE_MS);
-    }
+      // flicker random faces, slowing down as the die settles
+      var face; do{face=Math.floor(Math.random()*20)+1;}while(face==numEl.textContent);
+      numEl.textContent=face;
+      setTimeout(step,Math.round(55+t*t*260));
+    })();
   }
-  setTimeout(tick,_steps[0]);
+  spin(1,2200);
+  spin(2,2600);   // second die lands a beat later for suspense
+
+  function finish(){
+    var w1=document.getElementById('d20wrap1'), w2=document.getElementById('d20wrap2');
+    if(results[0]===results[1]){
+      mid.textContent='TIE — ROLLING AGAIN';
+      mid.classList.add('show');
+      setTimeout(function(){if(token===_d20Token)rollD20Pair(token);},1400);
+      return;
+    }
+    var winner=results[0]>results[1]?1:2, loser=winner===1?2:1;
+    var ww=winner===1?w1:w2, lw=winner===1?w2:w1;
+    ww.classList.add('won'); lw.classList.add('lost');
+    w1.classList.add('settled'); w2.classList.add('settled');
+    mid.textContent=results[0]+'  —  '+results[1];
+    mid.classList.add('show');
+    document.getElementById('dice-star1').classList.add('show');
+    document.getElementById('dice-star2').classList.add('show');
+    document.getElementById('dice-winner-p'+winner).classList.add('show');
+    var loserEl=document.getElementById('dice-loser-p'+loser);
+    if(loserEl){document.getElementById('dice-loser-name'+loser).textContent='WAITING FOR '+state.names[winner-1]+'...';loserEl.style.opacity='1';}
+    document.getElementById('dice-half'+winner).classList.add('blinking');
+    diceWinner=winner;
+    diceSettled=true;
+    // no input within AUTO_ADVANCE_MS - continue on its own
+    if(_diceAutoTimer)clearTimeout(_diceAutoTimer);
+    _diceAutoTimer=setTimeout(function(){_diceAutoTimer=null;confirmDice();},AUTO_ADVANCE_MS);
+  }
 }
 
 function confirmDice(){
