@@ -263,6 +263,10 @@
   @keyframes diceGlow{0%,100%{filter:drop-shadow(0 0 5px rgba(255,213,79,0.2));}50%{filter:drop-shadow(0 0 60px rgba(255,213,79,1)) drop-shadow(0 0 30px rgba(255,213,79,0.8));}}
   #big-dice.idle{animation:diceGlow 1.8s ease-in-out infinite;}
   #big-dice.shaking{animation:diceShake 0.5s ease-in-out;}
+  #big-d20{transform-box:fill-box;transform-origin:center;}
+  #big-d20.spin{animation:bigD20Spin 0.7s cubic-bezier(.3,.7,.4,1);}
+  @keyframes bigD20Spin{0%{transform:rotate(0deg) scale(1);}30%{transform:rotate(160deg) scale(0.86);}70%{transform:rotate(330deg) scale(1.06);}100%{transform:rotate(360deg) scale(1);}}
+  @media (prefers-reduced-motion: reduce){#big-d20.spin{animation:none;}}
   #big-dice-container .dice-player-name{font-family:'Rajdhani',sans-serif;font-size:clamp(1rem,3.8vw,1.4rem);font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,213,79,0.6);margin-bottom:0.3rem;pointer-events:none;}
   @keyframes cycleDots{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
   #p2-label{position:absolute;top:8px;left:0;width:100%;height:22px;z-index:4;pointer-events:none;}
@@ -306,15 +310,18 @@
 
       <div id="big-dice-container">
         <svg id="big-dice" class="idle" onclick="rollDice()" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <rect x="5" y="5" width="90" height="90" rx="18" fill="var(--surface2)" stroke="var(--gold)" stroke-width="3"/>
-
+          <g id="big-d20">
+            <polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="var(--surface2)" stroke="var(--gold)" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M50,24 L80,70 L20,70 Z M50,24 L50,4 M50,24 L10,27 M50,24 L90,27 M80,70 L90,27 M80,70 L90,73 M80,70 L50,96 M20,70 L10,27 M20,70 L10,73 M20,70 L50,96" fill="none" stroke="var(--gold)" stroke-width="1.6" opacity="0.55"/>
+            <text id="big-d20-num" x="50" y="54" fill="var(--gold)" font-family="Rajdhani,sans-serif" font-weight="700" font-size="26" text-anchor="middle" dominant-baseline="central">20</text>
+          </g>
         </svg>
       </div>
     <canvas id="p2-label" width="0" height="0"></canvas>
     <div id="midbar">
       <div class="mid-btn danger" onclick="resetMatch()" title="Reset"><svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="var(--danger)"/></svg></div>
       <div class="mid-btn gg" id="gg-btn" onclick="openCombinedLog()" title="Log"><svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="#4ade80" stroke-width="1.8"/><rect x="8" y="8"  width="8" height="1.7" rx="0.85" fill="#4ade80"/><rect x="8" y="11.5" width="8" height="1.7" rx="0.85" fill="#4ade80"/><rect x="8" y="15" width="5" height="1.7" rx="0.85" fill="#4ade80"/></svg></div>
-      <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">&nbsp; <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="var(--gold)" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="var(--gold)"/><circle cx="10" cy="4" r="1" fill="var(--gold)"/><circle cx="7" cy="7" r="1" fill="var(--gold)"/><circle cx="4" cy="10" r="1" fill="var(--gold)"/><circle cx="10" cy="10" r="1" fill="var(--gold)"/></svg> &nbsp;&nbsp;ROLL DICE&nbsp;&nbsp; <svg width="22" height="22" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="12" height="12" rx="2.5" stroke="var(--gold)" stroke-width="1.2"/><circle cx="4" cy="4" r="1" fill="var(--gold)"/><circle cx="10" cy="4" r="1" fill="var(--gold)"/><circle cx="7" cy="7" r="1" fill="var(--gold)"/><circle cx="4" cy="10" r="1" fill="var(--gold)"/><circle cx="10" cy="10" r="1" fill="var(--gold)"/></svg></div>
+      <div class="mid-btn gold" id="roll-dice-btn" onclick="rollDice()">&nbsp; <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="50,4 90,27 90,73 50,96 10,73 10,27" stroke="var(--gold)" stroke-width="7" stroke-linejoin="round"/><path d="M50,24 L80,70 L20,70 Z" stroke="var(--gold)" stroke-width="5" stroke-linejoin="round"/></svg> &nbsp;&nbsp;ROLL DICE&nbsp;&nbsp; <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="50,4 90,27 90,73 50,96 10,73 10,27" stroke="var(--gold)" stroke-width="7" stroke-linejoin="round"/><path d="M50,24 L80,70 L20,70 Z" stroke="var(--gold)" stroke-width="5" stroke-linejoin="round"/></svg></div>
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;pointer-events:none;flex-shrink:0;">
         <div class="midbar-logo flip" id="midbar-logo-p2" style="position:relative;left:-1px;"><span class="r">RIFT</span><span class="k">KEEPER</span></div>
         <div class="midbar-logo" id="midbar-round-p1" style="display:none;"></div>
@@ -1282,37 +1289,23 @@ function triggerOvertime(){
 var _fwInterval=null;
 
 var _diceAnimInterval=null;
-var _diceFaces=[
-  [], // 0 unused
-  [[50,50]], // 1
-  [[28,28],[72,72]], // 2
-  [[28,28],[50,50],[72,72]], // 3
-  [[28,28],[72,28],[28,72],[72,72]], // 4
-  [[28,28],[72,28],[50,50],[28,72],[72,72]], // 5
-  [[28,28],[72,28],[28,50],[72,50],[28,72],[72,72]] // 6
-];
 function startDiceAnim(){
-  var dice=document.getElementById('big-dice');
-  if(!dice)return;
-  var face=1;
-  function showFace(n){
-    var dots=dice.querySelectorAll('.bd-dot');
-    dots.forEach(function(d){d.remove();});
-    _diceFaces[n].forEach(function(pos){
-      var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      c.setAttribute('cx',pos[0]);c.setAttribute('cy',pos[1]);c.setAttribute('r','8');
-      c.setAttribute('fill','var(--gold)');c.classList.add('bd-dot');
-      dice.appendChild(c);
-    });
+  // Idle "attract" animation: the d20 tumbles every couple of seconds, flicking through faces,
+  // while the container keeps its pulsing gold glow. Cosmetic only - the real roll happens in rollDice().
+  var g=document.getElementById('big-d20'), num=document.getElementById('big-d20-num');
+  if(!g||!num)return;
+  function tumble(){
+    g.classList.remove('spin'); void g.getBoundingClientRect(); g.classList.add('spin');
+    var flips=0;
+    (function flick(){
+      var f; do{f=Math.floor(Math.random()*20)+1;}while(f==num.textContent);
+      num.textContent=f;
+      if(++flips<7)setTimeout(flick,90);
+    })();
   }
-  showFace(5); // default 5 dots
   if(_diceAnimInterval)clearInterval(_diceAnimInterval);
-  _diceAnimInterval=setInterval(function(){
-    var newFace;
-    do{newFace=Math.floor(Math.random()*6)+1;}while(newFace===face);
-    face=newFace;
-    showFace(face);
-  },600);
+  tumble();
+  _diceAnimInterval=setInterval(tumble,2000);
 }
 function stopDiceAnim(){
   if(_diceAnimInterval){clearInterval(_diceAnimInterval);_diceAnimInterval=null;}
